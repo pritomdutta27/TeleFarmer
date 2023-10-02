@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav_menu"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.theroyalsoft.telefarmer.ui.view.fragments.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.theroyalsoft.telefarmer.ui.view.fragments.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/packFragment"
+        android:name="com.theroyalsoft.telefarmer.ui.view.fragments.pack.PackFragment"
+        android:label="fragment_pack"
+        tools:layout="@layout/fragment_pack" />
+    <fragment
+        android:id="@+id/newsListFragment"
+        android:name="com.theroyalsoft.telefarmer.ui.view.fragments.newslist.NewsListFragment"
+        android:label="fragment_news_listragment"
+        tools:layout="@layout/fragment_news_listragment" >
+        <action
+            android:id="@+id/action_newsListFragment_to_newsDetailsFragment"
+            app:destination="@id/newsDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsDetailsFragment"
+        android:name="com.theroyalsoft.telefarmer.ui.view.fragments.newsdetails.NewsDetailsFragment"
+        android:label="fragment_news_details"
+        tools:layout="@layout/fragment_news_details" >
+        <argument
+            android:name="newsID"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/tipsNTricksListFragment"
+        android:name="com.theroyalsoft.telefarmer.ui.view.fragments.tipsntrickslist.TipsNTricksListFragment"
+        android:label="fragment_tips_n_tricks_list"
+        tools:layout="@layout/fragment_tips_n_tricks_list" >
+        <action
+            android:id="@+id/action_tipsNTricksListFragment_to_tipsNTricksDetailsFragment"
+            app:destination="@id/tipsNTricksDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tipsNTricksDetailsFragment"
+        android:name="com.theroyalsoft.telefarmer.ui.view.fragments.tipsntricksdetails.TipsNTricksDetailsFragment"
+        android:label="fragment_tips_n_tricks_details"
+        tools:layout="@layout/fragment_tips_n_tricks_details" >
+        <argument
+            android:name="tipsID"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/uploadImgFragment"
+        android:name="com.theroyalsoft.telefarmer.ui.view.fragments.uploadimg.UploadImgFragment"
+        android:label="fragment_upload_img"
+        tools:layout="@layout/fragment_upload_img" >
+        <action
+            android:id="@+id/action_uploadImgFragment_to_previousConsultationFragment"
+            app:destination="@id/previousConsultationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previousConsultationFragment"
+        android:name="com.theroyalsoft.telefarmer.ui.view.fragments.previousConsultation.PreviousConsultationFragment"
+        android:label="fragment_previous_consultation"
+        tools:layout="@layout/fragment_previous_consultation" >
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+</navigation>
