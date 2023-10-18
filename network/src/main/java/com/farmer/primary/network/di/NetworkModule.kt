@@ -21,6 +21,7 @@ import okhttp3.internal.platform.Platform
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -56,6 +57,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @Named("first")
     internal fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(DataSourceConstants.BASE_URL)
@@ -67,7 +69,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
+    fun provideApiService(@Named("first") retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
 

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#D8E1D3D3"
+    android:clickable="true"
+    android:gravity="center"
+    android:longClickable="true"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#5E404040"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:outlineAmbientShadowColor="#aaa"
+            android:outlineSpotShadowColor="#aaa"
+            app:cardBackgroundColor="@color/color_app_bg"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="25dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/tvDialogHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:padding="5dp"
+                    android:text="@string/demo_text_short"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_app"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvDialogMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:paddingStart="@dimen/_15dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="@dimen/_15dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/demo_text_short"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorTextTittle"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:background="#E6E6E6" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/tvYes"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:gravity="center|center_vertical"
+                        android:maxLines="1"
+                        android:text="Yes"
+                        android:textColor="@color/colorRed"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#E6E6E6"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvCancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:gravity="center|center_vertical"
+                        android:maxLines="1"
+                        android:text="Cancel"
+                        android:textColor="@color/colorTextTittle"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

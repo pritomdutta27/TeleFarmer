@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import bio.medico.patient.callingWebrtc.CallActivityKotlin
+import bio.medico.patient.common.AppKey
 import com.theroyalsoft.telefarmer.databinding.FragmentHomeBinding
 import com.theroyalsoft.telefarmer.extensions.getCameraAndMicPermission
-import com.theroyalsoft.telefarmer.helper.AppKey
-import com.theroyalsoft.telefarmer.ui.view.activity.call.CallActivity
 import com.theroyalsoft.telefarmer.ui.view.activity.call.CallTestActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,9 +42,9 @@ class HomeFragment : Fragment() {
         binding.apply {
             imgAudioCall.setOnClickListener {
                 getCameraAndMicPermission {
-                    val intent = Intent(activity, CallTestActivity::class.java)
-                    intent.putExtra("isVideoCall", false)
-                    startActivity(intent)
+//                    val intent = Intent(activity, CallTestActivity::class.java)
+//                    intent.putExtra("isVideoCall", false)
+//                    startActivity(intent)
                 }
             }
 
@@ -54,12 +54,12 @@ class HomeFragment : Fragment() {
 //                startActivity(intent)
                 //check if permission of mic and camera is taken
                 getCameraAndMicPermission {
-                    val intent = Intent(requireActivity(), CallTestActivity::class.java)
-                    intent.putExtra("isVideoCall", true)
-                    startActivity(intent)
-//                    val intent = Intent(activity, CallActivity::class.java)
-//                    intent.putExtra(AppKey.INTENT_VIDEO_CALL, true)
+//                    val intent = Intent(requireActivity(), CallTestActivity::class.java)
+//                    intent.putExtra("isVideoCall", true)
 //                    startActivity(intent)
+                    val intent = Intent(requireActivity(), CallActivityKotlin::class.java)
+                    intent.putExtra(AppKey.INTENT_VIDEO_CALL, true);
+                    startActivity(intent);
                 }
             }
         }

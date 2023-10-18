@@ -124,7 +124,7 @@
 
         <include
             android:id="@+id/ll"
-            layout="@layout/fragment_call" />
+            layout="@layout/fragment_call_my" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

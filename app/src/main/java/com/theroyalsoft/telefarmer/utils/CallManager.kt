@@ -193,7 +193,7 @@ class CallManager {
                     "",
                     sdp,
                     "",
-                    LocalData.getUserUuid(),
+                    "LocalData.getUserUuid()",
                     doctorUuid
                 )
                 val signalingOfferSocketPayloadJson: String = JsonUtil.getJsonStringFromObject(json)
@@ -262,7 +262,7 @@ class CallManager {
             "",
             "",
             jsonStringFromObject,
-            LocalData.getUserUuid(),
+            "LocalData.getUserUuid()",
             SocketKey.RECEIVER_ID
         )
         val signalingoffersocketpayloadjosn: String =
@@ -355,7 +355,7 @@ class CallManager {
     fun doEndCall() {
         val preOfferAnswerSocket = PreOfferAnswerSocket(
             SocketKey.KEY_TYPE_CALL_ENDED,
-            LocalData.getUserUuid(),
+            "LocalData.getUserUuid()",
             SocketKey.RECEIVER_ID
         )
         val json: String = JsonUtil.getJsonStringFromObject(preOfferAnswerSocket)
@@ -377,7 +377,7 @@ class CallManager {
     fun doForceStopCall() {
         val preOfferAnswerSocket = PreOfferAnswerSocket(
             SocketKey.KEY_TYPE_CALL_HANGED_UP,
-            LocalData.getUserUuid(),
+            "LocalData.getUserUuid()",
             SocketKey.RECEIVER_ID
         )
         val json: String = JsonUtil.getJsonStringFromObject(preOfferAnswerSocket)
@@ -419,11 +419,11 @@ class CallManager {
     private var alreadySend = false
     fun callOffer(doctorUuid: String, callType: String?) {
         val preOfferSocket = PreOfferSocket(
-            LocalData.getUserName(),
-            LocalData.getUserProfile(),
+            "LocalData.getUserName()",
+            "LocalData.getUserProfile()",
             AppKey.getTime1(),
             callType,
-            LocalData.getUserUuid(),
+            "LocalData.getUserUuid()",
             doctorUuid
         )
         if (socketManager?.isSocketConnected!!) {

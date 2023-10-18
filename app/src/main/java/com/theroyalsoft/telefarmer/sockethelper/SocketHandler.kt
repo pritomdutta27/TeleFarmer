@@ -1,9 +1,6 @@
 package com.theroyalsoft.telefarmer.sockethelper
 
-import android.os.Handler
-import android.os.Looper
 import com.theroyalsoft.telefarmer.utils.DeviceIDUtil
-import com.theroyalsoft.telefarmer.utils.LocalData
 import io.socket.client.IO
 import io.socket.client.Socket
 import timber.log.Timber

@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import bio.medico.patient.callingWebrtc.databinding.ActivityCallKotlinBinding
 import com.skh.hkhr.util.IntentUtil
 import com.skh.hkhr.util.NetUtil
 import com.skh.hkhr.util.thread.AppHandler
@@ -29,7 +30,6 @@ import com.theroyalsoft.mydoc.apputil.baseUI.ViewPathAnimator
 import com.theroyalsoft.mydoc.apputil.internet.NetworkUtils
 import com.theroyalsoft.telefarmer.R
 import com.theroyalsoft.telefarmer.TeleFarmerApp
-import com.theroyalsoft.telefarmer.databinding.ActivityCallBinding
 import com.theroyalsoft.telefarmer.utils.AppAudioManager
 import com.theroyalsoft.telefarmer.utils.CallManager
 import com.theroyalsoft.telefarmer.utils.PreOfferAnswerSocket
@@ -58,7 +58,7 @@ import timber.log.Timber
 class CallActivity() : AppCompatActivity() {
     //============================================
 
-    private lateinit var binding: ActivityCallBinding
+    private lateinit var binding: ActivityCallKotlinBinding
     private val viewModel: CallViewModel by viewModels()
     //============================================
     private var mLocalSurfaceView: SurfaceViewRenderer? = null
@@ -80,21 +80,21 @@ class CallActivity() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCallBinding.inflate(layoutInflater)
+        binding = ActivityCallKotlinBinding.inflate(layoutInflater)
         setContentView(binding.root)
         activity = this
 
-        binding.ll.tvSearchDoctor.typeWrite(this, "Calling........",200L)
-        callManager = CallManager()
-        callManager?.initUi(mPeerConnectionObserver)
-
-        //=======================================================================
-        mLocalSurfaceView = findViewById(R.id.LocalSurfaceView)
-        mRemoteSurfaceView = findViewById(R.id.RemoteSurfaceView)
-//        ViewTextUtil.setVisibility(binding.llDrag, View.GONE)
-        appAudioManager = AppAudioManager(isVideoCall, this, binding.fbLoudSpeaker)
-        callUISetup()
-        RTCSignalManager.setSignalEventListener(mICallUiListener)
+//        binding.ll.tvSearchDoctor.typeWrite(this, "Calling........",200L)
+//        callManager = CallManager()
+//        callManager?.initUi(mPeerConnectionObserver)
+//
+//        //=======================================================================
+//        mLocalSurfaceView = findViewById(R.id.LocalSurfaceView)
+//        mRemoteSurfaceView = findViewById(R.id.RemoteSurfaceView)
+////        ViewTextUtil.setVisibility(binding.llDrag, View.GONE)
+//        appAudioManager = AppAudioManager(isVideoCall, this, binding.fbLoudSpeaker)
+//        callUISetup()
+//        RTCSignalManager.setSignalEventListener(mICallUiListener)
 //
 ////        //=======================================================================
         start()
@@ -219,20 +219,20 @@ class CallActivity() : AppCompatActivity() {
 //        llRoundDashView.setShapeRadiusRatio(radiusRatio1, radiusRatio2, radiusRatio3, radiusRatio4);
 //
 //
-        binding.ll.llCancel.setOnClickListener {
-//            ApiManager.getDoctorCancel() //get doctor apiCall cancel
-            forceCloseUi(isRinging)
-            //                stopPulse();
-            closeCallUi()
-//            ApiManager.sendApiLog(
-//                AppKeyLog.UI_HOME,
-//                AppKeyLog.CLOSE_CALL_UI,
-//                AppKeyLog.NA,
-//                AppKeyLog.NA,
-//                AppKeyLog.NA
-//            )
-//            FirebaseAnalyticsManager.logEventWithNumber(AppKey.EVENT_CALL_HANGUP_CLICK)
-        }
+//        binding.ll.llCancel.setOnClickListener {
+////            ApiManager.getDoctorCancel() //get doctor apiCall cancel
+//            forceCloseUi(isRinging)
+//            //                stopPulse();
+//            closeCallUi()
+////            ApiManager.sendApiLog(
+////                AppKeyLog.UI_HOME,
+////                AppKeyLog.CLOSE_CALL_UI,
+////                AppKeyLog.NA,
+////                AppKeyLog.NA,
+////                AppKeyLog.NA
+////            )
+////            FirebaseAnalyticsManager.logEventWithNumber(AppKey.EVENT_CALL_HANGUP_CLICK)
+//        }
 
 
         /*ImageLode.lodeImage(imgVDoctor1, url);
@@ -398,7 +398,7 @@ class CallActivity() : AppCompatActivity() {
     private fun setDoctorName(name: String, isPushCall: Boolean) {
         runOnUiThread {
            // binding.ll.tvSelectedDoctor.text = name
-            if (!isPushCall) {
+           /* if (!isPushCall) {
                 binding.ll.tvSearchDoctor.text = AppKey.Calling_to + name
             } else {
                 val messageDoctorNotFound =
@@ -412,7 +412,7 @@ class CallActivity() : AppCompatActivity() {
                         getDrawable(R.drawable.ic_mobile_call), null, null, null
                     )
                 }
-            }
+            }*/
             binding.tvDoctorName.text = name
         }
     }
@@ -859,11 +859,11 @@ class CallActivity() : AppCompatActivity() {
 //        )
         closeHandlerConnectingTime()
         runOnUiThread {
-            binding.apply {
-                ViewTextUtil.setVisibility(llDrag, View.VISIBLE)
-                ViewTextUtil.setVisibility(remoteBackground, View.VISIBLE)
-                ViewTextUtil.setVisibility(llCallEnd, View.VISIBLE)
-            }
+//            binding.apply {
+//                ViewTextUtil.setVisibility(llDrag, View.VISIBLE)
+//                ViewTextUtil.setVisibility(remoteBackground, View.VISIBLE)
+//                ViewTextUtil.setVisibility(llCallEnd, View.VISIBLE)
+//            }
         }
         if (isNotIceConnect) {
             startTime = System.currentTimeMillis()

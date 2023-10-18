@@ -6,7 +6,7 @@ object Versions {
     const val gradlePlugin = "4.2.2"
 
     const val kotlin = "1.8.21"
-    const val coreKtx = "1.10.0"
+    const val coreKtx = "1.12.0"
 
     const val appCompat = "1.3.1"
     const val constraintLayout = "2.1.0"
@@ -17,7 +17,7 @@ object Versions {
 
     const val lifecycleVersion = "2.5.1"
 
-    const val material = "1.8.0"
+    const val material = "1.6.1"
 
     const val rxAndroid = "3.0.0"
     const val rxJava = "3.1.0"
@@ -168,11 +168,13 @@ object Libraries {
     val gson = "com.google.code.gson:gson:${Versions.gson}"
     val gsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
     val retrofitRxAdapter = "com.squareup.retrofit2:adapter-rxjava3:${Versions.retrofit}"
+    val retrofit_converter_scalars = "com.squareup.retrofit2:converter-scalars:${Versions.retrofit}"
 
     val circleimageview = "de.hdodenhof:circleimageview:${Versions.circleimageview}"
 
     //Timber
     val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
+    val commonUtil = "com.github.SamiranKumar:common-util-android:1.13"
 
     //DP Lib
     val sdp = "com.intuit.sdp:sdp-android:${Versions.sdpssp}"
@@ -218,6 +220,12 @@ object Libraries {
 
     //logging interceptor
     val loggingInterceptor = "com.github.ihsanbal:LoggingInterceptor:${Versions.loggingInterceptor}"
+
+    val okhttp = "com.squareup.okhttp3:okhttp:4.9.0"
+    val okhttp_logging_interceptor =
+        "com.squareup.okhttp3:logging-interceptor:4.9.0" // http traffic in Log
+    val okhttpprofilerLog = "com.localebro:okhttpprofiler:1.0.8"
+
 }
 
 fun getDate(): String {

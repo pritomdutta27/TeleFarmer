@@ -5,10 +5,11 @@ import static io.socket.client.Socket.EVENT_CONNECT;
 import static io.socket.client.Socket.EVENT_CONNECT_ERROR;
 import static io.socket.client.Socket.EVENT_DISCONNECT;
 
-import com.theroyalsoft.telefarmer.helper.AppKey;
 import com.farmer.primary.network.utils.NullRemoveUtil;
+import com.theroyalsoft.telefarmer.helper.AppKey;
 
 import java.net.URISyntaxException;
+
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -53,7 +54,7 @@ public class SocketManager {
         }
 
         try {
-            String customId = "uuid=" + LocalData.getUserUuid();
+            String customId = "uuid=" + "LocalData.getUserUuid()";
             String devicesId = "deviceId=" + DeviceIDUtil.getDeviceID();
             String query = customId + "&" + devicesId;
 
@@ -146,10 +147,10 @@ public class SocketManager {
 
 
                     Timber.e("socket socketStatus");
-                    String uuid = LocalData.getUserUuid();
+                    String uuid = "LocalData.getUserUuid()";
 
-                    String userName = LocalData.getUserName();
-                    String userMobile = LocalData.getPhoneNumber();
+                    String userName = "LocalData.getUserName()";
+                    String userMobile = "LocalData.getPhoneNumber()";
 
 
                     if (uuid.isEmpty()) {

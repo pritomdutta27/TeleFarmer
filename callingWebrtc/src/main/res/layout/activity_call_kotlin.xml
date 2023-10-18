@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/llMain"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#017be6"
+    android:keepScreenOn="true"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--header Layout-->
+    <RelativeLayout
+        android:id="@+id/rrAppbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/home_header_back"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="111dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <ImageView
+                android:id="@+id/imgCallIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:padding="3dp"
+                android:src="@drawable/ic_audio_call" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/imgCallIcon"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDoctorName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llBottom"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:text=""
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCallDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llBottom"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:text=""
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <!--Remote SurfaceView-->
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/RemoteSurfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rrAppbar" />
+
+    <!--Local SurfaceView-->
+    <LinearLayout
+        android:id="@+id/llDrag"
+        android:layout_width="130dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/rrAppbar"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="top"
+        android:layout_margin="10dp"
+        android:background="@color/colorWhite">
+
+        <org.webrtc.SurfaceViewRenderer
+            android:id="@+id/LocalSurfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp" />
+    </LinearLayout>
+
+    <!--Call Audio Layout-->
+    <RelativeLayout
+        android:id="@+id/rlAudioLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rrAppbar"
+        android:visibility="visible">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_audio_call_bg"
+            android:visibility="visible" />
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/_10dp"
+            android:visibility="gone" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="@dimen/_140dp"
+            android:layout_height="@dimen/_140dp"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="@dimen/_100dp"
+            android:src="@drawable/ic_avatar_patient"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="5dp" />
+
+    </RelativeLayout>
+
+    <!--Call Action Button-->
+    <LinearLayout
+        android:id="@+id/llCallEnd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/_12dp"
+            android:layout_marginEnd="@dimen/_12dp"
+            android:layout_marginBottom="@dimen/_5dp"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="@dimen/_50dp"
+            app:cardElevation="3dp"
+            app:contentPadding="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_20dp"
+                android:paddingTop="@dimen/_5dp"
+                android:paddingEnd="@dimen/_20dp"
+                android:paddingBottom="@dimen/_5dp">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/activity_hang_up_button"
+                    style="@style/incoming_call_activity_fabs_style"
+                    android:layout_weight="1"
+                    android:contentDescription="hang_up_button_text"
+                    android:outlineAmbientShadowColor="@color/white"
+                    android:outlineSpotShadowColor="@color/white"
+                    android:src="@drawable/ic_hang_up_call"
+                    app:backgroundTint="@color/red"
+                    app:borderWidth="0dp"
+                    app:fabSize="mini"
+                    app:tint="@color/colorWhite" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fbVideoOn"
+                    style="@style/incoming_call_activity_fabs_style"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_weight="1"
+                    android:contentDescription="hang_up_button_text"
+                    android:outlineAmbientShadowColor="@color/white"
+                    android:outlineSpotShadowColor="@color/white"
+                    android:src="@drawable/ic_video_camera_on"
+                    android:visibility="gone"
+                    app:backgroundTint="@color/green"
+                    app:borderWidth="0dp"
+                    app:fabSize="mini"
+                    app:tint="@color/colorWhite" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fbMute"
+                    style="@style/incoming_call_activity_fabs_style"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_weight="1"
+                    android:contentDescription="hang_up_button_text"
+                    android:outlineAmbientShadowColor="@color/white"
+                    android:outlineSpotShadowColor="@color/white"
+                    android:src="@drawable/ic_mic_on"
+                    app:backgroundTint="@color/color_app_text_14"
+                    app:borderWidth="0dp"
+                    app:fabSize="mini"
+                    app:tint="@color/colorWhite" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fbCameraRotate"
+                    style="@style/incoming_call_activity_fabs_style"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_weight="1"
+                    android:contentDescription="hang_up_button_text"
+                    android:outlineAmbientShadowColor="@color/white"
+                    android:outlineSpotShadowColor="@color/white"
+                    android:src="@drawable/ic_baseline_flip_camera_ios_24"
+                    android:visibility="gone"
+                    app:backgroundTint="@color/light_blue_600"
+                    app:borderWidth="0dp"
+                    app:fabSize="mini"
+                    app:tint="@color/colorWhite" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fbLoudSpeaker"
+                    style="@style/incoming_call_activity_fabs_style"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_weight="1"
+                    android:contentDescription="hang_up_button_text"
+                    android:outlineAmbientShadowColor="@color/white"
+                    android:outlineSpotShadowColor="@color/white"
+                    android:src="@drawable/ic_loud_speaker_off"
+                    app:backgroundTint="@color/color_draft"
+                    app:borderWidth="0dp"
+                    app:fabSize="mini"
+                    app:tint="@color/colorWhite" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <!--Call Solar UI-->
+    <RelativeLayout
+        android:id="@+id/rlSolarView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:visibility="gone"
+        android:visibility="visible">
+
+
+        <FrameLayout
+            android:id="@+id/llContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:translationZ="200dp"
+            android:visibility="visible">
+
+            <include
+                android:id="@+id/llSolarUi"
+                layout="@layout/fragment_call"
+                android:visibility="visible" />
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -83,6 +83,13 @@ android {
 
 dependencies {
 
+    implementation(project(":assets"))
+    implementation(project(":common"))
+    implementation(project(":model"))
+    implementation(project(":data"))
+    implementation(project(":callingWebrtc"))
+    implementation(project(":socketUtils"))
+
     implementation(KotlinDependencies.coreKtx)
     implementation(AndroidXSupportDependencies.appCompat)
     implementation(AndroidXSupportDependencies.constraintLayout)
@@ -92,6 +99,8 @@ dependencies {
 
     //image round
     implementation(Libraries.circleimageview)
+
+    implementation(Libraries.retrofitMoshiConverter)
 
     implementation(Libraries.sdp)
     implementation(Libraries.ssp)

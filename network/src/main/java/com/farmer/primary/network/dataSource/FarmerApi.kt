@@ -1,11 +1,11 @@
 package com.farmer.primary.network.dataSource
 
+import bio.medico.patient.model.apiResponse.ResponseLogin
+import bio.medico.patient.model.apiResponse.ResponseMetaInfo
 import com.farmer.primary.network.model.doctor.Doctor
-import com.farmer.primary.network.model.doctor.DoctorAvailableResponse
 import com.farmer.primary.network.model.login.LoginOutParams
 import com.farmer.primary.network.model.login.LoginParams
 import com.farmer.primary.network.model.login.LoginResponse
-import com.farmer.primary.network.model.metadata.MetaModel
 import com.farmer.primary.network.model.otp.OtpParams
 import com.farmer.primary.network.model.otp.OtpResponse
 import com.farmer.primary.network.model.profile.ProfileModel
@@ -20,11 +20,11 @@ class FarmerApi @Inject constructor(
     private val apiService: ApiService
 ) {
 
-    suspend fun getMeta(): NetworkResult<Map<String, MetaModel>> {
+    suspend fun getMeta(): NetworkResult<ResponseMetaInfo> {
         return apiService.fetchMetaData()
     }
 
-    suspend operator fun invoke(params: LoginParams): NetworkResult<LoginResponse> {
+    suspend operator fun invoke(params: LoginParams): NetworkResult<ResponseLogin> {
         return apiService.loginUser(params)
     }
 

@@ -1,0 +1,442 @@
+<resources>
+    <string name="app_name">Medico</string>
+
+    <string name="demo_text_short"></string>
+    <string name="demo_text_long"></string>
+
+    <string name="facebook_app_id">1429915900809172</string>
+    <string name="fb_login_protocol_scheme">fb1429915900809172</string>
+    <string name="facebook_client_token">ca58f30fb0a5e6136bbb9dc6e8e17a35</string>
+
+
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="coming_soon_txt">Coming soon!</string>
+    <string name="default_notification_channel_id">1234</string>
+    <string name="hello">Hello,</string>
+    <string name="hello_bn">হ্যালো,</string>
+    <string name="remaining">Remaining</string>
+    <string name="remaining_bn">বাকি আছে</string>
+    <string name="call_remaining_bn">৯৯ কল</string>
+    <string name="call_remaining">99 call</string>
+    <string name="recharge_account">Recharge Account</string>
+    <string name="recharge_account_bn">রিচার্জ অ্যাকাউন্ট</string>
+    <string name="view_prescription">View Prescription</string>
+    <string name="view_prescription_bn">প্রেসক্রিপশন দেখুন</string>
+    <string name="view_call_history">View Call History</string>
+    <string name="view_call_history_bn">কল হিস্টরি দেখুন</string>
+    <string name="upload_lab_report">Upload Lab Report</string>
+    <string name="upload_lab_report_bn">ল্যাব রিপোর্ট আপলোড করুন</string>
+
+
+    <string name="health_package">Buy Health Package</string>
+    <string name="health_package_bn">হেলথ প্যাকেজ কিনুন</string>
+    <string name="subscribe_to_the">Subscribe to the best health plans</string>
+    <string name="subscribe_to_the_bn">সেরা স্বাস্থ্য পরিকল্পনা সাবস্ক্রাইব করুন</string>
+
+    <string name="buy_medicine">Buy Medicine</string>
+    <string name="buy_medicine_bn">ওষুধ কিনুন</string>
+    <string name="buy_medicine_anytime">Buy medicine anytime from any where</string>
+    <string name="buy_medicine_anytime_bn">যে কোন জায়গায় যে কোন সময় ঔষধ কিনুন</string>
+
+    <string name="lab_test">Lab Test</string>
+    <string name="lab_test_bn">ল্যাব টেস্ট</string>
+    <string name="book_for_test_amp"><![CDATA[Book for test & checkup]]></string>
+    <string name="book_for_test_amp_bn">পরীক্ষা এবং চেকআপের জন্য বুক করুন</string>
+
+    <string name="call_an_ambulance">Call an Ambulance</string>
+    <string name="call_an_ambulance_bn">অ্যাম্বুলেন্স কল করুন</string>
+
+    <string name="call_for_nursing_care">Call for nursing care</string>
+    <string name="call_for_nursing_care_bn">নার্সিং যত্নের জন্য কল করুন</string>
+
+    <string name="_24_7_service_all_over_the_country">24/7 service all over the country</string>
+    <string name="_24_7_service_all_over_the_country_bn">সারা দেশে 24/7 পরিষেবা</string>
+
+    <string name="call_for_home_physiotherapy">Home Physiotherapy</string>
+    <string name="call_for_home_physiotherapy_bn">হোম ফিজিওথেরাপির</string>
+
+
+    <string name="add_lab_test">Add Lab Test</string>
+    <string name="add_lab_test_bn">ল্যাব পরীক্ষা যোগ করুন</string>
+
+    <string name="common_health_conditions">Common Health Conditions</string>
+    <string name="common_health_conditions_bn">সাধারণ স্বাস্থ্যের অবস্থা</string>
+    <string name="signout">Signout</string>
+    <string name="signout_bn">সাইন আউট</string>
+    <string name="back">Back</string>
+    <string name="back_bn">পিছনে</string>
+    <string name="prescription">Prescription</string>
+    <string name="prescription_bn">প্রেসক্রিপশন</string>
+    <string name="call_history">Call History</string>
+    <string name="call_history_bn">কল হিস্টরি</string>
+    <string name="lab_report">Lab Report</string>
+    <string name="lab_report_bn">ল্যাব রিপোর্ট</string>
+    <string name="lab_test_report">Lab Test Report</string>
+
+
+
+    <string name="trusted_device_list">Trusted Device List</string>
+    <string name="trusted_device_list_bn">ট্রাস্টেড ডিভাইস লিস্ট </string>
+
+
+    <string name="prescription_upload">Upload Prescription</string>
+    <string name="prescription_upload_bn">আপলোড প্রেসক্রিপশন</string>
+
+    <string name="image_upload">Image Upload</string>
+    <string name="image_upload_bn">ইমেজ আপলোড</string>
+    <string name="my_details">My Details</string>
+    <string name="my_details_bn">মাই ডিটেইলস</string>
+
+    <string name="patient_name">Patient Name</string>
+    <string name="patient_name_bn">রোগীর নাম</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="date_of_birth_bn">জন্ম তারিখ</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="gender_bn">লিঙ্গ</string>
+    <string name="weight_kg">Weight(kg)</string>
+    <string name="weight_kg_bn">ওজন (কেজি)</string>
+    <string name="height_ft">Height(ft)</string>
+    <string name="height_ft_bn">উচ্চতা (ফুট)</string>
+    <string name="emergency_contact">Emergency Contact</string>
+    <string name="emergency_contact_bn">জরুরী যোগাযোগ</string>
+
+    <string name="write_details">Write Details</string>
+    <string name="write_details_bn">বিস্তারিত লিখুন</string>
+    <string name="current_medication">Current Medication</string>
+    <string name="current_medication_bn">চলমান ঔষধ</string>
+
+    <string name="previous_surgery">Previous Surgery</string>
+    <string name="previous_prescription">Previous Prescription</string>
+    <string name="previous_prescription_bn">পূর্ববর্তী প্রেসক্রিপশন</string>
+    <string name="previous_surgery_bn">পূর্ববর্তী সার্জারি</string>
+
+    <string name="remaining_call">Remaining Call</string>
+    <string name="remaining_call_bn">রিমেনিং কল</string>
+    <string name="payment">Payment</string>
+    <string name="home">Home</string>
+    <string name="my_health">My Health</string>
+    <string name="payment_bn">পেমেন্ট</string>
+    <string name="valid_till">Valid Till</string>
+    <string name="valid_till_en">ভ্যালিড আপ টু</string>
+    <string name="active_pack">Current Pack</string>
+    <string name="active_pack_bn">একটিভ প্যাক</string>
+    <string name="change_pack">Price &amp; Package</string>
+    <string name="change_pack_bn">প্যাক</string>
+    <string name="coupons_amp_offer_codes"><![CDATA[Coupons & Offer Codes]]></string>
+    <string name="coupons_amp_offer_codes_bn">কুপন এবং অফার কোড</string>
+    <string name="purchase_history">Purchase History</string>
+    <string name="purchase_history_bn">ক্রয় হিস্টরি</string>
+
+
+    <string name="sign_in">Enter your phone number</string>
+    <string name="sign_in_title_bd">আপনার ফোন নম্বর লিখুন</string>
+    <string name="sign_in_subTitle">Please confirm your country code and \nenter your mobile number</string>
+    <string name="sign_in_subTitle_bd">আপনার দেশের কোড নিশ্চিত করুন এবং \nআপনার মোবাইল নম্বর লিখুন</string>
+
+    <string name="create_profile_subTitle">Please enter your name and \nenter your date of birth</string>
+    <string name="create_profile_subTitle_bd">আপনার নাম লিখুন এবং আপনার জন্ম তারিখ লিখুন</string>
+
+    <string name="mobile_number">Mobile Number</string>
+    <string name="mobile_number_bn">মোবাইল নম্বর</string>
+    <string name="password">Password</string>
+    <string name="password_bn">পাসওয়ার্ড</string>
+    <string name="forgot">Forgot?</string>
+    <string name="forgot_bn">পাসওয়ার্ড ভুলে গেছেন?</string>
+
+    <string name="sign_up">Submit</string>
+    <string name="sign_up_bn">সাবমিট</string>
+
+    <string name="sign_up_subTitle">Create Profile</string>
+    <string name="sign_up_subTitleBd">প্রোফাইল তৈরি করুন</string>
+
+    <string name="new_to_medico">New to Medico?</string>
+    <string name="new_to_medico_bn">মেডিকোতে নতুন?</string>
+    <string name="already_to_medico">Already On Medico?</string>
+    <string name="already_to_medico_bn">আগে থেকেই অ্যাকাউন্ট আছে?</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="enter_your_name_bn">নাম লিখুন</string>
+
+    <string name="forget_password">Forget Password</string>
+    <string name="forget_password_bn">পাসওয়ার্ড ভুলে গেছেন</string>
+    <string name="if_you_forgot_password_nreset_using_registered_mobile_number">If you forgot password \nreset using registered mobile number</string>
+    <string name="if_you_forgot_password_nreset_using_registered_mobile_number_bn">নিবন্ধিত মোবাইল নম্বর ব্যবহার করে \nপাসওয়ার্ড রিসেট করুন</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="send_otp_bn">ওটিপি পাঠান</string>
+
+    <string name="otp_verification">OTP Verification</string>
+    <string name="otp_verification_bn">ওটিপি ভেরিফিকেশন</string>
+
+    <string name="otp_verification_subtitle">Enter the OTP sent to </string>
+    <string name="otp_verification_subtitle_bn">পাঠানো ওটিপি লিখুন </string>
+
+    <string name="verify">Verify &amp; Continue</string>
+    <string name="verify_bn">ভেরিফাই এবং পরবর্তীতে যান</string>
+
+    <string name="set_new_password">Set new password</string>
+    <string name="set_new_password_bn">নতুন পাসওয়ার্ড সেট করুন</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="confirm_password_bn">পাসওয়ার্ড নিশ্চিত করুন</string>
+    <string name="change">Change</string>
+    <string name="change_bn">পরিবর্তন করুন</string>
+
+    <string name="home_bn">হোম</string>
+    <string name="my_health_bn">আমার স্বাস্থ্য</string>
+    <string name="yes">Yes</string>
+    <string name="yes_bn">হ্যাঁ</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancel_bn">বাতিল করুন</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="are_you_sure_bn">তুমি কি নিশ্চিত?</string>
+
+    <string name="are_you_cancel">Do you want to Cancel?</string>
+    <string name="are_you_cancel_bn">আপনি কি বাতিল করতে চান?</string>
+
+    <string name="are_you_unsub">Do you want to Unsubscribe?</string>
+    <string name="are_you_unsub_bn">আপনি কি আনসাবস্ক্রাইব করতে চান?</string>
+
+    <string name="unsub">Unsubscribe</string>
+    <string name="unsub_bn">আনসাবস্ক্রাইব</string>
+
+
+    <string name="delete">Delete</string>
+    <string name="delete_bn">মুছে ফেলুন</string>
+
+    <string name="ok">OK</string>
+    <string name="ok_bn">ওকে</string>
+
+
+    <string name="continue_text">Continue</string>
+    <string name="continue_text_bn">এগিয়ে যান</string>
+
+    <string name="update">UPDATE</string>
+    <string name="update_bn">আপডেট</string>
+
+    <string name="chat_now">Chat Now</string>
+    <string name="chat_now_bn">চ্যাট করুন</string>
+    <string name="audio_call">Audio Call</string>
+    <string name="audio_call_bn">অডিও কল</string>
+    <string name="video_call">Video Call</string>
+    <string name="video_call_bn">ভিডিও কল</string>
+
+    <string name="call_now_en">Call Now</string>
+    <string name="call_now_bn">কল করুন</string>
+
+    <string name="call_en">Voice Call</string>
+    <string name="call_bn">ভয়েস কল</string>
+
+    <string name="without_internet_en">Using mobile network</string>
+    <string name="without_internet_bn">মোবাইল নেটওয়ার্ক ব্যবহার করে</string>
+
+    <string name="your_next_follow_up">Next Follow up</string>
+    <string name="your_next_follow_up_bn">পরবর্তী ফলো আপ</string>
+    <string name="pending_medicine">Pending Medicine</string>
+    <string name="pending_medicine_bn">পেন্ডিং মেডিসিন</string>
+    <string name="order_online">Order Online</string>
+    <string name="order_online_bn">অনলাইন অর্ডার</string>
+    <string name="pending_investigation">Pending Investigation</string>
+    <string name="pending_investigation_bn">পেন্ডিং ইনভেস্টিগেশন</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="delivery_address_bn">সরবরাহের ঠিকানা</string>
+    <string name="delivery_type">Delivery Type</string>
+    <string name="delivery_type_bn">সরবরাহের টাইপ</string>
+
+    <string name="partners_diagnostic_center">Partners Diagnostic Center</string>
+    <string name="partners_diagnostic_center_bn">পার্টনার ডায়াগনস্টিক সেন্টার</string>
+    <string name="order_now">Confirm Order</string>
+    <string name="order_history">Order History</string>
+    <string name="order_history_bn">অর্ডার হিস্ট্রি</string>
+    <string name="order_now_bn">অর্ডার কনফার্ম করুন</string>
+    <string name="partners_pharmacy">Partners Pharmacy</string>
+    <string name="partners_pharmacy_bn">পার্টনার ফার্মেসি</string>
+    <string name="order_details_bn">অর্ডার বিবরণ</string>
+    <string name="days">Days</string>
+    <string name="package_price">Price &amp; Package</string>
+    <string name="package_price_bn">প্যাকেজ এবং মূল্য</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="you_are_subscribed_user">You are subscribed user</string>
+    <string name="you_are_subscribed_user_bn">আপনি একজন নিবন্ধিত গ্রাহক</string>
+
+
+    <string name="close">Close</string>
+    <string name="close_bn">বন্ধ</string>
+    <string name="done_bn">সম্পন্ন</string>
+    <string name="done">Done</string>
+    <string name="add_more">Add more</string>
+    <string name="add_more_bn">আরো যোগ করুন</string>
+    <string name="write_here_bn">এখানে লিখুন</string>
+    <string name="new_item_added">New Item Added</string>
+    <string name="new_item_added_bn">নতুন আইটেম যোগ হয়েছে</string>
+    <string name="chat">Chat</string>
+    <string name="chat_bn">চ্যাট</string>
+    <string name="type_a_message">Type a message</string>
+    <string name="type_a_message_bn">বার্তা টাইপ করুন</string>
+    <string name="life_coverage">Life Coverage</string>
+    <string name="add_medicine">Add your prescription here</string>
+    <string name="add_medicine_bn">প্রেসক্রিপশন যোগ করুন</string>
+    <string name="write_notes">Write Notes</string>
+    <string name="write_notes_bn">নোট লিখুন</string>
+
+
+    <string name="set_reminder">Set Reminder</string>
+    <string name="set_reminder_bn">রিমাইন্ডার সেট করুন</string>
+    <string name="add_time">Add Time</string>
+    <string name="add_time_bn">সময় যোগ করুন</string>
+    <string name="medicine_reminder">Medicine Reminder</string>
+    <string name="medicine_reminder_bn">মেডিসিন রিমাইন্ডার</string>
+    <string name="discount">Discount Partners</string>
+    <string name="discount_bn">ডিসকাউন্ট পার্টনার</string>
+
+    <string name="discount_barcode_scan">Scan your code for eligibility</string>
+
+    <string name="add_reminder">Add Reminder</string>
+    <string name="add_reminder_bn">রিমাইন্ডার যোগ করুন</string>
+
+
+    <string name="task_title">My Notes</string>
+    <string name="add_task_title">Add new reminderModel</string>
+    <string name="edit_task_title">Edit reminderModel</string>
+    <string name="btn_done">Done</string>
+    <string name="edit_title">Title</string>
+    <string name="edit_desc">Note</string>
+    <string name="edit_pwd">Password</string>
+    <string name="toolbar_pwd">Enter Password</string>
+    <string name="encrypt">Lock reminderModel</string>
+    <string name="item_note">View reminderModel</string>
+    <string name="empty_notes">Once you add some reminder  \nyou will find it here</string>
+    <string name="empty_notes_bn">আপনার বাছাইকৃত রিমাইন্ডার যোগ করলে, এখানে খুঁজে পাবেন।</string>
+
+    <string name="pwd_title">Enter password</string>
+    <string name="error_pwd">Incorrect password</string>
+    <string name="today_s_medicine">Today\'s Medicine</string>
+    <string name="today_s_medicine_bn">আজকের ঔষধ</string>
+    <string name="medicine_name">Medicine Name</string>
+    <string name="medicine_name_bn">ওষুধের নাম</string>
+    <string name="medicine">Medicine</string>
+    <string name="medicine_bn">ঔষধ</string>
+    <string name="dosage">Dosage</string>
+    <string name="dosage_bn">ডোজ</string>
+    <string name="instruction">Instruction</string>
+    <string name="instruction_bn">নির্দেশাবলী</string>
+    <string name="start_date">Start Date</string>
+    <string name="start_date_bn">শুরুর তারিখ</string>
+    <string name="number_of_days">Number of Days</string>
+    <string name="number_of_days_bn">দিনের সংখ্যা</string>
+    <string name="pick_date">Pick date</string>
+    <string name="pick_date_bn">তারিখ বাছুন</string>
+    <string name="start_time">Start Time</string>
+    <string name="start_time_bn">শুরুর সময়</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="payment_method_bn">মূল্যপরিশোধ পদ্ধতি</string>
+
+    <string name="create_free_account">Create Free Account</string>
+    <string name="create_free_account_bn">ফ্রি রেজিস্ট্রেশন করুন</string>
+    <string name="or">OR</string>
+    <string name="or_bn">অথবা</string>
+
+
+    <!--SpecializedDoctor-->
+
+    <string name="bannerTitle">Schedule YOur Appointment With</string>
+    <string name="bannerTitleBn">বিশেষজ্ঞ ডাক্তারের</string>
+
+    <string name="bannerSubTitle">Our Expert Doctor</string>
+    <string name="bannerSubTitleBn">এ্যাপয়েন্টমেন্ট পেতে এখানে</string>
+
+    <string name="bookNow">Book Now</string>
+    <string name="bookNowBn">বুক করুন</string>
+
+
+    <!-- medico://home -->
+    <!--deep links-->
+    <string name="scheme_medico">medico</string>
+    <string name="deeplink_home">home</string>
+    <string name="deeplink_payment">payment</string> <!-- medico://home/payment -->
+    <string name="deeplink_my_health">my-health</string>   <!-- medico://home/my-health -->
+    <string name="deeplink_prescription">prescription</string>
+    <string name="deeplink_call_history">call-history</string>
+    <string name="deeplink_my_details">my-details</string>
+    <string name="deeplink_upload_prescription">upload-prescription</string>
+    <string name="deeplink_upload_lab_report">upload-lab-report</string>
+    <string name="deeplink_current_medication">current-medication</string>
+    <string name="deeplink_previous_surgery">previous-surgery</string>
+    <string name="deeplink_medicine_reminder">medicine-reminder</string>
+    <string name="deeplink_add_medicine_reminder">add-medicine-reminder</string>
+    <string name="deeplink_chat">chat</string>
+    <string name="deeplink_discount">discount</string>
+    <string name="deeplink_specialized_doctor">specialized_doctor</string>
+
+
+    <string name="deeplink_buy_medicine">buy_medicine</string> <!-- medico://home/buy_medicine -->
+    <string name="deeplink_call_ambulance">call_ambulance</string> <!-- medico://home/call_ambulance -->
+    <string name="deeplink_call_nurse">call_nurse</string> <!-- medico://home/call_nurse -->
+    <string name="deeplink_call_physiotherapy">call_physiotherapy</string> <!-- medico://home/call_physiotherapy -->
+    <!--deep links-->
+
+
+    <string name="checkbox"><p>I have read and agree to the <span style="color: #008080;">Terms Conditions, Privacy Policy</span> and <span style="color: #008080;">Return/Refund Policy</span></p></string>
+    <string name="checkbox_bn"><p>আমি পড়েছি এবং এর সাথে একমত <span style="color: #008080;">শর্তাবলী, গোপনীয়তা নীতি</span> and <span style="color: #008080;">রিটার্ন/ফেরত নীতি</span></p></string>
+    <string name="order_again">Order Again</string>
+    <string name="order_again_bn">আবার অর্ডার করুন</string>
+    <string name="search_medicine">Search Medicine</string>
+    <string name="search_medicine_bn">ওষুধ অনুসন্ধান করুন</string>
+    <string name="house_apartment_flat">House/Apartment/Flat*</string>
+    <string name="house_apartment_flat_bn">বাড়ি/অ্যাপার্টমেন্ট/ফ্ল্যাট*</string>
+    <string name="road">Road*</string>
+    <string name="road_bn">রাস্তা*</string>
+    <string name="area">Area*</string>
+    <string name="area_bn">এলাকা*</string>
+    <string name="cash_on_delivery">Cash on delivery</string>
+    <string name="cash_on_delivery_bn">নগদ মূল্যে পরিশোধ</string>
+    <string name="delivery_charge">Delivery Charge :</string>
+    <string name="delivery_charge_bn">ডেলিভারি চার্জ :</string>
+    <string name="sub_total_including_vat">Sub - Total :</string>
+    <string name="sub_total_including_vat_bn">মোট - :</string>
+    <string name="total">Total</string>
+    <string name="total_bn">সর্বমোট</string>
+    <string name="inc_vat"></string>
+    <string name="inc_vat_bn"></string>
+    <string name="please_add_medicine_from_the">Please add medicine from the</string>
+    <string name="please_add_medicine_from_the_bn">অনুগ্রহ করে ওষুধ যোগ করুন</string>
+    <string name="search_bar">search bar</string>
+    <string name="search_bar_bn">সার্চ অপশন থেকে</string>
+
+    <string name="purchases_medicine_by_List">Purchase Medicine by List</string>
+    <string name="purchases_medicine_by_List_bd">তালিকা অনুযায়ী ঔষধ ক্রয়</string>
+    <string name="purchases_medicine_by_prescription">Purchase Medicine by Prescription</string>
+    <string name="purchases_medicine_by_prescription_bd">প্রেসক্রিপশন দ্বারা ঔষধ ক্রয়</string>
+
+    <string name="purchases_medicine_by_medico_prescription">Purchase Medicine by Medico Prescription</string>
+    <string name="purchases_medicine_by_medico_prescription_bd">মেডিকো প্রেসক্রিপশন দ্বারা ঔষধ ক্রয়</string>
+
+    <string name="headerTextEn">Are you sure?</string>
+    <string name="headerTextBn">আপনি কি নিশ্চিত?</string>
+    <string name="messageTextEn">Do you want to Logout?</string>
+    <string name="messageTextBn">আপনি লগআউট করতে চান?</string>
+    <string name="positiveTextEn">Logout</string>
+    <string name="positiveTextBn">লগআউট</string>
+    <string name="negativeTextEn">No</string>
+    <string name="negativeTextBn">না</string>
+
+    <string name="network_txt">No Connection</string>
+    <string name="no_data_found">No data found</string>
+    <string name="no_data_found_bn">কোন তথ্য পাওয়া যায়নি</string>
+
+    <!--medico://home
+    medico://home/payment
+    medico://home/my-health
+    medico://prescription
+    medico://call-history
+    medico://my-details
+    medico://upload-prescription
+    medico://upload-lab-report
+    medico://current-medication
+    medico://previous-surgery
+    medico://medicine-reminder
+    medico://add-medicine-reminder
+    medico://chat
+    medico://discount
+-->
+</resources>

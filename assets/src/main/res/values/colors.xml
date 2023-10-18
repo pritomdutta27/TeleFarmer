@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorAccent">@color/color_status</color>
+    <color name="colorAuthBd">#ECF3F7</color>
+    <color name="colorCardAuthBd">#F3F3F3</color>
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="whiteBG">#79FFFFFF</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="black600">#8F000000</color>
+    <color name="black80">#CD000000</color>
+    <color name="redDelete">#FFA7A7</color>
+
+    <color name="color_others_chat_message_bg">#FF018786</color>
+    <color name="color_my_chat_message_bg">#FF039BE5</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhite_50">#caffffff</color>
+
+    <color name="green">#00B37A</color>
+    <color name="red">#E84949</color>
+    <color name="colorRed">#DA0303</color>
+    <color name="color_app_bg">#ECF3F7</color>
+
+    <color name="color_app_1">#262C3D</color>
+
+    <color name="color_app_text_4">#4F5F85</color>
+    <color name="color_app_text_5">#465353</color>
+    <color name="color_app_text_6">#707070</color>
+
+    <color name="color_app_text_11">#0098C9</color>
+    <color name="color_app_text_12">#00C2BB</color>
+    <color name="color_app_text_13">#45B47C</color>
+    <color name="color_app_text_14">#F69888</color>
+
+    <color name="color_app_text_call_title">#3E3E3E</color>
+    <color name="color_app_text_call">#3E3E3E</color>
+
+    <color name="color_app_auth_title">#017be6</color>
+
+    <color name="colorTextTittle">#EE171717</color>
+
+    <color name="color_pic_border">#FFF</color>
+
+    <color name="color_draft">#F6CE88</color>
+    <color name="color_cancel">#E94242</color>
+
+
+    <color name="transparent">#00000000</color>
+    <color name="colorGray">#E3E3E3</color>
+
+    <!--bottom_nav_color-->
+    <color name="nav_text_color">#6D6D6D</color>
+
+    <color name="app_nav1">#fff</color>
+    <color name="app_nav">#fff</color>
+    <color name="color_line_break">#74EFF0F1</color>
+    <color name="color_status">#0B76C0</color>
+    <color name="color_horizontal_line">#ECECEC</color>
+    <color name="color_call_bg">#0069B1</color>
+    <color name="color_app">#017BE6</color>
+    <color name="color_app_text_15_grey">#B9017BE6</color>
+    <color name="color_app_text_16">#F9A940</color>
+    <color name="color_app_text_17">#333333</color>
+    <color name="color_app_text_17_grey">#AD333333</color>
+    <color name="color_app_text_18">#24BBB7</color>
+    <color name="color_app_text_19">#3C9AEC</color>
+    <color name="color_app_text_20">#DBFBEB</color>
+    <color name="color_app_text_21">#E9F0FF</color>
+    <color name="color_app_text_27">#000000</color>
+
+    <color name="chatBGReceipt">#C4C4C4</color>
+    <color name="chatTextReceipt">#062743</color>
+
+    <color name="chatTimeBg">#95062743</color>
+
+    <color name="et_textColor">#455B6A</color>
+    <color name="et_textColorHint">#9C455B6A</color>
+
+    <color name="grey">#7a7a7a</color>
+    <color name="lightGrey">#aaaaaa</color>
+    <color name="veryLightGrey">#f0f0f0</color>
+    <color name="purple">#7d64e6</color>
+    <color name="yellow">#ffee00</color>
+
+    <color name="bg_layout">#ebebeb</color>
+    <color name="layout_title">#212121</color>
+    <color name="layout_item_desc">#2a2a2a</color>
+    <color name="fab_color">#4285f4</color>
+    <color name="btn_done_color">#1a73e8</color>
+    <color name="line">#40000000</color>
+    <color name="edit_title">#757575</color>
+    <color name="delete_tine">#40212121</color>
+    <color name="bg_lock">#99000000</color>
+    <color name="color_app_text_22">#FF8888</color>
+    <color name="color_app_text_23">#FFE4E4</color>
+    <color name="color_app_text_24">#1F754A</color>
+    <color name="color_app_text_25">#597DD1</color>
+
+    <color name="color_purple">#7B64F3</color>
+    <color name="color_red_1">#F44336</color>
+    <color name="colorYellow">#F9A02D</color>
+
+</resources>

@@ -4,12 +4,13 @@ import android.util.Log;
 
 import com.farmer.primary.network.model.metadata.MetaModel;
 import com.farmer.primary.network.model.metadata.TurnAuth;
-import com.farmer.primary.network.repositorys.metadata.ResponseMetaInfo;
 
 import org.webrtc.PeerConnection;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//import bio.medico.patient.data.local.LocalData;
 
 /**
  * Created by Pritom Dutta on 5/8/23.
@@ -43,20 +44,20 @@ public class IceServerUtils {
     }
 
     //==================================================================================================
-    public static List<PeerConnection.IceServer> getIceServersMetadata() {
-        MetaModel metaData = LocalData.getMetaInfoMetaData();
-        Log.e("PeerConnectionMeta", "getIceServersMetadata: "+metaData.toString() );
-
-        if (metaData == null) {
-            return new ArrayList<>();
-        }
-        TurnAuth turnAuth = metaData.getTurnAuth();
-
-        String userName = turnAuth.getUser();
-        String password = turnAuth.getPassword();
-
-        return getPeerConnectionIceServer(metaData.getStunServer(), metaData.getTurnServer(), userName, password);
-    }
+//    public static List<PeerConnection.IceServer> getIceServersMetadata() {
+//        M metaData = LocalData.getMetaInfoMetaData();
+//        Log.e("PeerConnectionMeta", "getIceServersMetadata: "+metaData.toString() );
+//
+//        if (metaData == null) {
+//            return new ArrayList<>();
+//        }
+//        TurnAuth turnAuth = metaData.getTurnAuth();
+//
+//        String userName = turnAuth.getUser();
+//        String password = turnAuth.getPassword();
+//
+//        return getPeerConnectionIceServer(metaData.getStunServer(), metaData.getTurnServer(), userName, password);
+//    }
 
     //==================================================================================================
     public static List<PeerConnection.IceServer> getIceServersXirsys() {

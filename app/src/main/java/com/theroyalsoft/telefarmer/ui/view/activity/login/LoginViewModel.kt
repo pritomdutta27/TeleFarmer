@@ -2,6 +2,7 @@ package com.theroyalsoft.telefarmer.ui.view.activity.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import bio.medico.patient.model.apiResponse.ResponseLogin
 import com.farmer.primary.network.model.login.LoginParams
 import com.farmer.primary.network.model.login.LoginResponse
 import com.farmer.primary.network.repositorys.login.LoginRepository
@@ -22,10 +23,10 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(private val repository: LoginRepository): ViewModel() {
 
     private val loginStateFlow by lazy {
-        MutableSharedFlow<LoginResponse>()
+        MutableSharedFlow<ResponseLogin>()
     }
 
-    val _loginStateFlow: SharedFlow<LoginResponse> = loginStateFlow
+    val _loginStateFlow: SharedFlow<ResponseLogin> = loginStateFlow
 
     private val errorFlow: MutableSharedFlow<String> = MutableSharedFlow()
     val _errorFlow: SharedFlow<String> = errorFlow

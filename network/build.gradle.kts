@@ -69,6 +69,8 @@ dependencies {
 
     implementation("com.jakewharton.timber:timber:4.7.1")
 
+    implementation(project(":model"))
+
     //Test Library
     testImplementation (TestingDependencies.junit)
 //    androidTestImplementation (TestingDependencies.ext_jUnit_lib)

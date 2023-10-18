@@ -1,7 +1,8 @@
 package com.theroyalsoft.telefarmer.model;
 
 import com.skh.hkhr.util.NullRemoveUtil;
-import com.theroyalsoft.telefarmer.utils.LocalData;
+
+//import bio.medico.patient.data.local.LocalData;
 
 /**
  * Created by Pritom Dutta on 5/8/23.
@@ -89,7 +90,7 @@ public class ResponseSingleDoctor {
         }
 
         public String getImage() {
-            return LocalData.getImgBaseUrl() + NullRemoveUtil.getNotNull(image);
+            return "LocalData.getImgBaseUrl()" + NullRemoveUtil.getNotNull(image);
         }
 
         public String getUuid() {

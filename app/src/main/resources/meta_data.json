@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "baseUrl": "https://arthik.io/",
+    "apiBaseUrl": "https://api.farmer.arthik.io",
+    "redirectAfterbilling": "https://arthik.io/",
+    "imgBaseUrl": "https://cms.farmer.arthik.io/",
+    "imageUploadBaseUrl": "https://cms.farmer.arthik.io/",
+    "socketBaseUrl": "https://socket.arthik.io",
+    "doctorBaseUrl": "https://doctor.farmer.arthik.io/",
+    "turnServer": [
+      "turn:getcoturn.apigate.pro:3478",
+      "turn:getcoturn.apigate.pro:3479",
+      "turn:getcoturn.apigate.pro:5349",
+      "turn:getcoturn.apigate.pro:5350"
+    ],
+    "turnAuth": {
+      "user": "root",
+      "password": "live@#01"
+    },
+    "stunServer": [
+      "stun:getcoturn.apigate.pro"
+    ],
+    "logWriteInfo": {
+      "api": "http://log.mydoc.bio/api/v1/log",
+      "accesstoken": "1pake4mh5ln64h5t26kpvm3iri"
+    },
+    "xmppInfo": {
+      "xmppDomain": "xmpp.mydoc.pro",
+      "apiBaseUrl": "http://xmpp.apigate.pro:1988/api/messages/",
+      "c2sPort": 5222,
+      "wsPort": 5280,
+      "bosPort": 5280
+    },
+    "chatUrl": "https://chat.mydoc.bio",
+    "token": "11111111111111111111111111",
+    "user": "api",
+    "password": "123456789",
+    "title": "no title",
+    "description": "NA",
+    "appVersion": 40,
+    "apiVersion": 2,
+    "xmpp": false,
+    "socket": true,
+    "playstoreLink": "https://play.google.com/store/apps/details?id=bio.medico.patient",
+    "instructionsLink": "https://patient.theroyalsoft.com/instructions",
+    "medicineDeliveryCharge": 600
+  }
+}

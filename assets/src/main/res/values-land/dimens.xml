@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="call_hangup_margin">5dp</dimen>
+</resources>

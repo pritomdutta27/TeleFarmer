@@ -1,0 +1,14 @@
+<resources>
+    <declare-styleable name="FullscreenAttrs">
+        <attr name="fullscreenBackgroundColor" format="color" />
+        <attr name="fullscreenTextColor" format="color" />
+    </declare-styleable>
+
+    <!-- AndroidAgo -->
+    <declare-styleable name="RelativeTimeTextView">
+        <attr name="relativeTimePrefix" format="string" />
+        <attr name="relativeTimeSuffix" format="string" />
+        <attr name="referenceTime" format="string" />
+    </declare-styleable>
+
+</resources>

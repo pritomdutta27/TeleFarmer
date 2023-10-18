@@ -1,15 +1,13 @@
 package com.farmer.primary.network.dataSource
 
+import bio.medico.patient.model.apiResponse.ResponseLogin
+import bio.medico.patient.model.apiResponse.ResponseMetaInfo
 import com.farmer.primary.network.model.doctor.Doctor
-import com.farmer.primary.network.model.doctor.DoctorAvailableResponse
 import com.farmer.primary.network.model.login.LoginOutParams
 import com.farmer.primary.network.model.login.LoginParams
 import com.farmer.primary.network.model.login.LoginResponse
-import com.farmer.primary.network.model.metadata.MetaDataResponse
-import com.farmer.primary.network.model.metadata.MetaModel
 import com.farmer.primary.network.model.otp.OtpParams
 import com.farmer.primary.network.model.otp.OtpResponse
-import com.farmer.primary.network.repositorys.metadata.ResponseMetaInfo
 import com.farmer.primary.network.model.profile.ProfileModel
 import com.farmer.primary.network.utils.NetworkResult
 import retrofit2.http.Body
@@ -17,7 +15,6 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
-import retrofit2.http.Streaming
 
 /**
  * Created by Pritom Dutta on 13/1/23.
@@ -26,10 +23,10 @@ import retrofit2.http.Streaming
 interface ApiService {
     
     @GET("metaInfo")
-    suspend fun fetchMetaData(): NetworkResult<Map<String, MetaModel>>
+    suspend fun fetchMetaData(): NetworkResult<ResponseMetaInfo>
 
     @POST("patient/passwordless-login")
-    suspend fun loginUser(@Body params: LoginParams): NetworkResult<LoginResponse>
+    suspend fun loginUser(@Body params: LoginParams): NetworkResult<ResponseLogin>
 
     @POST("patient/passwordless-logout")
     suspend fun userLogout(
