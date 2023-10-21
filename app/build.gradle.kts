@@ -130,6 +130,9 @@ dependencies {
         exclude(group = "org.json", module = "json")
     }
 
+    implementation(Libraries.paging)
+    implementation(Libraries.rxpaging)
+
     //Hilt
     implementation(Libraries.hilt_android_lib)
     kapt(Libraries.hilt_android_compiler_lib)

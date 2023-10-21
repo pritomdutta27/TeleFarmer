@@ -2,6 +2,7 @@ package com.farmer.primary.network.dataSource
 
 import bio.medico.patient.model.apiResponse.CommonResponse
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
+import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLogin
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
 import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
@@ -14,6 +15,8 @@ import com.farmer.primary.network.model.otp.OtpResponse
 import com.farmer.primary.network.model.profile.ProfileModel
 import com.farmer.primary.network.utils.NetworkResult
 import com.farmer.primary.network.utils.getBearerToken
+import retrofit2.http.Path
+import retrofit2.http.Query
 import javax.inject.Inject
 
 /**
@@ -59,5 +62,15 @@ class FarmerApi @Inject constructor(
         requestStatusUpdate: RequestStatusUpdate
     ): NetworkResult<CommonResponse> {
         return apiService.doctorStatusUpdate(token, userInfo, requestStatusUpdate)
+    }
+
+    suspend operator fun invoke(
+        token: String,
+        userInfo: String,
+        uuid: String,
+        pageNumber: String,
+        perpageCount: String
+    ): NetworkResult<ResponseCallHistoryModel> {
+        return apiService.getCallHistory(token.getBearerToken(), userInfo, uuid, pageNumber, perpageCount)
     }
 }

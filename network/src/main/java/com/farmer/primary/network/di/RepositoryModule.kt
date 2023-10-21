@@ -1,5 +1,7 @@
 package com.farmer.primary.network.di
 
+import com.farmer.primary.network.repositorys.callhistory.CallHistoryRepository
+import com.farmer.primary.network.repositorys.callhistory.CallHistoryRepositoryImp
 import com.farmer.primary.network.repositorys.doctor.AvailableDoctorRepository
 import com.farmer.primary.network.repositorys.doctor.AvailableDoctorRepositoryImp
 import com.farmer.primary.network.repositorys.doctor.UpdateDoctorStatus
@@ -54,4 +56,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideUpdateDoctorStatus(api: UpdateDoctorStatusImp): UpdateDoctorStatus
+
+    @Binds
+    @Singleton
+    abstract fun provideCallHistoryRepository(api: CallHistoryRepositoryImp): CallHistoryRepository
 }

@@ -36,8 +36,7 @@ class UploadImgFragment : Fragment() {
 
         mUploadImageAdapter = UploadImageAdapter {
             //Item Click
-            val action = UploadImgFragmentDirections.actionUploadImgFragmentToPreviousConsultationFragment()
-            findNavController().navigate(action)
+
         }
 
         val mLayoutManager = LinearLayoutManager(context)

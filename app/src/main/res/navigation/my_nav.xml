@@ -9,7 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="com.theroyalsoft.telefarmer.ui.view.fragments.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_previousConsultationFragment"
+            app:destination="@id/previousConsultationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_uploadImgFragment"
+            app:destination="@id/uploadImgFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.theroyalsoft.telefarmer.ui.view.fragments.profile.ProfileFragment"
@@ -62,11 +69,7 @@
         android:id="@+id/uploadImgFragment"
         android:name="com.theroyalsoft.telefarmer.ui.view.fragments.uploadimg.UploadImgFragment"
         android:label="fragment_upload_img"
-        tools:layout="@layout/fragment_upload_img" >
-        <action
-            android:id="@+id/action_uploadImgFragment_to_previousConsultationFragment"
-            app:destination="@id/previousConsultationFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_upload_img" />
     <fragment
         android:id="@+id/previousConsultationFragment"
         android:name="com.theroyalsoft.telefarmer.ui.view.fragments.previousConsultation.PreviousConsultationFragment"

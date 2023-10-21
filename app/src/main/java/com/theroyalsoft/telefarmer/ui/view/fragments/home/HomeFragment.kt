@@ -9,8 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -20,18 +21,23 @@ import bio.medico.patient.common.AppKey
 import com.theroyalsoft.telefarmer.databinding.FragmentHomeBinding
 import com.theroyalsoft.telefarmer.extensions.autoScroll
 import com.theroyalsoft.telefarmer.extensions.getCameraAndMicPermission
+import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.helper.EqualSpacingItemDecoration
 import com.theroyalsoft.telefarmer.helper.GridSpacingItemDecoration
+import com.theroyalsoft.telefarmer.helper.PeekingLinearLayoutManager
 import com.theroyalsoft.telefarmer.helper.SpannedGridLayoutManager
 import com.theroyalsoft.telefarmer.ui.adapters.previousConsultation.PreviousConsultationAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.slider.SliderAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.tipsntricks.TipsNTricksHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.uploadimg.UploadImageHomeAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Timer
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment() : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
@@ -50,8 +56,9 @@ class HomeFragment : Fragment() {
         initView()
         event()
 
-        // viewModel.fetchMetaData()
-
+        viewModel.getCallHistory()
+        getCallHistory()
+        ifApiGetError()
         return binding.root
     }
 
@@ -92,17 +99,8 @@ class HomeFragment : Fragment() {
 
         previousConsultationAdapter = PreviousConsultationAdapter()
 
-//        val mLayoutManager = PeekingLinearLayoutManager(context)
-        val mLayoutManager = LinearLayoutManager(context)
-        mLayoutManager.orientation = RecyclerView.HORIZONTAL
-
-        binding.llPreviousConsultation.rvPreviousConsultationHome.apply {
-            layoutManager = mLayoutManager
-            setHasFixedSize(true)
-            setItemViewCacheSize(20)
-            addItemDecoration(EqualSpacingItemDecoration(40))
-            adapter = previousConsultationAdapter
-        }
+//
+        rvSetUpPreviousConsultation()
 
         mUploadImageHomeAdapter = UploadImageHomeAdapter()
         val data = listOf(1,2,3)
@@ -152,6 +150,20 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun rvSetUpPreviousConsultation() {
+        val mLayoutManager = PeekingLinearLayoutManager(context)
+//        val mLayoutManager = LinearLayoutManager(context)
+        mLayoutManager.orientation = RecyclerView.HORIZONTAL
+
+        binding.llPreviousConsultation.rvPreviousConsultationHome.apply {
+            layoutManager = mLayoutManager
+            setHasFixedSize(true)
+            setItemViewCacheSize(20)
+            addItemDecoration(EqualSpacingItemDecoration(40))
+            adapter = previousConsultationAdapter
+        }
+    }
+
     private fun event() {
         binding.apply {
             imgAudioCall.setOnClickListener {
@@ -179,18 +191,39 @@ class HomeFragment : Fragment() {
                     startActivity(intent);
                 }
             }
+
+            llPreviousConsultation.btnViewAll.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToPreviousConsultationFragment()
+                findNavController().navigate(action)
+            }
         }
     }
+
+
+    // Api get
+    private fun getCallHistory(){
+        lifecycleScope.launch {
+            viewModel._historyStateFlow.collect {
+                val list = it.callHistory.take(5)
+                previousConsultationAdapter.submitData(list)
+            }
+        }
+    }
+
+    private fun ifApiGetError() {
+        lifecycleScope.launch {
+            viewModel._errorFlow.collect { errorStr ->
+                withContext(Dispatchers.Main) {
+                    if (errorStr.isNotEmpty()) {
+                        requireContext().showToast(errorStr)
+                    }
+                }
+            }
+        }
+    }
+
+
 }
 
-//    private fun ifApiGetError() {
-//        lifecycleScope.launch {
-//            viewModel._errorFlow.collect { errorStr ->
-//                withContext(Dispatchers.Main) {
-//                    if (errorStr.isNotEmpty()) {
-//                        requireContext().showToast(errorStr)
-//                    }
-//                }
-//            }
-//        }
-//    }
+
+//

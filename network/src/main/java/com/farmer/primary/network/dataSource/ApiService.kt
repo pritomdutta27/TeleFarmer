@@ -2,10 +2,10 @@ package com.farmer.primary.network.dataSource
 
 import bio.medico.patient.model.apiResponse.CommonResponse
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
+import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLogin
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
 import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
-import com.farmer.primary.network.model.doctor.Doctor
 import com.farmer.primary.network.model.login.LoginOutParams
 import com.farmer.primary.network.model.login.LoginParams
 import com.farmer.primary.network.model.login.LoginResponse
@@ -13,11 +13,13 @@ import com.farmer.primary.network.model.otp.OtpParams
 import com.farmer.primary.network.model.otp.OtpResponse
 import com.farmer.primary.network.model.profile.ProfileModel
 import com.farmer.primary.network.utils.NetworkResult
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * Created by Pritom Dutta on 13/1/23.
@@ -55,4 +57,13 @@ interface ApiService {
         @Header("UserInfo") headerUserInfo: String,
         @Body requestStatusUpdate: RequestStatusUpdate
     ): NetworkResult<CommonResponse>
+
+    @GET("callHistory/patient/{uuid}")
+    suspend fun getCallHistory(
+        @Header("Authorization") token: String,
+        @Header("UserInfo") headerUserInfo: String,
+        @Path("uuid") uuid: String,
+        @Query("pageNumber") pageNumber: String,
+        @Query("perpageCount") perpageCount: String
+    ): NetworkResult<ResponseCallHistoryModel>
 }
