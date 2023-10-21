@@ -3,6 +3,8 @@ package com.farmer.primary.network.di
 import android.app.Application
 import android.content.Context
 import com.farmer.primary.network.dataSource.ApiService
+import com.farmer.primary.network.dataSource.ApiServiceForImage
+import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.retrofitAdapter.NetworkResultCallAdapterFactory
 import com.farmer.primary.network.utils.DataSourceConstants
 import com.google.gson.Gson
@@ -19,10 +21,12 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.internal.platform.Platform
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
+
 
 /**
  * Created by Pritom Dutta on 13/1/23.
@@ -69,9 +73,30 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @Named("image_upload")
+    fun providePictureRetrofit(
+        okHttpClient: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(LocalData.getMetaInfoMetaData().imageUploadBaseUrl)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .addCallAdapterFactory(NetworkResultCallAdapterFactory.create())
+            .client(okHttpClient)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     fun provideApiService(@Named("first") retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideApiServiceForImage(@Named("image_upload") retrofit: Retrofit): ApiServiceForImage {
+        return retrofit.create(ApiServiceForImage::class.java)
+    }
+
 
     @Suppress("SameParameterValue")
     private fun getLogInterceptors(isDebugAble: Boolean = false): Interceptor {

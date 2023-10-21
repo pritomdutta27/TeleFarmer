@@ -5,13 +5,17 @@ import android.animation.Animator.AnimatorListener
 import android.animation.AnimatorListenerAdapter
 import android.os.Handler
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.theroyalsoft.telefarmer.R
 import com.zhpan.indicator.IndicatorView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Timer
 import java.util.TimerTask
 
@@ -66,7 +70,13 @@ fun TextView.typeWrite(lifecycleOwner: LifecycleOwner, text: String, intervalMs:
 }
 
 
-fun ViewPager2.autoScroll(size: Int, count: Int, indicator: IndicatorView, handler: Handler?, mTimer: Timer?) {
+fun ViewPager2.autoScroll(
+    size: Int,
+    count: Int,
+    indicator: IndicatorView,
+    handler: Handler?,
+    mTimer: Timer?
+) {
     var currentPage = count
     val update: Runnable? = Runnable {
         if (currentPage == size) {
@@ -83,9 +93,20 @@ fun ViewPager2.autoScroll(size: Int, count: Int, indicator: IndicatorView, handl
     }
     registerOnPageChangeCallback(pageChangeCallback)
 
-    mTimer?.schedule(object : TimerTask(){
+    mTimer?.schedule(object : TimerTask() {
         override fun run() {
             handler?.post(update!!)
         }
-    },1000, 4000)
+    }, 1000, 4000)
+}
+
+fun ImageView.setImage(url: String) {
+    Timber.e("Image: $url")
+    Glide
+        .with(this)
+        .load(url)
+        .centerCrop()
+        .placeholder(R.drawable.app_icon_green)
+        .into(this);
+
 }

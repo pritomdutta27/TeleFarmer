@@ -6,6 +6,10 @@ import com.farmer.primary.network.repositorys.doctor.AvailableDoctorRepository
 import com.farmer.primary.network.repositorys.doctor.AvailableDoctorRepositoryImp
 import com.farmer.primary.network.repositorys.doctor.UpdateDoctorStatus
 import com.farmer.primary.network.repositorys.doctor.UpdateDoctorStatusImp
+import com.farmer.primary.network.repositorys.home.HomeRepository
+import com.farmer.primary.network.repositorys.home.HomeRepositoryImp
+import com.farmer.primary.network.repositorys.lapreport.LabReportRepository
+import com.farmer.primary.network.repositorys.lapreport.LabReportRepositoryImp
 import com.farmer.primary.network.repositorys.login.LoginRepository
 import com.farmer.primary.network.repositorys.login.LoginRepositoryImp
 import com.farmer.primary.network.repositorys.metadata.MetaDataRepository
@@ -29,6 +33,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
+
+    @Binds
+    @Singleton
+    abstract fun provideHomeRepository(api: HomeRepositoryImp): HomeRepository
     @Binds
     @Singleton
     abstract fun provideMetaDataRepository(api: MetaDataRepositoryImp): MetaDataRepository
@@ -60,4 +68,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideCallHistoryRepository(api: CallHistoryRepositoryImp): CallHistoryRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideLabReportRepository(api: LabReportRepositoryImp): LabReportRepository
 }

@@ -33,7 +33,6 @@ class MainViewModel @Inject constructor(
 
     private fun setMetaData(metaData: ResponseMetaInfo) = runBlocking {
         metaData?.let {
-
             LocalData.saveData(it)
             pref.putModel(AppConstants.PREF_KEY_META_INFO, it)
         }
@@ -65,7 +64,6 @@ class MainViewModel @Inject constructor(
 //            LocalData.saveData(metaData)
             val profile = JsonUtils.getProfile("profile_info.json")
             LocalData.setUserProfileAll(profile)
-
 
 //            Timber.e("metaData ${LocalData.getToken()}")
             val response = repository.fetchMetaData()

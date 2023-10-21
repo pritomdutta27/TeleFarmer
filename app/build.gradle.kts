@@ -130,6 +130,9 @@ dependencies {
         exclude(group = "org.json", module = "json")
     }
 
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.vanniktech:android-image-cropper:4.5.0")
+
     implementation(Libraries.paging)
     implementation(Libraries.rxpaging)
 

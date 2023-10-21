@@ -3,10 +3,12 @@ package com.farmer.primary.network.dataSource
 import bio.medico.patient.model.apiResponse.CommonResponse
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
+import bio.medico.patient.model.apiResponse.ResponseLabReport
 import bio.medico.patient.model.apiResponse.ResponseLogin
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
 import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
 import com.farmer.primary.network.model.doctor.Doctor
+import com.farmer.primary.network.model.home.HomeResponse
 import com.farmer.primary.network.model.login.LoginOutParams
 import com.farmer.primary.network.model.login.LoginParams
 import com.farmer.primary.network.model.login.LoginResponse
@@ -15,6 +17,7 @@ import com.farmer.primary.network.model.otp.OtpResponse
 import com.farmer.primary.network.model.profile.ProfileModel
 import com.farmer.primary.network.utils.NetworkResult
 import com.farmer.primary.network.utils.getBearerToken
+import okhttp3.MultipartBody
 import retrofit2.http.Path
 import retrofit2.http.Query
 import javax.inject.Inject
@@ -23,9 +26,13 @@ import javax.inject.Inject
  * Created by Pritom Dutta on 13/1/23.
  */
 class FarmerApi @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val apiServiceForImage: ApiServiceForImage,
 ) {
 
+    suspend fun fetchHome(): NetworkResult<HomeResponse> {
+        return apiService.fetchHome()
+    }
     suspend fun getMeta(): NetworkResult<ResponseMetaInfo> {
         return apiService.fetchMetaData()
     }
@@ -71,6 +78,40 @@ class FarmerApi @Inject constructor(
         pageNumber: String,
         perpageCount: String
     ): NetworkResult<ResponseCallHistoryModel> {
-        return apiService.getCallHistory(token.getBearerToken(), userInfo, uuid, pageNumber, perpageCount)
+        return apiService.getCallHistory(
+            token.getBearerToken(),
+            userInfo,
+            uuid,
+            pageNumber,
+            perpageCount
+        )
+    }
+
+    suspend operator fun invoke(
+        token: String,
+        userInfo: String,
+        uuid: String
+    ): NetworkResult<ResponseLabReport> {
+        return apiService.getLabReportList(token.getBearerToken(), userInfo, uuid)
+    }
+
+    suspend operator fun invoke(
+        token: String,
+        userInfo: String,
+        uuid: String,
+        imageBody: MultipartBody.Part,
+        folder: String,
+        channel: String,
+        url: String
+    ): NetworkResult<CommonResponse> {
+        return apiServiceForImage.imageUpload(
+            token = token.getBearerToken(),
+            headerUserInfo = userInfo,
+            imageBody = imageBody,
+            user_id = uuid,
+            folder = folder,
+            channel = channel,
+//            url = url
+        )
     }
 }
