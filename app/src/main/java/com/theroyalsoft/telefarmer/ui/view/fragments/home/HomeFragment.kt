@@ -143,7 +143,10 @@ class HomeFragment() : Fragment() {
 
         binding.llUploadImage.rvUploadImg.addItemDecoration(EqualSpacingItemDecoration(20))
 
-        sliderAdapter = SliderAdapter()
+        sliderAdapter = SliderAdapter{
+            val action = HomeFragmentDirections.actionHomeFragmentToNewsDetailsFragment(it)
+            findNavController().navigate(action)
+        }
 
         previousConsultationAdapter = PreviousConsultationAdapter()
 
@@ -287,6 +290,19 @@ class HomeFragment() : Fragment() {
                     HomeFragmentDirections.actionHomeFragmentToPreviousConsultationFragment()
                 findNavController().navigate(action)
             }
+
+            llSlider.btnViewAll.setOnClickListener {
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToNewsListFragment()
+                findNavController().navigate(action)
+            }
+
+            llTipsNTricks.btnViewAll.setOnClickListener {
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToTipsNTricksListFragment()
+                findNavController().navigate(action)
+            }
+
 
             llUploadImage.btnViewAll.setOnClickListener {
                 val action =

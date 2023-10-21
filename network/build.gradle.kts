@@ -2,6 +2,7 @@ plugins {
     id ("com.android.library")
     id ("org.jetbrains.kotlin.android")
     id ("kotlin-kapt")
+    id("kotlin-parcelize")
     id("com.google.dagger.hilt.android")
 }
 
@@ -67,7 +68,8 @@ dependencies {
 
     implementation("com.github.SamiranKumar:common-util-android:1.13")
 
-    implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
     implementation(project(":model"))
     implementation(project(":appUtil"))

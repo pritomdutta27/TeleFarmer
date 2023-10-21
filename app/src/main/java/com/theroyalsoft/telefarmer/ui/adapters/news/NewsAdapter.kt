@@ -4,15 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.farmer.primary.network.model.home.NewsModel
 import com.theroyalsoft.telefarmer.base.BaseViewHolder
 import com.theroyalsoft.telefarmer.databinding.ItemNewsHeadBinding
 import com.theroyalsoft.telefarmer.databinding.ItemNewsLayoutBinding
+import com.theroyalsoft.telefarmer.extensions.setImage
 
 /**
  * Created by Pritom Dutta on 20/5/23.
  */
-class NewsAdapter(val onNewsSelect: () -> Unit) : RecyclerView.Adapter<BaseViewHolder>() {
-
+class NewsAdapter(val onNewsSelect: (data: NewsModel) -> Unit) :
+    RecyclerView.Adapter<BaseViewHolder>() {
+    private var list: List<NewsModel> = emptyList()
     override fun getItemViewType(position: Int): Int {
         if (position == 0)
             return VIEW_TYPE_HEADER
@@ -28,6 +31,7 @@ class NewsAdapter(val onNewsSelect: () -> Unit) : RecyclerView.Adapter<BaseViewH
                 )
                 return HeaderHolder(item)
             }
+
             else -> {
                 val item = ItemNewsLayoutBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -38,7 +42,12 @@ class NewsAdapter(val onNewsSelect: () -> Unit) : RecyclerView.Adapter<BaseViewH
         }
     }
 
-    override fun getItemCount(): Int = 12
+    override fun getItemCount(): Int = list.size
+
+    fun submitData(list: List<NewsModel>) {
+        this.list = list
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.onBind(position)
@@ -47,13 +56,24 @@ class NewsAdapter(val onNewsSelect: () -> Unit) : RecyclerView.Adapter<BaseViewH
     inner class HeaderHolder(private val mBinding: ItemNewsHeadBinding) :
         BaseViewHolder(mBinding.root) {
         override fun onBind(position: Int) {
+            itemView.setOnClickListener { onNewsSelect(list[position]) }
+            mBinding.apply {
+                imgNews.setImage(list[position].imageUrl)
+                tvNewTitle.text = list[position].title
+                tvNewDate.text = list[position].dateAndTime
+            }
         }
     }
 
     inner class NewsHolder(private val mBinding: ItemNewsLayoutBinding) :
         BaseViewHolder(mBinding.root) {
         override fun onBind(position: Int) {
-            itemView.setOnClickListener { onNewsSelect() }
+            itemView.setOnClickListener { onNewsSelect(list[position]) }
+            mBinding.apply {
+                imgNews.setImage(list[position].imageUrl)
+                tvNewTitle.text = list[position].title
+                tvNewDate.text = list[position].dateAndTime
+            }
         }
     }
 

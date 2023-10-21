@@ -11,7 +11,7 @@ import com.theroyalsoft.telefarmer.extensions.setImage
 /**
  * Created by Pritom Dutta on 21/10/23.
  */
-class SliderAdapter : RecyclerView.Adapter<BaseViewHolder>() {
+class SliderAdapter(val onNewsSelect: (data: NewsModel) -> Unit) : RecyclerView.Adapter<BaseViewHolder>() {
 
     private var list: List<NewsModel> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -35,6 +35,7 @@ class SliderAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     inner class SliderHolder(private val mBinding: ItemSliderBinding) :
         BaseViewHolder(mBinding.root) {
         override fun onBind(position: Int) {
+            itemView.setOnClickListener { onNewsSelect(list[position]) }
             mBinding.imgItem.setImage(list[position].imageUrl)
             mBinding.tvNewTitle.text = list[position].title
             mBinding.tvNewDate.text = list[position].dateAndTime

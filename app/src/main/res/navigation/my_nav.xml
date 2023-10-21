@@ -16,6 +16,15 @@
         <action
             android:id="@+id/action_homeFragment_to_uploadImgFragment"
             app:destination="@id/uploadImgFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_newsListFragment"
+            app:destination="@id/newsListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_tipsNTricksListFragment"
+            app:destination="@id/tipsNTricksListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_newsDetailsFragment"
+            app:destination="@id/newsDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -42,9 +51,10 @@
         android:label="fragment_news_details"
         tools:layout="@layout/fragment_news_details" >
         <argument
-            android:name="newsID"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:name="new_data"
+            app:argType="com.farmer.primary.network.model.home.NewsModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/tipsNTricksListFragment"
