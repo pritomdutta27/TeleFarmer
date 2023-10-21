@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -20,9 +21,11 @@ import com.theroyalsoft.telefarmer.databinding.FragmentHomeBinding
 import com.theroyalsoft.telefarmer.extensions.autoScroll
 import com.theroyalsoft.telefarmer.extensions.getCameraAndMicPermission
 import com.theroyalsoft.telefarmer.helper.EqualSpacingItemDecoration
+import com.theroyalsoft.telefarmer.helper.GridSpacingItemDecoration
 import com.theroyalsoft.telefarmer.helper.SpannedGridLayoutManager
 import com.theroyalsoft.telefarmer.ui.adapters.previousConsultation.PreviousConsultationAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.slider.SliderAdapter
+import com.theroyalsoft.telefarmer.ui.adapters.tipsntricks.TipsNTricksHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.uploadimg.UploadImageHomeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Timer
@@ -36,6 +39,7 @@ class HomeFragment : Fragment() {
     private lateinit var sliderAdapter: SliderAdapter
     private lateinit var previousConsultationAdapter: PreviousConsultationAdapter
     private lateinit var mUploadImageHomeAdapter: UploadImageHomeAdapter
+    private lateinit var mTipsNTricksHomeAdapter: TipsNTricksHomeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -123,8 +127,28 @@ class HomeFragment : Fragment() {
             layoutManager = gridLayoutManager
             setHasFixedSize(true)
             setItemViewCacheSize(20)
-            addItemDecoration(EqualSpacingItemDecoration(10))
+            addItemDecoration(EqualSpacingItemDecoration(20))
             adapter = mUploadImageHomeAdapter
+        }
+
+        mTipsNTricksHomeAdapter = TipsNTricksHomeAdapter()
+        val spanCount = 4
+        val spacing = 40
+        val includeEdge = true
+        val gridLayout = GridLayoutManager(requireContext(), spanCount)
+
+        binding.llTipsNTricks.rvTipsNTricks.apply {
+            layoutManager = gridLayout
+            addItemDecoration(
+                GridSpacingItemDecoration(
+                    spanCount,
+                    spacing,
+                    includeEdge
+                )
+            )
+            setHasFixedSize(true)
+            setItemViewCacheSize(20)
+            adapter = mTipsNTricksHomeAdapter
         }
     }
 

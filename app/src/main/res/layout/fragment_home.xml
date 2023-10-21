@@ -260,6 +260,10 @@
                     android:id="@+id/ll_upload_image"
                     layout="@layout/image_layout_home"/>
 
+                <include
+                    android:id="@+id/ll_tips_n_tricks"
+                    layout="@layout/layout_tips_n_tricks"/>
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
