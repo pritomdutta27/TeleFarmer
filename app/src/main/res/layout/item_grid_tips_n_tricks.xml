@@ -19,14 +19,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/tv_title_pack"
+            android:id="@+id/img_title_pack"
             android:layout_width="@dimen/_45sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_height="@dimen/_45sdp"
             android:src="@drawable/pngwing_1" />
 
         <TextView
-            android:id="@+id/tv_pack_amount"
+            android:id="@+id/tv_trips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"

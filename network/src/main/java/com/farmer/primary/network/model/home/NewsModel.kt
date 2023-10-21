@@ -1,6 +1,5 @@
 package com.farmer.primary.network.model.home
 
-import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 

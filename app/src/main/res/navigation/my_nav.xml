@@ -64,6 +64,14 @@
         <action
             android:id="@+id/action_tipsNTricksListFragment_to_tipsNTricksDetailsFragment"
             app:destination="@id/tipsNTricksDetailsFragment" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
     <fragment
         android:id="@+id/tipsNTricksDetailsFragment"
@@ -71,9 +79,10 @@
         android:label="fragment_tips_n_tricks_details"
         tools:layout="@layout/fragment_tips_n_tricks_details" >
         <argument
-            android:name="tipsID"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:name="data_tips"
+            app:argType="com.farmer.primary.network.model.home.TricksTip"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/uploadImgFragment"

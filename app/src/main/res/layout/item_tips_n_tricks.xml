@@ -18,7 +18,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_news"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_160sdp"
             android:scaleType="fitXY"
             app:layout_constraintDimensionRatio="H,16:9"
             app:layout_constraintEnd_toEndOf="parent"

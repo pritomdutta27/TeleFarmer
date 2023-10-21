@@ -143,7 +143,7 @@ class HomeFragment() : Fragment() {
 
         binding.llUploadImage.rvUploadImg.addItemDecoration(EqualSpacingItemDecoration(20))
 
-        sliderAdapter = SliderAdapter{
+        sliderAdapter = SliderAdapter {
             val action = HomeFragmentDirections.actionHomeFragmentToNewsDetailsFragment(it)
             findNavController().navigate(action)
         }
@@ -154,7 +154,11 @@ class HomeFragment() : Fragment() {
         rvSetUpPreviousConsultation()
 //        rvImageUploadSetup()
 
-        mTipsNTricksHomeAdapter = TipsNTricksHomeAdapter()
+        mTipsNTricksHomeAdapter = TipsNTricksHomeAdapter {
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToTipsNTricksListFragment(it._id, it.name)
+            findNavController().navigate(action)
+        }
         val spanCount = 4
         val spacing = 40
         val includeEdge = true
@@ -175,7 +179,7 @@ class HomeFragment() : Fragment() {
         }
     }
 
-    private fun rvSlider(){
+    private fun rvSlider() {
         binding.apply {
             llSlider.apply {
                 viewPagerSlider.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -344,6 +348,7 @@ class HomeFragment() : Fragment() {
                 val list = it.static
                 sliderAdapter.submitData(list.news.take(4))
                 rvSlider()
+                mTipsNTricksHomeAdapter.submitData(list.tips_categories)
             }
         }
     }

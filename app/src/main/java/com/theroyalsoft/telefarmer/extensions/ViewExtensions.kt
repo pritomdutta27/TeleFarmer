@@ -105,7 +105,6 @@ fun ImageView.setImage(url: String) {
     Glide
         .with(this)
         .load(url)
-        .centerCrop()
         .placeholder(R.drawable.app_icon_green)
         .into(this);
 
