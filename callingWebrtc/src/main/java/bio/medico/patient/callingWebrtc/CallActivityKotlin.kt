@@ -6,14 +6,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import bio.medico.patient.callingWebrtc.databinding.ActivityCallKotlinBinding
 import bio.medico.patient.common.AppKey
 import bio.medico.patient.common.AppKeyLog
 import bio.medico.patient.common.UiNavigation
-import bio.medico.patient.data.ApiManager
-import bio.medico.patient.data.ApiManager.IApiResponse
 import bio.medico.patient.model.apiResponse.CommonResponse
 import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
 import bio.medico.patient.model.apiResponse.ResponseSingleDoctor.Doctor
@@ -33,7 +34,11 @@ import com.skh.hkhr.util.view.LoadingUtil
 import com.skh.hkhr.util.view.OnSingleClickListener
 import com.theroyalsoft.mydoc.apputil.TimeUtil
 import com.theroyalsoft.mydoc.apputil.internet.NetworkUtils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.webrtc.DataChannel
 import org.webrtc.IceCandidate
 import org.webrtc.MediaStream
@@ -42,8 +47,10 @@ import org.webrtc.RendererCommon
 import org.webrtc.RtpReceiver
 import timber.log.Timber
 
+@AndroidEntryPoint
 class CallActivityKotlin : AppCompatActivity() {
 
+    private val viewModel: CallActivityViewModel by viewModels()
 
     private var callManager: CallManager? = null
 
@@ -114,6 +121,9 @@ class CallActivityKotlin : AppCompatActivity() {
         showSolarUI()
 
         callAudioManager.initPlayerWelcomeTone()
+
+        getResponse()
+        ifApiGetError()
         //==================================================
         /*
 
@@ -249,50 +259,79 @@ class CallActivityKotlin : AppCompatActivity() {
             }
 
             Timber.e("*******getDoctorApiCall**********************")
-            ApiManager.getDoctor(iApiResponseToken, false)
+           // ApiManager.getDoctor(iApiResponseToken, false)
+            viewModel.fetchAvailableDoctor()
         }
 
 
-    private val iApiResponseToken: IApiResponse = object : IApiResponse {
-        override fun <T> onSuccess(model: T) {
-            try {
-                val responseDoctor = model as ResponseSingleDoctor
+//    private val iApiResponseToken: IApiResponse = object : IApiResponse {
+//        override fun <T> onSuccess(model: T) {
+//            try {
+//                val responseDoctor = model as ResponseSingleDoctor
+//
+//                doctorNotFound = false
+//
+//                foundDoctorCall(responseDoctor)
+//
+////                sendApiLog(
+////                    uiName,
+////                    AppKeyLog.FOUND_DOCTOR,
+////                    AppKeyLog.ENDPOINT_TYPE_API,
+////                    AppUrl.URL_CALL_SINGLE_DOCTOR,
+////                    "doctorName:" + responseDoctor.doctor.name + ", " +
+////                            "mobile:" + responseDoctor.doctor.phoneNumber + ", " +
+////                            "doctorId:" + responseDoctor.doctor.uuid
+////                )
+//
+//            } catch (exception: Exception) {
+//                doctorManager.closeHandlerRingingTime()
+//                Timber.e("Error:$exception")
+////                sendApiLogErrorCodeScope(exception)
+//            }
+//        }
+//
+//        override fun onFailed(message: String) {
+//            doctorNotFound = true
+//            LoadingUtil.hide()
+//            Timber.e("===onFailed getDoctor===")
+//
+////            sendApiLog(
+////                uiName,
+////                AppKeyLog.NOT_FOUND_DOCTOR,
+////                AppKeyLog.ENDPOINT_TYPE_API,
+////                AppUrl.URL_CALL_SINGLE_DOCTOR,
+////                "Doctor Not found."
+////            )
+//
+//            notFoundDoctorCall()
+//        }
+//    }
 
-                doctorNotFound = false
-
-                foundDoctorCall(responseDoctor)
-
-//                sendApiLog(
-//                    uiName,
-//                    AppKeyLog.FOUND_DOCTOR,
-//                    AppKeyLog.ENDPOINT_TYPE_API,
-//                    AppUrl.URL_CALL_SINGLE_DOCTOR,
-//                    "doctorName:" + responseDoctor.doctor.name + ", " +
-//                            "mobile:" + responseDoctor.doctor.phoneNumber + ", " +
-//                            "doctorId:" + responseDoctor.doctor.uuid
-//                )
-
-            } catch (exception: Exception) {
-                doctorManager.closeHandlerRingingTime()
-                Timber.e("Error:$exception")
-//                sendApiLogErrorCodeScope(exception)
+    private fun getResponse() {
+        lifecycleScope.launch {
+            viewModel._doctorStateFlow.collect { data ->
+                withContext(Dispatchers.Main) {
+                    doctorNotFound = false
+                    foundDoctorCall(data)
+                }
             }
         }
+    }
 
-        override fun onFailed(message: String) {
-            doctorNotFound = true
-            LoadingUtil.hide()
-            Timber.e("===onFailed getDoctor===")
-
-//            sendApiLog(
-//                uiName,
-//                AppKeyLog.NOT_FOUND_DOCTOR,
-//                AppKeyLog.ENDPOINT_TYPE_API,
-//                AppUrl.URL_CALL_SINGLE_DOCTOR,
-//                "Doctor Not found."
-//            )
-
-            notFoundDoctorCall()
+    private fun ifApiGetError() {
+        lifecycleScope.launch {
+            viewModel._errorFlow.collect { errorStr ->
+                withContext(Dispatchers.Main) {
+                    //Log.e("networkResult", "onFailure: "+errorStr)
+                    if (!errorStr.isNullOrEmpty()) {
+                        if (errorStr == "422") {
+                            notFoundDoctorCall()
+                        } else {
+                            Toast.makeText(this@CallActivityKotlin, errorStr, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -353,7 +392,7 @@ class CallActivityKotlin : AppCompatActivity() {
     private fun setDoctorName(name: String, isPushCall: Boolean) {
         runOnUiThread {
             binding.llSolarUi.apply {
-                tvSelectedDoctor!!.text = name
+                //tvSelectedDoctor!!.text = name
                 if (!isPushCall) {
                     tvSearchDoctor!!.text = AppKey.Calling_to + name
                 } else {
@@ -422,25 +461,26 @@ class CallActivityKotlin : AppCompatActivity() {
 //        )
 
 
-        ApiManager.statusUpdate(releaseDoctorID, "online", object : IApiResponse {
-            override fun <T> onSuccess(model: T) {
-                try {
-                    val commonResponse = model as CommonResponse
-                    if (commonResponse.isSuccess) {
-
-                        /*XmppKey.USER_RECEIVER_ID = XmppKey.getReceiverId(doctorID);
-                        tvSelectedDoctor.setText(doctorName);
-                        tvDoctorName.setText(doctorName);
-                        callOffer();*/
-                    }
-                } catch (exception: Exception) {
-                    Timber.e("Error:$exception")
-                    //sendApiLogErrorCodeScope(exception)
-                }
-            }
-
-            override fun onFailed(message: String) {}
-        })
+        viewModel.updateDoctorStatus(releaseDoctorID, "online")
+//        ApiManager.statusUpdate(releaseDoctorID, "online", object : IApiResponse {
+//            override fun <T> onSuccess(model: T) {
+//                try {
+//                    val commonResponse = model as CommonResponse
+//                    if (commonResponse.isSuccess) {
+//
+//                        /*XmppKey.USER_RECEIVER_ID = XmppKey.getReceiverId(doctorID);
+//                        tvSelectedDoctor.setText(doctorName);
+//                        tvDoctorName.setText(doctorName);
+//                        callOffer();*/
+//                    }
+//                } catch (exception: Exception) {
+//                    Timber.e("Error:$exception")
+//                    //sendApiLogErrorCodeScope(exception)
+//                }
+//            }
+//
+//            override fun onFailed(message: String) {}
+//        })
     }
 
     //===========================ui init============================

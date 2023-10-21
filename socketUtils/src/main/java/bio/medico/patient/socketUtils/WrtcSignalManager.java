@@ -2,7 +2,7 @@ package bio.medico.patient.socketUtils;
 
 import com.skh.hkhr.util.JsonUtil;
 
-import bio.medico.patient.data.ApiManager;
+
 import bio.medico.patient.model.socket.PreOfferAnswerSocket;
 import bio.medico.patient.model.socket.SignalingOfferSocket;
 import timber.log.Timber;
@@ -67,7 +67,7 @@ public class WrtcSignalManager {
                         mICallUiListener.onPreOfferAnswer(preOfferAnswerSocket);
                     } catch (Exception e) {
                         Timber.e("Error:" + e.toString());
-                        ApiManager.sendApiLogErrorCodeScope(e);
+                        //ApiManager.sendApiLogErrorCodeScope(e);
                     }
 
                     break;

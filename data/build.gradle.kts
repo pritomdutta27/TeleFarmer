@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":appUtil"))
     implementation(project(":common"))
     implementation(project(":model"))
+    implementation(project(":network"))
 
     implementation(KotlinDependencies.kotlinStd)
     implementation(KotlinDependencies.coreKtx)

@@ -16,7 +16,6 @@ import com.theroyalsoft.mydoc.apputil.AppUtilConfig;
 
 import java.util.Objects;
 
-import bio.medico.patient.data.ApiManager;
 import timber.log.Timber;
 
 /**
@@ -296,7 +295,7 @@ public class AppAudioManager {
             }
         } catch (Exception e) {
             Timber.e("Exception " + e.toString());
-            ApiManager.sendApiLogErrorCodeScope(e);
+            //ApiManager.sendApiLogErrorCodeScope(e);
 
         }
     }

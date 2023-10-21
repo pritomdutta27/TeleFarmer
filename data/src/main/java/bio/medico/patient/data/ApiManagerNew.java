@@ -2,6 +2,7 @@ package bio.medico.patient.data;
 
 import androidx.annotation.NonNull;
 
+import com.farmer.primary.network.dataSource.local.LocalData;
 import com.skh.hkhr.util.JsonUtil;
 import com.skh.hkhr.util.log.ToastUtil;
 import com.skh.hkhr.util.view.LoadingUtil;
@@ -20,7 +21,6 @@ import bio.medico.patient.common.AppKeyLog;
 import bio.medico.patient.common.AppUser;
 import bio.medico.patient.common.DeviceIDUtil;
 import bio.medico.patient.common.UiNavigation;
-import bio.medico.patient.data.local.LocalData;
 import bio.medico.patient.model.apiResponse.CommonResponse;
 import bio.medico.patient.model.apiResponse.ResponseMedicine;
 import bio.medico.patient.model.apiResponse.OrderHistoryResponseModel;

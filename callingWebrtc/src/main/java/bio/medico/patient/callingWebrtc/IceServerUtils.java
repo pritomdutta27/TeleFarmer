@@ -1,12 +1,13 @@
 package bio.medico.patient.callingWebrtc;
 
 
+import com.farmer.primary.network.dataSource.local.LocalData;
+
 import org.webrtc.PeerConnection;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import bio.medico.patient.data.local.LocalData;
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo;
 
 public class IceServerUtils {

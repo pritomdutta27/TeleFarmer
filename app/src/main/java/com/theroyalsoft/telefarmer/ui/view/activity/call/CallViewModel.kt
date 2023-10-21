@@ -52,7 +52,7 @@ class CallViewModel @Inject constructor(
         viewModelScope.launch {
             val response = repository.getAvailableDoctors()
             response.onSuccess { res ->
-                res["doctor"]?.let { doctorStateFlow.emit(it) }
+               // res["doctor"]?.let { doctorStateFlow.emit(it) }
             }.onError { code, message ->
                 errorFlow.emit(if (code == 422) "422" else "Message: $message")
             }.onException { error ->

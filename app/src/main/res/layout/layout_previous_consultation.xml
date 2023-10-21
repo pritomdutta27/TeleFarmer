@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <TextView
+        android:id="@+id/secton_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:fontFamily="@font/montserrat_bold"
+        android:padding="@dimen/_2sdp"
+        android:text="@string/previous_consultation"
+        android:textColor="@color/app_green"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/previous_consultation" />
+
+    <TextView
+        android:id="@+id/btn_view_all"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:background="@null"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:padding="@dimen/_2sdp"
+        android:gravity="center|end"
+        android:text="@string/view_all"
+        android:textAllCaps="false"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/_9ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/secton_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/secton_title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_previous_consultation_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/secton_title" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

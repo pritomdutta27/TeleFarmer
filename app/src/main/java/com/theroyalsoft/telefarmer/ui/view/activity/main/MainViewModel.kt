@@ -2,7 +2,7 @@ package com.theroyalsoft.telefarmer.ui.view.activity.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import bio.medico.patient.data.local.LocalData
+import com.farmer.primary.network.dataSource.local.LocalData
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
 import com.farmer.primary.network.model.profile.ProfileModel
 import com.farmer.primary.network.repositorys.metadata.MetaDataRepository
@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
-import java.sql.Time
 import javax.inject.Inject
 
 /**
@@ -43,6 +42,7 @@ class MainViewModel @Inject constructor(
 
     private fun setProfileInfo(data: ProfileModel?) = runBlocking {
 //        LocalData.setUserProfile(data.toString())
+        //LocalData.setUserProfileAll(data)
         pref.putModel(AppConstants.PREF_KEY_USER_INFO, data)
     }
 
@@ -60,24 +60,24 @@ class MainViewModel @Inject constructor(
     fun fetchMetaData() {
 
         viewModelScope.launch {
-            LocalData.setToken(getToken())
-            val metaData = JsonUtils.getMetaData("meta_data.json")
-            LocalData.saveData(metaData)
+//            LocalData.setToken(getToken())
+//            val metaData = JsonUtils.getMetaData("meta_data.json")
+//            LocalData.saveData(metaData)
             val profile = JsonUtils.getProfile("profile_info.json")
             LocalData.setUserProfileAll(profile)
 
 
-            Timber.e("metaData ${LocalData.getToken()}")
-//            val response = repository.fetchMetaData()
-//            response.onSuccess { res ->
-//                setMetaData(res)
-//            }.onError { _, message ->
-//                //Log.e("setMetaData", "setMetaData: "+message)
-//                errorFlow.emit("Message: $message")
-//            }.onException { error ->
-//               // Log.e("setMetaData", "setMetaData: "+error)
-//                errorFlow.emit("$error")
-//            }
+//            Timber.e("metaData ${LocalData.getToken()}")
+            val response = repository.fetchMetaData()
+            response.onSuccess { res ->
+                setMetaData(res)
+            }.onError { _, message ->
+                //Log.e("setMetaData", "setMetaData: "+message)
+                errorFlow.emit("Message: $message")
+            }.onException { error ->
+               // Log.e("setMetaData", "setMetaData: "+error)
+                errorFlow.emit("$error")
+            }
         }
     }
 

@@ -3,99 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_solar_bg"
+    android:background="@color/light_gray"
     android:orientation="vertical">
 
-
-    <TextView
-        android:id="@+id/tvSearchDoctor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="@dimen/_20dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:text="Searching Doctors"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/tvSelectedDoctor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvSearchDoctor"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:text=""
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:visibility="gone" />
-
-    <bio.medico.patient.callingWebrtc.RoundDashView
-        android:id="@+id/llRoundDashView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgVDoctor1"
-        android:layout_width="@dimen/icon_size_search"
-        android:layout_height="@dimen/icon_size_search"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_answer_call"
-        android:visibility="gone"
-        app:civ_border_color="@color/color_pic_border"
-        app:civ_border_width="@dimen/icon_size_border" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgVDoctor2"
-        android:layout_width="@dimen/icon_size_search"
-        android:layout_height="@dimen/icon_size_search"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_answer_call"
-        app:civ_border_color="@color/color_pic_border"
-        app:civ_border_width="@dimen/icon_size_border" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgVDoctor3"
-        android:layout_width="@dimen/icon_size_search"
-        android:layout_height="@dimen/icon_size_search"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_answer_call"
-        app:civ_border_color="@color/color_pic_border"
-        app:civ_border_width="@dimen/icon_size_border" />
-
-
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/imgVDoctor4"
-        android:layout_width="@dimen/icon_size_search"
-        android:layout_height="@dimen/icon_size_search"
+        android:layout_width="@dimen/_99sdp"
+        android:layout_height="@dimen/_99sdp"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_answer_call"
-        app:civ_border_color="@color/color_pic_border"
-        app:civ_border_width="@dimen/icon_size_border" />
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/tree" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgVDoctor5"
-        android:layout_width="@dimen/icon_size_search"
-        android:layout_height="@dimen/icon_size_search"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_answer_call"
-        app:civ_border_color="@color/color_pic_border"
-        app:civ_border_width="@dimen/icon_size_border" />
+        android:visibility="gone"
+        app:civ_border_color="@color/grey"
+        app:civ_border_width="@dimen/_10sdp" />
+
+    <TextView
+        android:id="@+id/tvSearchDoctor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgVDoctor4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:drawableStart="@drawable/_call_ic"
+        android:drawablePadding="@dimen/_10sdp"
+        android:drawableTint="@color/app_color"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Calling..."
+        android:textAlignment="center"
+        android:textColor="@color/app_color"
+        android:textSize="22sp" />
 
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgVDoctor6"
-        android:layout_width="@dimen/icon_size_search"
-        android:layout_height="@dimen/icon_size_search"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_answer_call"
         android:visibility="gone"
-        app:civ_border_color="@color/color_pic_border"
-        app:civ_border_width="@dimen/icon_size_border" />
-
+        app:civ_border_color="@color/grey"
+        app:civ_border_width="@dimen/_2sdp" />
 
     <LinearLayout
         android:id="@+id/llCancel"
@@ -103,14 +58,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="@dimen/call_hangup_margin"
+        android:layout_marginBottom="@dimen/_40sdp"
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
-
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:padding="@dimen/_10sdp"
             android:src="@drawable/ic_call_stop"
             android:visibility="visible" />
 
@@ -121,7 +76,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/montserrat_medium"
             android:text="CANCEL"
-            android:textColor="@color/color_app_text_call"
+            android:textColor="@color/grey"
             android:textSize="18sp"
             android:visibility="gone" />
 

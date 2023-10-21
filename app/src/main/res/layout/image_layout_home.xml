@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/secton_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/montserrat_bold"
+        android:padding="@dimen/_2sdp"
+        android:text="@string/upload_image_for_diagnosis"
+        android:textColor="@color/app_green"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/upload_image_for_diagnosis" />
+
+    <TextView
+        android:id="@+id/btn_view_all"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:background="@null"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:gravity="center|end"
+        android:padding="@dimen/_2sdp"
+        android:text="@string/view_all"
+        android:textAllCaps="false"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/_9ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/secton_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/secton_title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_upload_img"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_190sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/_15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/secton_title" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:background="@drawable/upload_img_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/rv_upload_img"
+        app:layout_constraintStart_toStartOf="@+id/rv_upload_img"
+        app:layout_constraintTop_toBottomOf="@+id/rv_upload_img" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

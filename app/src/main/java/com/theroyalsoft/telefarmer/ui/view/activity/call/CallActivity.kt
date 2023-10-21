@@ -151,8 +151,8 @@ class CallActivity() : AppCompatActivity() {
                     CallManager.switchCamera()
                 }
             })
-            binding.tvDoctorName.setTextColor(getColor(R.color.white))
-            binding.tvCallDuration.setTextColor(getColor(R.color.white))
+            binding.tvDoctorName.setTextColor(getColor(R.color.white_color))
+            binding.tvCallDuration.setTextColor(getColor(R.color.white_color))
         } else {
             binding.tvDoctorName.setTextColor(getColor(R.color.black))
             binding.tvCallDuration.setTextColor(getColor(R.color.black))
@@ -798,8 +798,8 @@ class CallActivity() : AppCompatActivity() {
                     isDoctorMakeAudioCAll = false
                     setCameraOnOff(false)
                     ViewTextUtil.setVisibility(binding.rlAudioLayout, View.GONE)
-                    binding.tvDoctorName.setTextColor(getColor(R.color.white))
-                    binding.tvCallDuration.setTextColor(getColor(R.color.white))
+                    binding.tvDoctorName.setTextColor(getColor(R.color.white_color))
+                    binding.tvCallDuration.setTextColor(getColor(R.color.white_color))
 //                    ApiManager.sendApiLogEndpointSocket(
 //                        AppKeyLog.RECEIVE_SOCKET,
 //                        SocketKey.KEY_TYPE_VIDEO_ON,

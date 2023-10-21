@@ -114,11 +114,11 @@ class CallTestActivity : AppCompatActivity(), WebRTCClient.Listener,
 
 
     private fun event() {
-        binding.ll.llCancel.setOnClickListener {
-            doForceStopCall()
-            mWebRTCClient.closeConnection()
-            finish()
-        }
+//        binding.ll.llCancel.setOnClickListener {
+//            doForceStopCall()
+//            mWebRTCClient.closeConnection()
+//            finish()
+//        }
 
 //        binding.endCallButton.setOnClickListener {
 //            doForceStopCall()
@@ -172,7 +172,7 @@ class CallTestActivity : AppCompatActivity(), WebRTCClient.Listener,
                 userType = AppKey.USER_PATIENT,
                 dateAndTime = AppKey.getTime1()
             )
-            mHandler.post { binding.ll.tvSearchDoctor.text = "Ringing..." }
+            //mHandler.post { binding.ll.tvSearchDoctor.text = "Ringing..." }
             val userInfoSocketJson = JsonUtil.getJsonStringFromObject(userInfoSocket)
             SocketHandler.sendData(SocketKeyChat.LISTENER_USER_INFO, userInfoSocketJson)
             viewModel.fetchAvailableDoctor()

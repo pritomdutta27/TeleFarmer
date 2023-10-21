@@ -70,6 +70,8 @@ dependencies {
     implementation("com.jakewharton.timber:timber:4.7.1")
 
     implementation(project(":model"))
+    implementation(project(":appUtil"))
+    implementation(project(":common"))
 
     //Test Library
     testImplementation (TestingDependencies.junit)

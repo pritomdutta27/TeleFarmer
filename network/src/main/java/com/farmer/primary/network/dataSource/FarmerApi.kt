@@ -1,7 +1,10 @@
 package com.farmer.primary.network.dataSource
 
+import bio.medico.patient.model.apiResponse.CommonResponse
+import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseLogin
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
+import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
 import com.farmer.primary.network.model.doctor.Doctor
 import com.farmer.primary.network.model.login.LoginOutParams
 import com.farmer.primary.network.model.login.LoginParams
@@ -39,7 +42,7 @@ class FarmerApi @Inject constructor(
         return apiService.verifyOtp(params)
     }
 
-    suspend operator fun invoke(token: String): NetworkResult<Map<String, Doctor>> {
+    suspend operator fun invoke(token: String): NetworkResult<ResponseSingleDoctor> {
         return apiService.getAvailableDoctor(token.getBearerToken())
     }
 
@@ -48,5 +51,13 @@ class FarmerApi @Inject constructor(
         phoneNumber: String
     ): NetworkResult<ProfileModel> {
         return apiService.fetchProfileData(token.getBearerToken(), phoneNumber)
+    }
+
+    suspend operator fun invoke(
+        token: String,
+        userInfo: String,
+        requestStatusUpdate: RequestStatusUpdate
+    ): NetworkResult<CommonResponse> {
+        return apiService.doctorStatusUpdate(token, userInfo, requestStatusUpdate)
     }
 }

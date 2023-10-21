@@ -2,6 +2,7 @@ package bio.medico.patient.data;
 
 import android.os.AsyncTask;
 
+import com.farmer.primary.network.dataSource.local.LocalData;
 import com.skh.hkhr.util.view.LoadingUtil;
 import com.theroyalsoft.mydoc.apputil.internet.NetworkUtils;
 import com.theroyalsoft.mydoc.apputil.log.ClassLineNoUtil;
@@ -12,7 +13,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import bio.medico.patient.common.AppKeyLog;
-import bio.medico.patient.data.local.LocalData;
 import bio.medico.patient.model.apiResponse.OrderRequest;
 import bio.medico.patient.model.apiResponse.RequestLabReport;
 import bio.medico.patient.model.apiResponse.RequestMedicationSurgeryInsert;

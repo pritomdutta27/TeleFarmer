@@ -14,7 +14,7 @@
         android:id="@+id/rrAppbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/home_header_back"
+        android:background="@color/app_color"
         >
 
         <RelativeLayout
@@ -107,7 +107,7 @@
             android:layout_alignParentEnd="true"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_audio_call_bg"
+            android:src="@color/light_gray"
             android:visibility="visible" />
 
         <ImageView

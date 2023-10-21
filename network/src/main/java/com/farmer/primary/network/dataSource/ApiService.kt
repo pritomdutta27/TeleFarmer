@@ -1,7 +1,10 @@
 package com.farmer.primary.network.dataSource
 
+import bio.medico.patient.model.apiResponse.CommonResponse
+import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseLogin
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
+import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
 import com.farmer.primary.network.model.doctor.Doctor
 import com.farmer.primary.network.model.login.LoginOutParams
 import com.farmer.primary.network.model.login.LoginParams
@@ -21,7 +24,7 @@ import retrofit2.http.Path
  */
 
 interface ApiService {
-    
+
     @GET("metaInfo")
     suspend fun fetchMetaData(): NetworkResult<ResponseMetaInfo>
 
@@ -38,11 +41,18 @@ interface ApiService {
     suspend fun verifyOtp(@Body params: OtpParams): NetworkResult<OtpResponse>
 
     @GET("doctor/callDoctor")
-    suspend fun getAvailableDoctor(@Header("Authorization") token: String): NetworkResult<Map<String, Doctor>>
+    suspend fun getAvailableDoctor(@Header("Authorization") token: String): NetworkResult<ResponseSingleDoctor>
 
     @GET("patient/profile/{phoneNumber}")
     suspend fun fetchProfileData(
         @Header("Authorization") token: String,
         @Path("phoneNumber") phoneNumber: String
     ): NetworkResult<ProfileModel>
+
+    @POST("doctor/statusUpdate")
+    suspend fun doctorStatusUpdate(
+        @Header("Authorization") token: String,
+        @Header("UserInfo") headerUserInfo: String,
+        @Body requestStatusUpdate: RequestStatusUpdate
+    ): NetworkResult<CommonResponse>
 }

@@ -107,4 +107,17 @@
     <color name="color_red_1">#F44336</color>
     <color name="colorYellow">#F9A02D</color>
 
+    <color name="app_color">#40CF96</color>
+    <color name="app_color_alpha">#E7F6F1</color>
+    <color name="app_green">#008C72</color>
+    <color name="login_hint_color">#768FA8</color>
+    <color name="bottom_bar_color">#19D1B7</color>
+    <color name="news_title_color">#364B44</color>
+    <color name="home_news_title_color">#69767A</color>
+    <color name="light_gray">#F3F3F3</color>
+    <color name="light_gray_date">#BABABA</color>
+    <color name="light_white">#FBFBFB</color>
+    <color name="hint_color">#C7C7C7</color>
+    <color name="faded_black">#57000000</color>
+
 </resources>

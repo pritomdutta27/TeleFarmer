@@ -1,10 +1,10 @@
 package bio.medico.patient.data;
 
+import com.farmer.primary.network.dataSource.local.LocalData;
 import com.skh.hkhr.util.JsonUtil;
 
 import bio.medico.patient.common.AppKey;
 import bio.medico.patient.common.DeviceIDUtil;
-import bio.medico.patient.data.local.LocalData;
 
 public class UserDevices {
     private static UserDevices userDevices;

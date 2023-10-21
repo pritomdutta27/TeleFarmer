@@ -1,4 +1,4 @@
-package bio.medico.patient.data.local
+package com.farmer.primary.network.dataSource.local
 
 object SpKey {
 

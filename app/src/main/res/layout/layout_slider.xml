@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/secton_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:padding="@dimen/_2sdp"
+        android:text="@string/today_agro_news"
+        android:textColor="@color/app_green"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/today_agro_news" />
+
+    <TextView
+        android:id="@+id/btn_view_all"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:background="@null"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:padding="@dimen/_2sdp"
+        android:gravity="center|end"
+        android:text="@string/view_all"
+        android:textAllCaps="false"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/_9ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/secton_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/secton_title" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager_slider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        android:padding="@dimen/_15sdp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/secton_title" />
+
+    <com.zhpan.indicator.IndicatorView
+        android:id="@+id/dots_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_pager_slider"
+        app:vpi_slide_mode="color"
+        app:vpi_slider_checked_color="@color/app_color"
+        app:vpi_slider_normal_color="@color/grey"
+        app:vpi_style="round_rect" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

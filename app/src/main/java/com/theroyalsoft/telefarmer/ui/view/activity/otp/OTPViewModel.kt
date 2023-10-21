@@ -2,6 +2,7 @@ package com.theroyalsoft.telefarmer.ui.view.activity.otp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.model.otp.OtpParams
 import com.farmer.primary.network.model.otp.OtpResponse
 import com.farmer.primary.network.repositorys.otp.OtpRepository
@@ -40,6 +41,7 @@ class OTPViewModel @Inject constructor(
 
     private fun setLogin(data: OtpResponse, phone: String) = runBlocking {
         pref.userLoginMode()
+        LocalData.setToken(data.accessToken)
         pref.putString(AppConstants.PREF_KEY_ACCESS_TOKEN, data.accessToken)
         pref.putString(AppConstants.PREF_KEY_USER_PHONE_NUM, phone)
     }

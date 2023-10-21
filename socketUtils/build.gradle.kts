@@ -39,8 +39,8 @@ dependencies {
     implementation(project(":appUtil"))
     implementation(project(":common"))
     implementation(project(":model"))
-    implementation(project(":data"))
-
+//    implementation(project(":data"))
+    implementation(project(":network"))
 
 
     implementation(Libraries.timber)

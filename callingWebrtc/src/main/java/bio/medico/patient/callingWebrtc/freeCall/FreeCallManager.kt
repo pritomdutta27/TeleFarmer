@@ -2,7 +2,7 @@ package bio.medico.patient.callingWebrtc.freeCall
 
 import android.app.Activity
 import android.os.Handler
-import bio.medico.patient.data.local.LocalData
+import com.farmer.primary.network.dataSource.local.LocalData
 import bio.medico.patient.model.apiResponse.ResponseSubInfo
 import com.theroyalsoft.mydoc.apputil.TimeUtil
 import timber.log.Timber
@@ -61,10 +61,10 @@ class FreeCallManager(
             if (callLimitStatusExpire == null) {
                 val json = LocalCallLimitStatusExpire.getCallLimitStatusExpireJson(
                     LocalCallLimitStatusExpire(
-                        LocalData.getUserUuid(), TimeUtil.getToday(), 1
+                        com.farmer.primary.network.dataSource.local.LocalData.getUserUuid(), TimeUtil.getToday(), 1
                     )
                 )
-                LocalData.setCallLimit(json)
+                com.farmer.primary.network.dataSource.local.LocalData.setCallLimit(json)
             } else {
                 if (freeCallInfo != null) {
                     when (freeCallInfo.callLimitType) {
@@ -76,7 +76,7 @@ class FreeCallManager(
                                 LocalCallLimitStatusExpire.getCallLimitStatusExpireJson(
                                     callLimitStatusExpire
                                 )
-                            LocalData.setCallLimit(json)
+                            com.farmer.primary.network.dataSource.local.LocalData.setCallLimit(json)
                         }
 
                         LocalCallLimitStatusExpire.STATUS_TYPE_EVERYDAY -> {
@@ -94,17 +94,17 @@ class FreeCallManager(
                                     LocalCallLimitStatusExpire.getCallLimitStatusExpireJson(
                                         callLimitStatusExpire
                                     )
-                                LocalData.setCallLimit(json1)
+                                com.farmer.primary.network.dataSource.local.LocalData.setCallLimit(json1)
                             } else {
                                 val json2 =
                                     LocalCallLimitStatusExpire.getCallLimitStatusExpireJson(
                                         LocalCallLimitStatusExpire(
-                                            LocalData.getUserUuid(),
+                                            com.farmer.primary.network.dataSource.local.LocalData.getUserUuid(),
                                             TimeUtil.getToday(),
                                             1
                                         )
                                     )
-                                LocalData.setCallLimit(json2)
+                                com.farmer.primary.network.dataSource.local.LocalData.setCallLimit(json2)
                             }
                         }
 
@@ -123,17 +123,17 @@ class FreeCallManager(
                                     LocalCallLimitStatusExpire.getCallLimitStatusExpireJson(
                                         callLimitStatusExpire
                                     )
-                                LocalData.setCallLimit(json1)
+                                com.farmer.primary.network.dataSource.local.LocalData.setCallLimit(json1)
                             } else {
                                 val json2 =
                                     LocalCallLimitStatusExpire.getCallLimitStatusExpireJson(
                                         LocalCallLimitStatusExpire(
-                                            LocalData.getUserUuid(),
+                                            com.farmer.primary.network.dataSource.local.LocalData.getUserUuid(),
                                             TimeUtil.getToday(),
                                             1
                                         )
                                     )
-                                LocalData.setCallLimit(json2)
+                                com.farmer.primary.network.dataSource.local.LocalData.setCallLimit(json2)
                             }
                         }
                     }
@@ -172,7 +172,7 @@ fun ResponseSubInfo.FreeCallInfo.hasFreeCallAvailable(): Boolean {
         Timber.d("isFreeCall:$isFreeCall | callLimitStatusExpire")
         return isFreeCall
     }
-    if (callLimitStatusExpire.getUserId() != LocalData.getUserUuid()) {
+    if (callLimitStatusExpire.getUserId() != com.farmer.primary.network.dataSource.local.LocalData.getUserUuid()) {
         isFreeCall = true
         Timber.d("isFreeCall:$isFreeCall | getUserUuid")
         return isFreeCall

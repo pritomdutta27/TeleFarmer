@@ -6,7 +6,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import bio.medico.patient.common.AppKey
-import bio.medico.patient.data.local.LocalData
+import com.farmer.primary.network.dataSource.local.LocalData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.theroyalsoft.mydoc.apputil.AppUtilConfig
 import timber.log.Timber
@@ -34,9 +34,9 @@ class CallAudioManager(
     //===========================player setup=============================
     fun initPlayerWelcomeTone() {
         welcomeToneMediaPlayer = if (LocalData.getLanguage() == AppKey.LANGUAGE_BN) {
-            MediaPlayer.create(activity, bio.medico.patient.assets.R.raw.welcome_tune_bn)
+            MediaPlayer.create(activity, bio.medico.patient.assets.R.raw.caller_tone)
         } else {
-            MediaPlayer.create(activity, bio.medico.patient.assets.R.raw.welcome_tune)
+            MediaPlayer.create(activity, bio.medico.patient.assets.R.raw.caller_tone)
         }
         welcomeToneMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
         welcomeToneMediaPlayer.isLooping = true

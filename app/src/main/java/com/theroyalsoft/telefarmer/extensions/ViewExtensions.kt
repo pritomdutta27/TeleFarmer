@@ -3,12 +3,17 @@ package com.theroyalsoft.telefarmer.extensions
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
 import android.animation.AnimatorListenerAdapter
+import android.os.Handler
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
+import com.zhpan.indicator.IndicatorView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Timer
+import java.util.TimerTask
 
 /**
  * Created by Pritom Dutta on 28/8/23.
@@ -58,4 +63,29 @@ fun TextView.typeWrite(lifecycleOwner: LifecycleOwner, text: String, intervalMs:
             this@typeWrite.text = text.take(it + 1)
         }
     }
+}
+
+
+fun ViewPager2.autoScroll(size: Int, count: Int, indicator: IndicatorView, handler: Handler?, mTimer: Timer?) {
+    var currentPage = count
+    val update: Runnable? = Runnable {
+        if (currentPage == size) {
+            currentPage = 0
+        }
+        setCurrentItem(currentPage++, true)
+    }
+
+    val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            currentPage = position
+            indicator.onPageSelected(position)
+        }
+    }
+    registerOnPageChangeCallback(pageChangeCallback)
+
+    mTimer?.schedule(object : TimerTask(){
+        override fun run() {
+            handler?.post(update!!)
+        }
+    },1000, 4000)
 }

@@ -4,6 +4,8 @@ import static io.socket.client.Socket.EVENT_CONNECT;
 import static io.socket.client.Socket.EVENT_CONNECT_ERROR;
 import static io.socket.client.Socket.EVENT_DISCONNECT;
 
+import com.farmer.primary.network.dataSource.local.LocalData;
+import com.farmer.primary.network.dataSource.local.MessageModel;
 import com.skh.hkhr.util.JsonUtil;
 import com.skh.hkhr.util.NullRemoveUtil;
 import com.theroyalsoft.mydoc.apputil.TimeUtil;
@@ -13,9 +15,6 @@ import java.net.URISyntaxException;
 import bio.medico.patient.common.AppKey;
 import bio.medico.patient.common.AppKeyLog;
 import bio.medico.patient.common.DeviceIDUtil;
-import bio.medico.patient.data.activityLog.AppLog;
-import bio.medico.patient.data.local.LocalData;
-import bio.medico.patient.data.local.MessageModel;
 import bio.medico.patient.model.socket.ResponseSpDoctor;
 import bio.medico.patient.model.socket.UserInfoSocket;
 import io.socket.client.IO;
@@ -83,7 +82,7 @@ public class SocketManagerSpecializedDoctor {
 
         } catch (URISyntaxException e) {
             Timber.e("Error:" + e.toString());
-            AppLog.sendApiLogErrorCodeScope(e);
+            //AppLog.sendApiLogErrorCodeScope(e);
         }
     }
 
@@ -106,7 +105,7 @@ public class SocketManagerSpecializedDoctor {
         } catch (Exception e) {
             Timber.e("Error:" + e.toString());
             onConnection(false);
-            AppLog.sendApiLogErrorCodeScope(e);
+            //AppLog.sendApiLogErrorCodeScope(e);
         }
     }
 
@@ -183,16 +182,16 @@ public class SocketManagerSpecializedDoctor {
 
                     //---------------------------------------------------------------
                     String message = "SOCKET CONNECTED >> with Socket.socketId: " + socketId;
-                    AppLog.sendSocketLog(uiName, SocketKeyChat.LISTENER_USER_INFO, message);
+                    //AppLog.sendSocketLog(uiName, SocketKeyChat.LISTENER_USER_INFO, message);
                     //-----------------------------------------------------------------
 
                 }).on(EVENT_CONNECT_ERROR, args -> {
                     Timber.e("SOCKET: ERROR disconnect");
-                   AppLog.sendSocketConnection(uiName, EVENT_CONNECT_ERROR, "SOCKET: ERROR disconnect");
+                   //AppLog.sendSocketConnection(uiName, EVENT_CONNECT_ERROR, "SOCKET: ERROR disconnect");
 
                     onConnection(false);
                 }).on(EVENT_DISCONNECT, args -> {
-                    AppLog.sendSocketConnection(uiName, EVENT_DISCONNECT, "SOCKET: disconnect");
+                    //AppLog.sendSocketConnection(uiName, EVENT_DISCONNECT, "SOCKET: disconnect");
                     Timber.e("SOCKET: disconnect");
                     onConnection(false);
                 })
@@ -230,7 +229,7 @@ public class SocketManagerSpecializedDoctor {
 
         } catch (Exception error) {
             Timber.e("Error: " + error.toString());
-            AppLog.sendApiLogErrorCodeScope(error);
+            //AppLog.sendApiLogErrorCodeScope(error);
         }
 
     }

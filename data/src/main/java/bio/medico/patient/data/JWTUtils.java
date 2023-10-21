@@ -2,6 +2,7 @@ package bio.medico.patient.data;
 
 import android.util.Base64;
 
+import com.farmer.primary.network.dataSource.local.LocalData;
 import com.skh.hkhr.util.JsonUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -9,7 +10,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import bio.medico.patient.common.AppKeyLog;
-import bio.medico.patient.data.local.LocalData;
 import timber.log.Timber;
 
 /**

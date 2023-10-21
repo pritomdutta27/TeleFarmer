@@ -1,9 +1,10 @@
 package bio.medico.patient.callingWebrtc.freeCall;
 
+import com.farmer.primary.network.dataSource.local.LocalData;
 import com.skh.hkhr.util.JsonUtil;
 import com.skh.hkhr.util.NullRemoveUtil;
 
-import bio.medico.patient.data.local.LocalData;
+
 import timber.log.Timber;
 
 /**

@@ -86,7 +86,7 @@ dependencies {
     implementation(project(":assets"))
     implementation(project(":common"))
     implementation(project(":model"))
-    implementation(project(":data"))
+//    implementation(project(":data"))
     implementation(project(":callingWebrtc"))
     implementation(project(":socketUtils"))
 
@@ -115,6 +115,7 @@ dependencies {
 
     //lottie
     implementation("com.airbnb.android:lottie:6.1.0")
+    implementation(Libraries.indicator_lib)
 
     implementation ("com.jakewharton.timber:timber:5.0.1") //timber
 
@@ -131,11 +132,12 @@ dependencies {
 
     //Hilt
     implementation(Libraries.hilt_android_lib)
+    kapt(Libraries.hilt_android_compiler_lib)
+    kapt(Libraries.hiltAnnotationProcessor)
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    kapt(Libraries.hilt_android_compiler_lib)
-    kapt(Libraries.hiltAnnotationProcessor)
+
 
     implementation("pub.devrel:easypermissions:3.0.0")
     implementation("com.github.SamiranKumar:common-util-android:1.13")

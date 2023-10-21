@@ -2,6 +2,8 @@ package com.farmer.primary.network.di
 
 import com.farmer.primary.network.repositorys.doctor.AvailableDoctorRepository
 import com.farmer.primary.network.repositorys.doctor.AvailableDoctorRepositoryImp
+import com.farmer.primary.network.repositorys.doctor.UpdateDoctorStatus
+import com.farmer.primary.network.repositorys.doctor.UpdateDoctorStatusImp
 import com.farmer.primary.network.repositorys.login.LoginRepository
 import com.farmer.primary.network.repositorys.login.LoginRepositoryImp
 import com.farmer.primary.network.repositorys.metadata.MetaDataRepository
@@ -48,4 +50,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideProfileRepository(api: ProfileRepositoryImp): ProfileRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideUpdateDoctorStatus(api: UpdateDoctorStatusImp): UpdateDoctorStatus
 }

@@ -2,6 +2,7 @@ package bio.medico.patient.callingWebrtc;
 
 import android.content.Context;
 
+import com.farmer.primary.network.dataSource.local.LocalData;
 import com.skh.hkhr.util.JsonUtil;
 import com.theroyalsoft.mydoc.apputil.AppUtilConfig;
 import com.theroyalsoft.mydoc.apputil.TimeUtil;
@@ -26,8 +27,6 @@ import org.webrtc.VideoTrack;
 import bio.medico.patient.common.AppKey;
 import bio.medico.patient.common.AppKeyLog;
 import bio.medico.patient.common.DeviceIDUtil;
-import bio.medico.patient.data.local.LocalData;
-import bio.medico.patient.data.ApiManager;
 import bio.medico.patient.socketUtils.SocketKey;
 import bio.medico.patient.socketUtils.SocketManager;
 import bio.medico.patient.model.socket.IceCandidateSocket;
@@ -169,7 +168,7 @@ public class CallManager {
                 mVideoCapturer.stopCapture();
             }
         } catch (InterruptedException e) {
-            ApiManager.sendApiLogErrorCodeScope(e);
+            //ApiManager.sendApiLogErrorCodeScope(e);
 
             Timber.e("Error:" + e.toString());
         }
@@ -185,7 +184,7 @@ public class CallManager {
             mVideoCapturer.startCapture(VIDEO_RESOLUTION_WIDTH, VIDEO_RESOLUTION_HEIGHT, VIDEO_FPS);
         } catch (Exception e) {
             Timber.e("Error:" + e.toString());
-            ApiManager.sendApiLogErrorCodeScope(e);
+            //ApiManager.sendApiLogErrorCodeScope(e);
         }
     }
 
@@ -245,7 +244,7 @@ public class CallManager {
 
                 //---------------------------------------------------------------
                 String message = "Send \"ANSAWER\" doctor call offer. DoctorId:" + doctorUuid;
-                ApiManager.sendApiLog(uiName, AppKeyLog.SEND_SOCKET, AppKeyLog.ENDPOINT_TYPE_SOCKET_LISTENER, SocketKey.LISTENER_DATA_WEBRTC_SIGNALING, message);
+               // ApiManager.sendApiLog(uiName, AppKeyLog.SEND_SOCKET, AppKeyLog.ENDPOINT_TYPE_SOCKET_LISTENER, SocketKey.LISTENER_DATA_WEBRTC_SIGNALING, message);
                 //-----------------------------------------------------------------
 
 
@@ -308,7 +307,7 @@ public class CallManager {
 
         //---------------------------------------------------------------
         String message = "Send WebRtc-ICE_CANDIDATE. DoctorId:" + SocketKey.RECEIVER_ID;
-        ApiManager.sendApiLog(uiName, AppKeyLog.SEND_SOCKET, AppKeyLog.ENDPOINT_TYPE_SOCKET_LISTENER, SocketKey.LISTENER_DATA_WEBRTC_SIGNALING, message);
+        //ApiManager.sendApiLog(uiName, AppKeyLog.SEND_SOCKET, AppKeyLog.ENDPOINT_TYPE_SOCKET_LISTENER, SocketKey.LISTENER_DATA_WEBRTC_SIGNALING, message);
         //-----------------------------------------------------------------
 
 
@@ -388,7 +387,7 @@ public class CallManager {
 
         //---------------------------------------------------------------
         String message = "Send " + SocketKey.KEY_TYPE_CALL_ENDED + " Click Call End Button . DoctorId:" + SocketKey.RECEIVER_ID;
-        ApiManager.sendApiLog(uiName, AppKeyLog.SEND_SOCKET, AppKeyLog.ENDPOINT_TYPE_SOCKET_LISTENER, SocketKey.LISTENER_PRE_OFFER_ANSWER, message);
+        //ApiManager.sendApiLog(uiName, AppKeyLog.SEND_SOCKET, AppKeyLog.ENDPOINT_TYPE_SOCKET_LISTENER, SocketKey.LISTENER_PRE_OFFER_ANSWER, message);
         //-----------------------------------------------------------------
 
     }
@@ -400,7 +399,7 @@ public class CallManager {
         socketManager.sendData(SocketKey.LISTENER_USER_HANGUP, json);
         //---------------------------------------------------------------
         String message = "Send " + SocketKey.KEY_TYPE_CALL_HANGED_UP + " in solar ui for force Stop Call & Click hangedUp Button . DoctorId:" + SocketKey.RECEIVER_ID;
-        ApiManager.sendApiLog(uiName, AppKeyLog.SEND_SOCKET, AppKeyLog.ENDPOINT_TYPE_SOCKET_LISTENER, SocketKey.LISTENER_USER_HANGUP, message);
+       // ApiManager.sendApiLog(uiName, AppKeyLog.SEND_SOCKET, AppKeyLog.ENDPOINT_TYPE_SOCKET_LISTENER, SocketKey.LISTENER_USER_HANGUP, message);
         //-----------------------------------------------------------------
 
 
@@ -424,7 +423,7 @@ public class CallManager {
 
         } catch (Exception e) {
             Timber.e("Error:" + e);
-            ApiManager.sendApiLogErrorCodeScope(e);
+           // ApiManager.sendApiLogErrorCodeScope(e);
 
         }
     }
@@ -456,7 +455,7 @@ public class CallManager {
 
         //---------------------------------------------------------------
         String message = "Send  call preOffer sdp. DoctorId:" + doctorUuid;
-        ApiManager.sendApiLog(uiName, AppKeyLog.SEND_SOCKET, AppKeyLog.ENDPOINT_TYPE_SOCKET_LISTENER, SocketKey.LISTENER_PRE_OFFER, message);
+        //ApiManager.sendApiLog(uiName, AppKeyLog.SEND_SOCKET, AppKeyLog.ENDPOINT_TYPE_SOCKET_LISTENER, SocketKey.LISTENER_PRE_OFFER, message);
         //-----------------------------------------------------------------
 
     }
