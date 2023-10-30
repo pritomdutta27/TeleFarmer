@@ -1,6 +1,7 @@
 package com.farmer.primary.network.dataSource
 
 import bio.medico.patient.model.apiResponse.CommonResponse
+import bio.medico.patient.model.apiResponse.RequestLabReport
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
@@ -33,6 +34,7 @@ class FarmerApi @Inject constructor(
     suspend fun fetchHome(): NetworkResult<HomeResponse> {
         return apiService.fetchHome()
     }
+
     suspend fun getMeta(): NetworkResult<ResponseMetaInfo> {
         return apiService.fetchMetaData()
     }
@@ -98,20 +100,27 @@ class FarmerApi @Inject constructor(
     suspend operator fun invoke(
         token: String,
         userInfo: String,
-        uuid: String,
         imageBody: MultipartBody.Part,
-        folder: String,
-        channel: String,
-        url: String
+        folder: MultipartBody.Part
     ): NetworkResult<CommonResponse> {
         return apiServiceForImage.imageUpload(
             token = token.getBearerToken(),
             headerUserInfo = userInfo,
             imageBody = imageBody,
-            user_id = uuid,
-            folder = folder,
-            channel = channel,
+            folder = folder
 //            url = url
+        )
+    }
+
+    suspend fun urlUpload(
+        token: String,
+        userInfo: String,
+        patientUpdate: Map<String,String>
+    ): NetworkResult<CommonResponse> {
+        return apiService.patientPrescriptionFileURLUpload(
+            token = token.getBearerToken(),
+            headerUserInfo = userInfo,
+            patientUpdate = patientUpdate
         )
     }
 }

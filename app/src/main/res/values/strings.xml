@@ -44,4 +44,5 @@
     <string name="view_all">See all</string>
     <string name="careline">Careline</string>
     <string name="no_previous_consultations_found">You have not had any previous consultations</string>
+    <string name="loading">Loading..</string>
 </resources>

@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import bio.medico.patient.common.AppKey
 import bio.medico.patient.model.apiResponse.CommonResponse
+import bio.medico.patient.model.apiResponse.RequestLabReport
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseCallHistory
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
@@ -166,19 +168,40 @@ class HomeViewModel @Inject constructor(
     }
 
     fun uploadFile(imgPart: MultipartBody.Part) {
+        val params: MultipartBody.Part = MultipartBody.Part.createFormData("folderName", "labReport")
         val headerUserInfo: String = UserDevices.getUserDevicesJson("labReportUploadApi")
+
         viewModelScope.launch {
             mLabReportRepository.uploadImgFile(
                 headerUserInfo,
                 LocalData.getUserUuid(),
-                imgPart,
-                "labReport",
-                "android",
-                LocalData.getMetaInfoMetaData().imageUploadBaseUrl
+                imgPart, params
+            ).onSuccess { res ->
+                urlStore(res.file)
+            }.onError { _, message ->
+                //Log.e("setMetaData", "setMetaData: "+message)
+                errorFlow.emit("Message: $message")
+            }.onException { error ->
+                // Log.e("setMetaData", "setMetaData: "+error)
+                errorFlow.emit("$error")
+            }
+        }
+    }
+
+    fun urlStore(url: String) {
+        val headerUserInfo: String = UserDevices.getUserDevicesJson("labReport")
+//        val labReport =   RequestLabReport(LocalData.getUserUuid(),url, AppKey.CHANNEL)
+        val labReport = mutableMapOf<String,String>()
+        labReport["patientUuid"] = LocalData.getUserUuid()
+        labReport["fileUrl"] = url
+        labReport["channel"] = AppKey.CHANNEL
+        viewModelScope.launch {
+            mLabReportRepository.patientLabReportFileURLUpload(
+                headerUserInfo,
+                labReport
             ).onSuccess { res ->
                 imgUrlStateFlow.emit(res)
             }.onError { _, message ->
-                //Log.e("setMetaData", "setMetaData: "+message)
                 errorFlow.emit("Message: $message")
             }.onException { error ->
                 // Log.e("setMetaData", "setMetaData: "+error)

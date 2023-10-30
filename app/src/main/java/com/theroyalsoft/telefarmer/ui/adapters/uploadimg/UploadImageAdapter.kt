@@ -43,7 +43,7 @@ class UploadImageAdapter(val onClickImage: () -> Unit) :
         BaseViewHolder(mBinding.root) {
         override fun onBind(position: Int) {
 //            itemView.setOnClickListener { onClickImage() }
-            mBinding.imgNews.setImage(LocalData.getMetaInfoMetaData().imgBaseUrl + list[position].fileUrl)
+            mBinding.imgNews.setImage(LocalData.getMetaInfoMetaData().imgBaseUrl + "/uploaded/" + list[position].fileUrl)
             val file = File(list[position].fileUrl)
             mBinding.tvNewTitle.text = file.name
             mBinding.tvNewDate.text = list[position].updatedAt.getFromDateTime("yyyy-MM-dd'T'HH:mm:ssXXX", "MMM dd, yyyy")

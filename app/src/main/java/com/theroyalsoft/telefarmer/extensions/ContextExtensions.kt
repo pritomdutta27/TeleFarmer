@@ -152,3 +152,13 @@ fun Int.convertToHumanTime(): String {
     val minutesString = if (minutes < 10) "0$minutes" else "$minutes"
     return "$minutesString:$secondsString"
 }
+
+fun Context.showLoadingDialog(): Dialog {
+    val dialog = Dialog(this)
+    dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.setCancelable(false)
+    dialog.setContentView(R.layout.progress_dialog)
+//    dialog.show()
+    return dialog
+}

@@ -87,11 +87,10 @@ interface ApiService {
 
     //labReportUploadApi
 
-
     @POST("labReport")
-    fun patientPrescriptionFileURLUpload(
+    suspend fun patientPrescriptionFileURLUpload(
         @Header("Authorization") token: String,
         @Header("UserInfo") headerUserInfo: String,
-        @Body patientUpdate: RequestLabReport?
+        @Body patientUpdate: Map<String,String>
     ): NetworkResult<CommonResponse>
 }

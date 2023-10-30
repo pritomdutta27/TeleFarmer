@@ -1,8 +1,10 @@
 package com.theroyalsoft.telefarmer.ui.view.fragments.home
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -36,6 +38,8 @@ import com.theroyalsoft.telefarmer.databinding.FragmentHomeBinding
 import com.theroyalsoft.telefarmer.extensions.autoScroll
 import com.theroyalsoft.telefarmer.extensions.getCameraAndMicPermission
 import com.theroyalsoft.telefarmer.extensions.getCameraAndPhotoPermission
+import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
+import com.theroyalsoft.telefarmer.extensions.showLoadingDialog
 import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.helper.EqualSpacingItemDecoration
 import com.theroyalsoft.telefarmer.helper.GridSpacingItemDecoration
@@ -45,7 +49,6 @@ import com.theroyalsoft.telefarmer.ui.adapters.previousConsultation.PreviousCons
 import com.theroyalsoft.telefarmer.ui.adapters.slider.SliderAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.tipsntricks.TipsNTricksHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.uploadimg.UploadImageHomeAdapter
-import com.theroyalsoft.telefarmer.utils.ImagePickUpUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -62,6 +65,7 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.Timer
+
 
 @AndroidEntryPoint
 class HomeFragment() : Fragment() {
@@ -87,14 +91,13 @@ class HomeFragment() : Fragment() {
 
             var imgFile: File = getFile(requireContext(), bitmapImage!!)
 
-            /* try {
-                 val compressToBitmap: Bitmap =
-                     Compressor(requireContext()).compressToBitmap(imgFile)
+            try {
+                 val compressToBitmap = imgFile.path.resizeBitMapImage1(200,200)
                  imgFile = getFile(requireContext(), compressToBitmap)
              } catch (e: IOException) {
                  Timber.e("Error:$e")
                  return@registerForActivityResult
-             }*/
+             }
 
             val imgFileName: String = imgFile.name
 
@@ -106,6 +109,7 @@ class HomeFragment() : Fragment() {
                 imgFileName,
                 requestFile
             )
+            loadingDialog?.show()
             viewModel.uploadFile(imageBody)
         } else {
             // An error occurred.
@@ -117,6 +121,8 @@ class HomeFragment() : Fragment() {
 
     private var imgUrl = "";
 
+    private var loadingDialog: Dialog? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -126,6 +132,8 @@ class HomeFragment() : Fragment() {
         initView()
         event()
 
+        loadingDialog = requireContext().showLoadingDialog()
+
         imgUrl = LocalData.getMetaInfoMetaData().imgBaseUrl
         viewModel.getHomeData()
 
@@ -134,6 +142,7 @@ class HomeFragment() : Fragment() {
         getCallHistory()
         getLabReport()
         getHomeResponse()
+        uploadFile()
         ifApiGetError()
         return binding.root
     }
@@ -227,18 +236,26 @@ class HomeFragment() : Fragment() {
 
     private fun rvImageUploadSetup(list: List<ResponseLabReport.ItemLabReport>) {
         mUploadImageHomeAdapter = UploadImageHomeAdapter(imgUrl)
-        //val data = list
+        var data: List<Int>
+        if (list.size > 2) {
+            data = listOf(0, 1, 2)
+        } else if (list.size > 1) {
+            data = listOf(0, 1)
+        } else {
+            data = listOf(0)
+        }
+
         var gridLayoutManager: LayoutManager
         if (list.size > 1) {
             gridLayoutManager = SpannedGridLayoutManager({ position ->
                 val spanInfo = SpannedGridLayoutManager.SpanInfo(1, 1)
-                if (position == 1) {
+                if (data[position] == 1) {
                     spanInfo.columnSpan = 1
                     spanInfo.rowSpan = 1
-                } else if (position == 0) {
-                    spanInfo.columnSpan = 1
-//                spanInfo.rowSpan = 1
-                } else if (position == 3) {
+                } else if (data[position] == 0) {
+//                    spanInfo.columnSpan = 1
+                    spanInfo.rowSpan = 1
+                } else if (data[position] == 2) {
                     spanInfo.columnSpan = 2
                     spanInfo.rowSpan = 1
                 }
@@ -253,9 +270,6 @@ class HomeFragment() : Fragment() {
 //        val mLayoutManagerT =
         binding.llUploadImage.rvUploadImg.apply {
             layoutManager = gridLayoutManager
-            setHasFixedSize(true)
-            setItemViewCacheSize(20)
-
             adapter = mUploadImageHomeAdapter
         }
         mUploadImageHomeAdapter.submitData(list)
@@ -342,6 +356,15 @@ class HomeFragment() : Fragment() {
         }
     }
 
+    private fun uploadFile() {
+        lifecycleScope.launch {
+            viewModel._imgUrlStateFlow.collect {
+                loadingDialog?.dismiss()
+                viewModel.getLabReport()
+            }
+        }
+    }
+
     private fun getHomeResponse() {
         lifecycleScope.launch {
             viewModel._homeStateFlow.collect {
@@ -356,6 +379,7 @@ class HomeFragment() : Fragment() {
     private fun ifApiGetError() {
         lifecycleScope.launch {
             viewModel._errorFlow.collect { errorStr ->
+                loadingDialog?.dismiss()
                 withContext(Dispatchers.Main) {
                     if (errorStr.isNotEmpty()) {
                         requireContext().showToast(errorStr)
@@ -381,7 +405,7 @@ class HomeFragment() : Fragment() {
             }
     }
 
-    private fun getFile(context: Context, bm: Bitmap): File {
+    private fun getFile(context: Context, bm: Bitmap?): File {
         val imgFile = File(context.cacheDir, "image-" + System.currentTimeMillis() + ".jpg")
         try {
             imgFile.createNewFile()
@@ -389,7 +413,7 @@ class HomeFragment() : Fragment() {
             Timber.d("Error:$e")
         }
         val bos = ByteArrayOutputStream()
-        bm.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos)
+        bm?.compress(Bitmap.CompressFormat.JPEG, 50 /*ignored for PNG*/, bos)
         val bitmapData = bos.toByteArray()
         var fos: FileOutputStream? = null
         try {
@@ -404,6 +428,8 @@ class HomeFragment() : Fragment() {
         }
         return imgFile
     }
+
+
 
 }
 

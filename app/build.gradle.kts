@@ -147,6 +147,7 @@ dependencies {
 
     implementation("pub.devrel:easypermissions:3.0.0")
     implementation("com.github.SamiranKumar:common-util-android:1.13")
+//    implementation ("id.zelory:compressor:3.0.0")
 
     //retrofit
     val retrofit = "2.9.0"

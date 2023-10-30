@@ -31,7 +31,7 @@ class UploadImageHomeAdapter(private val imgUrl: String) : RecyclerView.Adapter<
     inner class ImageUploadHomeHolder(private val mBinding: ItemImageUploadBinding) :
         BaseViewHolder(mBinding.root) {
         override fun onBind(position: Int) {
-            mBinding.imgNews.setImage(imgUrl + list[position].fileUrl)
+            mBinding.imgNews.setImage(imgUrl + "/uploaded/" + list[position].fileUrl)
 //            itemView.setOnClickListener { onClickImage() }
         }
     }

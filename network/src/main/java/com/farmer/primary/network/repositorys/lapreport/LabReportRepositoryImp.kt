@@ -1,7 +1,10 @@
 package com.farmer.primary.network.repositorys.lapreport
 
+import bio.medico.patient.model.apiResponse.CommonResponse
+import bio.medico.patient.model.apiResponse.RequestLabReport
 import com.farmer.primary.network.dataSource.FarmerApi
 import com.farmer.primary.network.utils.AppConstants
+import com.farmer.primary.network.utils.NetworkResult
 import dynamic.app.survey.data.dataSource.local.preferences.abstraction.DataStoreRepository
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -26,12 +29,18 @@ class LabReportRepositoryImp @Inject constructor(
         userInfo: String,
         uuid: String,
         imageBody: MultipartBody.Part,
-        folder: String,
-        channel: String,
-        url: String
-    ) = api.invoke(
+        folder: MultipartBody.Part
+    )= api.invoke(
+        token = pref.getString(AppConstants.PREF_KEY_ACCESS_TOKEN) ?: "",
+        userInfo = userInfo, imageBody = imageBody, folder = folder
+    )
+
+    override suspend fun patientLabReportFileURLUpload(
+        userInfo: String,
+        patientUpdate: Map<String,String>
+    ) = api.urlUpload(
         token = pref.getString(AppConstants.PREF_KEY_ACCESS_TOKEN) ?: "",
         userInfo = userInfo,
-        uuid = uuid, imageBody = imageBody, folder = folder, channel = channel, url = url
+        patientUpdate = patientUpdate
     )
 }

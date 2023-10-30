@@ -2,6 +2,8 @@ package com.theroyalsoft.telefarmer.extensions
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -71,4 +73,46 @@ inline fun <reified T : Parcelable> Intent.parcelableArrayList(key: String): Arr
 inline fun <reified T : Parcelable> Bundle.parcelableArrayList(key: String): ArrayList<T>? = when {
     Build.VERSION.SDK_INT >= 33 -> getParcelableArrayList(key, T::class.java)
     else -> @Suppress("DEPRECATION") getParcelableArrayList(key)
+}
+
+fun String.resizeBitMapImage1( targetWidth: Int,
+    targetHeight: Int
+): Bitmap? {
+    var bitMapImage: Bitmap? = null
+    // First, get the dimensions of the image
+    val options = BitmapFactory.Options()
+    options.inJustDecodeBounds = true
+    BitmapFactory.decodeFile(this, options)
+    var sampleSize = 0.0
+    // Only scale if we need to
+    // (16384 buffer for img processing)
+    val scaleByHeight: Boolean = Math.abs(options.outHeight - targetHeight) >= Math
+        .abs(options.outWidth - targetWidth)
+    if (options.outHeight * options.outWidth * 2 >= 1638) {
+        // Load, scaling to smallest power of 2 that'll get it <= desired
+        // dimensions
+        sampleSize =
+            if (scaleByHeight) (options.outHeight / targetHeight).toDouble() else (options.outWidth / targetWidth).toDouble()
+        sampleSize = Math.pow(
+            2.0,
+            Math.floor(Math.log(sampleSize) / Math.log(2.0))
+        ).toInt().toDouble()
+    }
+
+    // Do the actual decoding
+    options.inJustDecodeBounds = false
+    options.inTempStorage = ByteArray(128)
+    while (true) {
+        try {
+            options.inSampleSize = sampleSize.toInt()
+            bitMapImage = BitmapFactory.decodeFile(this, options)
+            break
+        } catch (ex: Exception) {
+            try {
+                sampleSize = sampleSize * 2
+            } catch (ex1: Exception) {
+            }
+        }
+    }
+    return bitMapImage
 }

@@ -7,6 +7,7 @@ class RequestLabReport {
     private var patientName: String? = null
     private var phoneNumber: String? = null
 
+
     constructor(patientUuid: String, fileUrl: String, channel: String) {
         this.patientUuid = patientUuid
         this.fileUrl = fileUrl

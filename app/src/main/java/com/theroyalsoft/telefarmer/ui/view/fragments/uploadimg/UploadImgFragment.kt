@@ -1,5 +1,6 @@
 package com.theroyalsoft.telefarmer.ui.view.fragments.uploadimg
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -23,6 +24,8 @@ import com.canhub.cropper.CropImageOptions
 import com.theroyalsoft.telefarmer.R
 import com.theroyalsoft.telefarmer.databinding.FragmentUploadImgBinding
 import com.theroyalsoft.telefarmer.extensions.getCameraAndPhotoPermission
+import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
+import com.theroyalsoft.telefarmer.extensions.showLoadingDialog
 import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.helper.EqualSpacingItemDecoration
 import com.theroyalsoft.telefarmer.ui.adapters.uploadimg.UploadImageAdapter
@@ -53,6 +56,9 @@ class UploadImgFragment : Fragment() {
     private lateinit var mUploadImageAdapter: UploadImageAdapter
 
     private lateinit var bitmapImage: Bitmap
+
+    private var loadingDialog: Dialog? = null
+
     private val cropImage = registerForActivityResult(CropImageContract()) { result ->
         if (result.isSuccessful) {
             // Use the returned uri.
@@ -65,14 +71,13 @@ class UploadImgFragment : Fragment() {
 
             var imgFile: File = getFile(requireContext(), bitmapImage!!)
 
-            /* try {
-                 val compressToBitmap: Bitmap =
-                     Compressor(requireContext()).compressToBitmap(imgFile)
-                 imgFile = getFile(requireContext(), compressToBitmap)
-             } catch (e: IOException) {
-                 Timber.e("Error:$e")
-                 return@registerForActivityResult
-             }*/
+            try {
+                val compressToBitmap = imgFile.path.resizeBitMapImage1(200,200)
+                imgFile = getFile(requireContext(), compressToBitmap)
+            } catch (e: IOException) {
+                Timber.e("Error:$e")
+                return@registerForActivityResult
+            }
 
             val imgFileName: String = imgFile.name
 
@@ -84,6 +89,7 @@ class UploadImgFragment : Fragment() {
                 imgFileName,
                 requestFile
             )
+            loadingDialog?.show()
             viewModel.uploadFile(imageBody)
         } else {
             // An error occurred.
@@ -99,6 +105,8 @@ class UploadImgFragment : Fragment() {
     ): View? {
         binding = FragmentUploadImgBinding.inflate(layoutInflater, container, false)
 
+        loadingDialog = requireContext().showLoadingDialog()
+
         initView()
         photoPickerInitialize()
 
@@ -110,6 +118,7 @@ class UploadImgFragment : Fragment() {
 
         viewModel.getLabReport()
         getResponseLabReport()
+        uploadFile()
         ifApiGetError()
 
         return binding.root
@@ -150,12 +159,22 @@ class UploadImgFragment : Fragment() {
 
     private fun ifApiGetError() {
         lifecycleScope.launch {
+            loadingDialog?.dismiss()
             viewModel._errorFlow.collect { errorStr ->
                 withContext(Dispatchers.Main) {
                     if (errorStr.isNotEmpty()) {
                         requireContext().showToast(errorStr)
                     }
                 }
+            }
+        }
+    }
+
+    private fun uploadFile() {
+        lifecycleScope.launch {
+            viewModel._imgUrlStateFlow.collect {
+                loadingDialog?.dismiss()
+                viewModel.getLabReport()
             }
         }
     }
@@ -173,7 +192,7 @@ class UploadImgFragment : Fragment() {
                 }
             }
     }
-    private fun getFile(context: Context, bm: Bitmap): File {
+    private fun getFile(context: Context, bm: Bitmap?): File {
         val imgFile = File(context.cacheDir, "image-" + System.currentTimeMillis() + ".jpg")
         try {
             imgFile.createNewFile()
@@ -181,7 +200,7 @@ class UploadImgFragment : Fragment() {
             Timber.d("Error:$e")
         }
         val bos = ByteArrayOutputStream()
-        bm.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos)
+        bm?.compress(Bitmap.CompressFormat.JPEG, 60 /*ignored for PNG*/, bos)
         val bitmapData = bos.toByteArray()
         var fos: FileOutputStream? = null
         try {
