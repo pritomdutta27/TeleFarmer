@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farmer.primary.network.dataSource.local.LocalData
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
+import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import com.farmer.primary.network.model.profile.ProfileModel
 import com.farmer.primary.network.repositorys.metadata.MetaDataRepository
 import com.farmer.primary.network.repositorys.profile.ProfileRepository
@@ -39,9 +40,9 @@ class MainViewModel @Inject constructor(
 
     }
 
-    private fun setProfileInfo(data: ProfileModel?) = runBlocking {
+    private fun setProfileInfo(data: ResponsePatientInfo?) = runBlocking {
 //        LocalData.setUserProfile(data.toString())
-        //LocalData.setUserProfileAll(data)
+        LocalData.setUserProfileAll(data)
         pref.putModel(AppConstants.PREF_KEY_USER_INFO, data)
     }
 
@@ -62,8 +63,8 @@ class MainViewModel @Inject constructor(
 //            LocalData.setToken(getToken())
 //            val metaData = JsonUtils.getMetaData("meta_data.json")
 //            LocalData.saveData(metaData)
-            val profile = JsonUtils.getProfile("profile_info.json")
-            LocalData.setUserProfileAll(profile)
+//            val profile = JsonUtils.getProfile("profile_info.json")
+//            LocalData.setUserProfileAll(profile)
 
 //            Timber.e("metaData ${LocalData.getToken()}")
             val response = repository.fetchMetaData()
@@ -80,18 +81,18 @@ class MainViewModel @Inject constructor(
     }
 
     fun fetchProfile() {
-//        viewModelScope.launch {
-//            val response = repositoryProfile.profileInfo(getPhone())
-//            response.onSuccess { res ->
-//                setProfileInfo(res)
-//            }.onError { _, message ->
-//                //Log.e("setMetaData", "setMetaData: "+message)
-//                errorFlow.emit("Message: $message")
-//            }.onException { error ->
-//                // Log.e("setMetaData", "setMetaData: "+error)
-//                errorFlow.emit("$error")
-//            }
-//        }
+        viewModelScope.launch {
+            val response = repositoryProfile.profileInfo(getPhone())
+            response.onSuccess { res ->
+                setProfileInfo(res)
+            }.onError { _, message ->
+                //Log.e("setMetaData", "setMetaData: "+message)
+                errorFlow.emit("Message: $message")
+            }.onException { error ->
+                // Log.e("setMetaData", "setMetaData: "+error)
+                errorFlow.emit("$error")
+            }
+        }
     }
 
 

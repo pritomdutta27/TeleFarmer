@@ -100,7 +100,7 @@
                 android:textSize="@dimen/_12sdp" />
 
             <EditText
-                android:id="@+id/tv_name"
+                android:id="@+id/et_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.1"
@@ -155,6 +155,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.1"
                 android:lines="1"
+                android:enabled="false"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/montserrat_medium"
                 android:gravity="start|center_vertical"
@@ -292,7 +293,7 @@
                 android:drawablePadding="@dimen/_5sdp"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:paddingStart="@dimen/_5sdp"
-                android:text="@string/expiry"
+                android:text="@string/dob"
                 android:textSize="@dimen/_12sdp" />
 
             <TextView
@@ -313,7 +314,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/montserrat_medium"
                 android:gravity="start|center_vertical"
-                android:hint="@string/expiry_date"
+                android:hint="@string/date_of_birth"
                 android:paddingEnd="@dimen/_5sdp"
                 android:textColorHint="@color/hint_color"
                 android:textSize="@dimen/_11sdp" />

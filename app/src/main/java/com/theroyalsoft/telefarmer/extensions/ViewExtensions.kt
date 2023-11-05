@@ -109,3 +109,13 @@ fun ImageView.setImage(url: String) {
         .into(this);
 
 }
+
+fun ImageView.setImageProfile(url: String) {
+    Timber.e("Image: $url")
+    Glide
+        .with(this)
+        .load(url)
+        .placeholder(R.drawable.avatar_man)
+        .into(this);
+
+}

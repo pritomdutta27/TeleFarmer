@@ -1,5 +1,6 @@
 package com.farmer.primary.network.repositorys.profile
 
+import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import com.farmer.primary.network.dataSource.FarmerApi
 import com.farmer.primary.network.model.profile.ProfileModel
 import com.farmer.primary.network.utils.AppConstants
@@ -15,7 +16,7 @@ class ProfileRepositoryImp @Inject constructor(
     private val api: FarmerApi,
     private val pref: DataStoreRepository
 ) : ProfileRepository {
-    override suspend fun profileInfo(params: String): NetworkResult<ProfileModel> {
+    override suspend fun profileInfo(params: String): NetworkResult<ResponsePatientInfo> {
         return api.invoke(pref.getString(AppConstants.PREF_KEY_ACCESS_TOKEN) ?: "", params)
     }
 }

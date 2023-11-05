@@ -12,6 +12,7 @@ import com.google.gson.Gson
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import com.livetechnologies.primary.network.BuildConfig
+import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,18 +46,22 @@ object NetworkModule {
     fun provideContext(application: Application): Context {
         return application
     }
-    
+
     @Provides
     fun provideGson(): Gson = Gson()
 
     @Provides
     @Singleton
     fun provideOkhttpClient(@ApplicationContext context: Context): OkHttpClient {
-        return OkHttpClient.Builder()
-            .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
+        val builder = OkHttpClient.Builder()
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(OkHttpProfilerInterceptor())
+        }
+        builder.readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(getLogInterceptors(BuildConfig.DEBUG))
-            .cache(getCache(context)).build()
+            .cache(getCache(context))
+        return builder.build()
     }
 
     @Provides
@@ -95,7 +100,7 @@ object NetworkModule {
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(
-               DataSourceConstants.WEATHER_URL
+                DataSourceConstants.WEATHER_URL
             )
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(NetworkResultCallAdapterFactory.create())
@@ -124,6 +129,7 @@ object NetworkModule {
 
     @Suppress("SameParameterValue")
     private fun getLogInterceptors(isDebugAble: Boolean = false): Interceptor {
+
         val builder = LoggingInterceptor.Builder()
             .setLevel(if (isDebugAble) Level.BASIC else Level.NONE)
             .log(Platform.INFO)

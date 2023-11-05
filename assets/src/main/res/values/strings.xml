@@ -92,6 +92,7 @@
     <string name="patient_name">Patient Name</string>
     <string name="patient_name_bn">রোগীর নাম</string>
     <string name="date_of_birth">Date of Birth</string>
+    <string name="dob">DOB</string>
     <string name="date_of_birth_bn">জন্ম তারিখ</string>
     <string name="age">Age</string>
     <string name="gender">Gender</string>

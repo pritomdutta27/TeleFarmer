@@ -7,6 +7,7 @@ import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
 import bio.medico.patient.model.apiResponse.ResponseLogin
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
+import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
 import com.farmer.primary.network.model.home.HomeResponse
 import com.farmer.primary.network.model.login.LoginOutParams
@@ -60,7 +61,7 @@ interface ApiService {
     suspend fun fetchProfileData(
         @Header("Authorization") token: String,
         @Path("phoneNumber") phoneNumber: String
-    ): NetworkResult<ProfileModel>
+    ): NetworkResult<ResponsePatientInfo>
 
     @POST("doctor/statusUpdate")
     suspend fun doctorStatusUpdate(

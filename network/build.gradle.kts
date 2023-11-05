@@ -71,6 +71,8 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
+    implementation ("com.localebro:okhttpprofiler:1.0.8")
+
     implementation(project(":model"))
     implementation(project(":appUtil"))
     implementation(project(":common"))

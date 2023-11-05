@@ -24,8 +24,6 @@ public class ResponsePatientInfo {
     private String image;
 
 
-
-
     public String getImage() {
         return NullRemoveUtil.getNotNull(image);
     }

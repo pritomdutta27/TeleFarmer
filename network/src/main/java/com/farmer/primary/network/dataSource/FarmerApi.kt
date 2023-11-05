@@ -7,6 +7,7 @@ import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
 import bio.medico.patient.model.apiResponse.ResponseLogin
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
+import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
 import com.farmer.primary.network.model.doctor.Doctor
 import com.farmer.primary.network.model.home.HomeResponse
@@ -63,7 +64,7 @@ class FarmerApi @Inject constructor(
     suspend operator fun invoke(
         token: String,
         phoneNumber: String
-    ): NetworkResult<ProfileModel> {
+    ): NetworkResult<ResponsePatientInfo> {
         return apiService.fetchProfileData(token.getBearerToken(), phoneNumber)
     }
 
