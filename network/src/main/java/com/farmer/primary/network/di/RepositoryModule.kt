@@ -18,6 +18,8 @@ import com.farmer.primary.network.repositorys.otp.OtpRepository
 import com.farmer.primary.network.repositorys.otp.OtpRepositoryImp
 import com.farmer.primary.network.repositorys.profile.ProfileRepository
 import com.farmer.primary.network.repositorys.profile.ProfileRepositoryImp
+import com.farmer.primary.network.repositorys.weather.WeatherRepository
+import com.farmer.primary.network.repositorys.weather.WeatherRepositoryImp
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -37,6 +39,7 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideHomeRepository(api: HomeRepositoryImp): HomeRepository
+
     @Binds
     @Singleton
     abstract fun provideMetaDataRepository(api: MetaDataRepositoryImp): MetaDataRepository
@@ -72,4 +75,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideLabReportRepository(api: LabReportRepositoryImp): LabReportRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideWeatherRepository(api: WeatherRepositoryImp): WeatherRepository
 }

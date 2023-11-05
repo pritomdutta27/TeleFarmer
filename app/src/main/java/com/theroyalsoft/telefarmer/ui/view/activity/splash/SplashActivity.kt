@@ -4,6 +4,7 @@ package com.theroyalsoft.telefarmer.ui.view.activity.splash
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.animation.AlphaAnimation
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
@@ -39,27 +40,27 @@ class SplashActivity : AppCompatActivity() {
         fadeIn.interpolator = DecelerateInterpolator() //add this
         fadeIn.duration = 2000
         binding.imgAppIcon.animation = fadeIn
-
-        callActivity()
+        Handler(Looper.getMainLooper()).postDelayed({
+            callActivity()
+        }, 3000)
     }
 
-
     fun callActivity() {
-        Handler(Looper.getMainLooper()).postDelayed({
-            lifecycleScope.launch {
-                val userLogin = pref.getInt(PREF_KEY_USER_LOGGED_IN_MODE)
-                if (userLogin == null || userLogin == LOGGED_IN_MODE_LOGGED_OUT.type) {
-                    pref.putInt(
-                        PREF_KEY_USER_LOGGED_IN_MODE,
-                        LOGGED_IN_MODE_LOGGED_OUT.type
-                    )
-                    startActivity(LoginActivity.newIntent(this@SplashActivity))
-                    finish()
-                } else {
-                    startActivity(MainActivity.newIntent(this@SplashActivity))
-                    finish()
-                }
+        lifecycleScope.launch {
+            val userLogin = pref.getInt(PREF_KEY_USER_LOGGED_IN_MODE)
+            Log.e("userLogin", "userLogin ${userLogin}")
+            if (userLogin == null || userLogin == LOGGED_IN_MODE_LOGGED_OUT.type) {
+                pref.putInt(
+                    PREF_KEY_USER_LOGGED_IN_MODE,
+                    LOGGED_IN_MODE_LOGGED_OUT.type
+                )
+                startActivity(LoginActivity.newIntent(this@SplashActivity))
+                finish()
+            } else {
+                startActivity(MainActivity.newIntent(this@SplashActivity))
+                finish()
             }
-        }, 3000)
+        }
+
     }
 }

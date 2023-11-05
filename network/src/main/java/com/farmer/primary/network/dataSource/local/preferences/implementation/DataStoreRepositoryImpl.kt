@@ -69,7 +69,7 @@ class DataStoreRepositoryImpl @Inject constructor(
     override suspend fun getInt(key: String): Int? {
         val preferencesKey = intPreferencesKey(key)
         val preferences = context.dataStore.data.first()
-        return preferences[preferencesKey]
+        return preferences[preferencesKey] ?: 0
     }
 
     override suspend fun getUserID(): Int? {

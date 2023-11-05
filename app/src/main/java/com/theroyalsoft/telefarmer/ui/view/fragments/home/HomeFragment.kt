@@ -39,6 +39,7 @@ import com.theroyalsoft.telefarmer.extensions.autoScroll
 import com.theroyalsoft.telefarmer.extensions.getCameraAndMicPermission
 import com.theroyalsoft.telefarmer.extensions.getCameraAndPhotoPermission
 import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
+import com.theroyalsoft.telefarmer.extensions.setImage
 import com.theroyalsoft.telefarmer.extensions.showLoadingDialog
 import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.helper.EqualSpacingItemDecoration
@@ -49,6 +50,7 @@ import com.theroyalsoft.telefarmer.ui.adapters.previousConsultation.PreviousCons
 import com.theroyalsoft.telefarmer.ui.adapters.slider.SliderAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.tipsntricks.TipsNTricksHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.uploadimg.UploadImageHomeAdapter
+import com.theroyalsoft.telefarmer.ui.adapters.weather.WeatherAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -75,6 +77,7 @@ class HomeFragment() : Fragment() {
 
     private lateinit var sliderAdapter: SliderAdapter
     private lateinit var previousConsultationAdapter: PreviousConsultationAdapter
+    private lateinit var weatherAdapter: WeatherAdapter
     private lateinit var mUploadImageHomeAdapter: UploadImageHomeAdapter
     private lateinit var mTipsNTricksHomeAdapter: TipsNTricksHomeAdapter
 
@@ -92,12 +95,12 @@ class HomeFragment() : Fragment() {
             var imgFile: File = getFile(requireContext(), bitmapImage!!)
 
             try {
-                 val compressToBitmap = imgFile.path.resizeBitMapImage1(200,200)
-                 imgFile = getFile(requireContext(), compressToBitmap)
-             } catch (e: IOException) {
-                 Timber.e("Error:$e")
-                 return@registerForActivityResult
-             }
+                val compressToBitmap = imgFile.path.resizeBitMapImage1(200, 200)
+                imgFile = getFile(requireContext(), compressToBitmap)
+            } catch (e: IOException) {
+                Timber.e("Error:$e")
+                return@registerForActivityResult
+            }
 
             val imgFileName: String = imgFile.name
 
@@ -134,7 +137,7 @@ class HomeFragment() : Fragment() {
 
         loadingDialog = requireContext().showLoadingDialog()
 
-        imgUrl = LocalData.getMetaInfoMetaData().imgBaseUrl
+        imgUrl = LocalData.getMetaInfoMetaData()?.imgBaseUrl ?: ""
         viewModel.getHomeData()
 
         photoPickerInitialize()
@@ -142,6 +145,8 @@ class HomeFragment() : Fragment() {
         getCallHistory()
         getLabReport()
         getHomeResponse()
+        getWeather()
+
         uploadFile()
         ifApiGetError()
         return binding.root
@@ -161,6 +166,7 @@ class HomeFragment() : Fragment() {
 
 //
         rvSetUpPreviousConsultation()
+        rvWeatherSet()
 //        rvImageUploadSetup()
 
         mTipsNTricksHomeAdapter = TipsNTricksHomeAdapter {
@@ -275,6 +281,20 @@ class HomeFragment() : Fragment() {
         mUploadImageHomeAdapter.submitData(list)
     }
 
+    private fun rvWeatherSet(){
+        weatherAdapter = WeatherAdapter {  }
+        val mLayoutManager = PeekingLinearLayoutManager(context)
+        mLayoutManager.setRation(0.20f)
+//        val mLayoutManager = LinearLayoutManager(context)
+        mLayoutManager.orientation = RecyclerView.HORIZONTAL
+
+        binding.llWeather.rvWeather.apply {
+            layoutManager = mLayoutManager
+//            addItemDecoration(EqualSpacingItemDecoration(10))
+            adapter = weatherAdapter
+        }
+    }
+
     private fun event() {
         binding.apply {
             imgAudioCall.setOnClickListener {
@@ -342,7 +362,9 @@ class HomeFragment() : Fragment() {
         lifecycleScope.launch {
             viewModel._historyStateFlow.collect {
                 val list = it.callHistory.take(5)
-                previousConsultationAdapter.submitData(list)
+                withContext(Dispatchers.Main) {
+                    previousConsultationAdapter.submitData(list)
+                }
             }
         }
     }
@@ -351,7 +373,9 @@ class HomeFragment() : Fragment() {
         lifecycleScope.launch {
             viewModel._labStateFlow.collect {
                 val list = it.items.take(3)
-                rvImageUploadSetup(list)
+                withContext(Dispatchers.Main) {
+                    rvImageUploadSetup(list)
+                }
             }
         }
     }
@@ -359,8 +383,10 @@ class HomeFragment() : Fragment() {
     private fun uploadFile() {
         lifecycleScope.launch {
             viewModel._imgUrlStateFlow.collect {
-                loadingDialog?.dismiss()
-                viewModel.getLabReport()
+                withContext(Dispatchers.Main) {
+                    loadingDialog?.dismiss()
+                    viewModel.getLabReport()
+                }
             }
         }
     }
@@ -369,9 +395,34 @@ class HomeFragment() : Fragment() {
         lifecycleScope.launch {
             viewModel._homeStateFlow.collect {
                 val list = it.static
-                sliderAdapter.submitData(list.news.take(4))
-                rvSlider()
-                mTipsNTricksHomeAdapter.submitData(list.tips_categories)
+                withContext(Dispatchers.Main) {
+                    sliderAdapter.submitData(list.news.take(4))
+                    rvSlider()
+                    mTipsNTricksHomeAdapter.submitData(list.tips_categories)
+                }
+            }
+        }
+    }
+
+    private fun getWeather() {
+        lifecycleScope.launch {
+            viewModel._weatherRes.collect { data ->
+                withContext(Dispatchers.Main) {
+                    weatherAdapter.submitData(data.forecast.forecastday)
+                    binding.apply {
+                        val img = "http:${data.current.condition.icon}"
+                        imgWeather.setImage(img)
+                        tvWeatherC.text = "${data.current.temp_c} °c"
+                        tvWeatherStatus.text = data.current.condition.text
+                    }
+
+                    binding.llWeather.apply {
+                        val img = "http:${data.current.condition.icon}"
+                        imgWeather.setImage(img)
+                        tvWeatherC.text = "${data.current.temp_c}°"
+                        tvWeatherStatus.text = data.current.condition.text
+                    }
+                }
             }
         }
     }
@@ -428,7 +479,6 @@ class HomeFragment() : Fragment() {
         }
         return imgFile
     }
-
 
 
 }

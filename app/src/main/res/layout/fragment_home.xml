@@ -41,11 +41,13 @@
                     android:gravity="center_vertical">
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/img_weather"
                         android:layout_width="@dimen/_24sdp"
                         android:layout_height="@dimen/_24sdp"
                         app:srcCompat="@drawable/cloudy" />
 
                     <TextView
+                        android:id="@+id/tv_weather_c"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_2sdp"
@@ -58,6 +60,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <TextView
+                    android:id="@+id/tv_weather_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_medium"
@@ -255,6 +258,10 @@
                 <include
                     android:id="@+id/ll_previous_consultation"
                     layout="@layout/layout_previous_consultation"/>
+
+                <include
+                    android:id="@+id/ll_weather"
+                    layout="@layout/weather_layout"/>
 
                 <include
                     android:id="@+id/ll_upload_image"

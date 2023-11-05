@@ -16,6 +16,7 @@ import com.farmer.primary.network.model.login.LoginResponse
 import com.farmer.primary.network.model.otp.OtpParams
 import com.farmer.primary.network.model.otp.OtpResponse
 import com.farmer.primary.network.model.profile.ProfileModel
+import com.farmer.primary.network.model.weather.WeatherResponse
 import com.farmer.primary.network.utils.NetworkResult
 import com.farmer.primary.network.utils.getBearerToken
 import okhttp3.MultipartBody
@@ -29,6 +30,7 @@ import javax.inject.Inject
 class FarmerApi @Inject constructor(
     private val apiService: ApiService,
     private val apiServiceForImage: ApiServiceForImage,
+    private val weatherApi: WeatherApi,
 ) {
 
     suspend fun fetchHome(): NetworkResult<HomeResponse> {
@@ -115,12 +117,17 @@ class FarmerApi @Inject constructor(
     suspend fun urlUpload(
         token: String,
         userInfo: String,
-        patientUpdate: Map<String,String>
+        patientUpdate: Map<String, String>
     ): NetworkResult<CommonResponse> {
         return apiService.patientPrescriptionFileURLUpload(
             token = token.getBearerToken(),
             headerUserInfo = userInfo,
             patientUpdate = patientUpdate
         )
+    }
+
+    suspend fun getWeatherReports(
+    ): NetworkResult<WeatherResponse> {
+        return weatherApi.getWeatherReports()
     }
 }

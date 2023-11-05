@@ -18,10 +18,12 @@ import com.farmer.primary.network.dataSource.local.UserDevices
 import com.farmer.primary.network.model.home.HomeResponse
 import com.farmer.primary.network.model.metadata.MetaDataResponse
 import com.farmer.primary.network.model.metadata.MetaModel
+import com.farmer.primary.network.model.weather.WeatherResponse
 import com.farmer.primary.network.repositorys.callhistory.CallHistoryRepository
 import com.farmer.primary.network.repositorys.home.HomeRepository
 import com.farmer.primary.network.repositorys.lapreport.LabReportRepository
 import com.farmer.primary.network.repositorys.metadata.MetaDataRepository
+import com.farmer.primary.network.repositorys.weather.WeatherRepository
 import com.farmer.primary.network.utils.AppConstants
 import com.farmer.primary.network.utils.onError
 import com.farmer.primary.network.utils.onException
@@ -29,6 +31,7 @@ import com.farmer.primary.network.utils.onSuccess
 import com.google.gson.GsonBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dynamic.app.survey.data.dataSource.local.preferences.abstraction.DataStoreRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
@@ -48,6 +51,7 @@ class HomeViewModel @Inject constructor(
     private val repository: CallHistoryRepository,
     private val mLabReportRepository: LabReportRepository,
     private val homeRepository: HomeRepository,
+    private val weatherRepository: WeatherRepository,
     private val pref: DataStoreRepository
 ) : ViewModel() {
 
@@ -65,6 +69,11 @@ class HomeViewModel @Inject constructor(
         MutableSharedFlow<HomeResponse>()
     }
     val _homeStateFlow: SharedFlow<HomeResponse> = homeStateFlow
+
+    private val weatherRes by lazy {
+        MutableSharedFlow<WeatherResponse>()
+    }
+    val _weatherRes: SharedFlow<WeatherResponse> = weatherRes
 
     private val historyStateFlow by lazy {
         MutableSharedFlow<ResponseCallHistoryModel>()
@@ -87,7 +96,7 @@ class HomeViewModel @Inject constructor(
 
     fun getHomeData() {
         val headerUserInfo: String = UserDevices.getUserDevicesJson("callHistory/patient")
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val history =
                 async { repository.getCallHistory(headerUserInfo, LocalData.getUserUuid()) }
             val report = async {
@@ -97,9 +106,11 @@ class HomeViewModel @Inject constructor(
                 )
             }
 
+            val weather = async {weatherRepository.getWeather()}
+
             val home = async { homeRepository.fetchHome() }
 
-            val list = awaitAll(history, report, home)
+            val list = awaitAll(history, report, home, weather)
 
             list[0].onSuccess { res ->
                 historyStateFlow.emit(res as ResponseCallHistoryModel)
@@ -123,6 +134,15 @@ class HomeViewModel @Inject constructor(
 
             list[2].onSuccess { res ->
                 homeStateFlow.emit(res as HomeResponse)
+            }.onError { _, message ->
+                errorFlow.emit("Message: $message")
+            }.onException { error ->
+                // Log.e("setMetaData", "setMetaData: "+error)
+                errorFlow.emit("$error")
+            }
+
+            list[3].onSuccess { res ->
+                weatherRes.emit(res as WeatherResponse)
             }.onError { _, message ->
                 errorFlow.emit("Message: $message")
             }.onException { error ->

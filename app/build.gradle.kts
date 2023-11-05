@@ -9,6 +9,16 @@ plugins {
 
 android {
 
+    signingConfigs {
+        create("release") {
+            storeFile =
+                file("/Users/pritomdutta/Desktop/My Learning/TeleFarmer/tele_farmer")
+            storePassword = "!@#$%^&*"
+            keyAlias = "tele"
+            keyPassword = "!@#$%^&*"
+        }
+    }
+
     compileSdk = BuildConfig.compileSdkVersion
     buildToolsVersion = BuildConfig.buildToolsVersion
     namespace = BuildConfig.applicationID
@@ -21,7 +31,7 @@ android {
         testInstrumentationRunner = BuildConfig.testRunner
 
         setProperty("archivesBaseName", "Tele Farmer" + "-v" + versionCode + "_" + getDate())
-//        signingConfig = signingConfigs.getByName("release")
+        signingConfig = signingConfigs.getByName("release")
         multiDexEnabled = true
         testFunctionalTest = false
         testHandleProfiling = false
@@ -69,16 +79,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-
-//    signingConfigs {
-//        create("release") {
-//            storeFile =
-//                file("/Users/pritomdutta/Desktop/Pritom Dutta/Android/comics_android_app/comics_keystore")
-//            storePassword = "@!comicslivetech!@"
-//            keyAlias = "release"
-//            keyPassword = "@!comicslivetech!@"
-//        }
-//    }
 }
 
 dependencies {

@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.farmer.primary.network.dataSource.ApiService
 import com.farmer.primary.network.dataSource.ApiServiceForImage
+import com.farmer.primary.network.dataSource.WeatherApi
 import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.retrofitAdapter.NetworkResultCallAdapterFactory
 import com.farmer.primary.network.utils.DataSourceConstants
@@ -21,7 +22,6 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.internal.platform.Platform
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
@@ -78,7 +78,25 @@ object NetworkModule {
         okHttpClient: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(LocalData.getMetaInfoMetaData().imageUploadBaseUrl)
+            .baseUrl(
+                LocalData.getMetaInfoMetaData()?.imageUploadBaseUrl ?: DataSourceConstants.BASE_URL
+            )
+            .addConverterFactory(MoshiConverterFactory.create())
+            .addCallAdapterFactory(NetworkResultCallAdapterFactory.create())
+            .client(okHttpClient)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("weather")
+    fun provideWeatherRetrofit(
+        okHttpClient: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(
+               DataSourceConstants.WEATHER_URL
+            )
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(NetworkResultCallAdapterFactory.create())
             .client(okHttpClient)
@@ -95,6 +113,12 @@ object NetworkModule {
     @Singleton
     fun provideApiServiceForImage(@Named("image_upload") retrofit: Retrofit): ApiServiceForImage {
         return retrofit.create(ApiServiceForImage::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiServiceForWeather(@Named("weather") retrofit: Retrofit): WeatherApi {
+        return retrofit.create(WeatherApi::class.java)
     }
 
 

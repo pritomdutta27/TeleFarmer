@@ -5,6 +5,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.skh.hkhr.util.BuildConfig;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,7 +14,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import com.theroyalsoft.mydoc.apputil.BuildConfig;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,19 +31,6 @@ public class LogUtil {
 
     public static void initializeLog(String tagName) {
 
-        if (BuildConfig.DEBUG) {
-
-            Timber.plant(new Timber.DebugTree() {
-                @Override
-                protected @Nullable
-                String createStackElementTag(@NotNull StackTraceElement element) {
-                    return tagName + ":[" + super.createStackElementTag(element) + ":" + element.getLineNumber() + "]";
-                }
-            });
-
-        } else {
-            //
-        }
     }
 
 

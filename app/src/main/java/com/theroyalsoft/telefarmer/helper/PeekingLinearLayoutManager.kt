@@ -36,5 +36,9 @@ class PeekingLinearLayoutManager : LinearLayoutManager {
 
     private val verticalSpace get() = height - paddingTop - paddingBottom
 
-    private val ratio = 0.7f // change to 0.7f for 70%
+    private var ratio = 0.7f // change to 0.7f for 70%
+
+    fun setRation(ratio: Float){
+        this.ratio = ratio
+    }
 }
