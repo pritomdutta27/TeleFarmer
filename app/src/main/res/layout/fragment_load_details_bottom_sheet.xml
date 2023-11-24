@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ui.view.activity.loan.detailsbottomsheet.LoadDetailsBottomSheet">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_load_details_list"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <View
+        android:id="@+id/total_line_view"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_margin="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="@+id/rv_load_details_list"
+        app:layout_constraintStart_toStartOf="@+id/rv_load_details_list"
+        app:layout_constraintTop_toBottomOf="@+id/rv_load_details_list"
+        android:background="@color/black"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_total"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_margin="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="@+id/total_line_view"
+        app:layout_constraintStart_toStartOf="@+id/total_line_view"
+        app:layout_constraintTop_toBottomOf="@+id/total_line_view">
+
+        <TextView
+            android:id="@+id/tv_total_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/total_bn"
+            android:textSize="@dimen/_11ssp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_weight="1.4"
+            android:background="@drawable/line_dot_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@+id/tv_total_title"
+            app:layout_constraintEnd_toStartOf="@+id/tv_total_loan_amount"
+            app:layout_constraintTop_toTopOf="@+id/tv_total_title" />
+
+        <TextView
+            android:id="@+id/tv_total_loan_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="৩৮২৪২ টাকা"
+            android:textSize="@dimen/_11ssp"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_btn_nid_front"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_15sdp"
+        android:background="@drawable/nid_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_total">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/button_x"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_up"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="@string/nid_font"
+                android:textAlignment="center"
+                android:textColor="@color/app_color"
+                android:textSize="@dimen/_11ssp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    nid back side-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_btn_nid_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_15sdp"
+        android:background="@drawable/nid_bg"
+        app:layout_constraintBottom_toTopOf="@+id/btn_ll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_btn_nid_front">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/button_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_up"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="@string/nid_back"
+                android:textAlignment="center"
+                android:textColor="@color/app_color"
+                android:textSize="@dimen/_11ssp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/btn_ll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:weightSum="2"
+        android:layout_marginBottom="@dimen/_20sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cl_btn_nid_back"
+        app:layout_constraintStart_toStartOf="@+id/cl_btn_nid_back">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_submit"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_weight="1.2"
+            android:background="@drawable/_submit_btn_bg"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/application_now"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_set_time" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="0.2" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_weight="0.6"
+            android:background="@drawable/_submit_btn_bg"
+            android:backgroundTint="@color/red_btn"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_set_time" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,8 @@
     <string name="please_type_the_four_digit_code"><![CDATA[ 4 digit code has been\nsent to <b>%1$s</b> number]]></string>
     <string name="submit">Submit</string>
     <string name="back_to_home">হোম পেজ এ ফিরে যান</string>
+    <string name="application_now">আবেদন করুন</string>
+    <string name="cancel">বাতিল</string>
     <string name="no_internet">No Internet</string>
     <string name="news">News</string>
     <string name="loan">ঋণ</string>
@@ -29,6 +31,8 @@
     <string name="name">Name</string>
     <string name="crop">শষ্য</string>
     <string name="amount_of_land">জমির পরিমাণ</string>
+    <string name="nid_font">জাতীয় পরিচয়পত্রের সামনের দিকে আপলোড করুন</string>
+    <string name="nid_back">জাতীয় পরিচয়পত্রের পেছনের অংশ আপলোড করুন</string>
     <string name="type_your_name">Type your name</string>
     <string name="phone">Phone</string>
     <string name="type_your_phone_number">Type your phone number</string>

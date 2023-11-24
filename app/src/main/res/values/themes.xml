@@ -41,4 +41,15 @@
         <attr name="aspectRatio" format="string" />
     </declare-styleable>
 
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
+    <style name="BaseBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="BottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_dialog</item>
+    </style>
+
 </resources>

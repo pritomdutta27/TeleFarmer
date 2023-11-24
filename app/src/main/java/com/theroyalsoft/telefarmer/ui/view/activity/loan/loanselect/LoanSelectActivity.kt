@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.theroyalsoft.telefarmer.R
 import com.theroyalsoft.telefarmer.databinding.ActivityLoanSelectBinding
+import com.theroyalsoft.telefarmer.ui.view.activity.loan.detailsbottomsheet.LoadDetailsBottomSheet
 import com.theroyalsoft.telefarmer.ui.view.activity.loan.loansuccess.LoanSuccessActivity
 import com.theroyalsoft.telefarmer.utils.applyTransparentStatusBarAndNavigationBar
 import com.theroyalsoft.telefarmer.utils.isInvisible
@@ -13,6 +14,7 @@ import com.theroyalsoft.telefarmer.utils.isInvisible
 class LoanSelectActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoanSelectBinding
+    private lateinit var mLoadDetailsBottomSheet: LoadDetailsBottomSheet
 
     companion object {
         @JvmStatic
@@ -29,13 +31,14 @@ class LoanSelectActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        mLoadDetailsBottomSheet = LoadDetailsBottomSheet()
         binding.apply {
             toolBarLay.btnBack.setOnClickListener { finish() }
             toolBarLay.imgLeft.isInvisible()
             toolBarLay.tvToolbarTitle.text = getString(R.string.loan)
 
             clBtnLoanSubmit.setOnClickListener {
-                startActivity(LoanSuccessActivity.newIntent(this@LoanSelectActivity))
+                mLoadDetailsBottomSheet.show(supportFragmentManager, "LoadDetailsBottomSheet")
             }
         }
     }

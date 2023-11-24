@@ -31,6 +31,7 @@ class LoanSuccessActivity : AppCompatActivity() {
             toolBarLay.btnBack.setOnClickListener { finish() }
             toolBarLay.imgLeft.isInvisible()
             toolBarLay.tvToolbarTitle.text = getString(R.string.loan)
+
         }
     }
 }
