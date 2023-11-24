@@ -9,9 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.theroyalsoft.telefarmer.R
+import com.theroyalsoft.telefarmer.helper.EqualSpacingItemDecoration
+import com.theroyalsoft.telefarmer.helper.GridSpacingItemDecoration
+import com.theroyalsoft.telefarmer.helper.RecyclerViewItemDecoration
 import com.zhpan.indicator.IndicatorView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -118,4 +122,19 @@ fun ImageView.setImageProfile(url: String) {
         .placeholder(R.drawable.avatar_man)
         .into(this);
 
+}
+
+fun RecyclerView.setItemDecorationSpacingDivider(spacingPx: Float) {
+    val divider = RecyclerViewItemDecoration(spacingPx.toInt(), context)
+    addItemDecoration(divider)
+}
+
+fun RecyclerView.setItemDecorationSpacing(spacingPx: Float) {
+    val divider = EqualSpacingItemDecoration(spacingPx.toInt())
+    addItemDecoration(divider)
+}
+
+fun RecyclerView.setItemDecorationGrid(spanCount: Int, spacing: Int, includeEdge: Boolean) {
+    val divider = GridSpacingItemDecoration(spanCount, spacing, includeEdge)
+    addItemDecoration(divider)
 }

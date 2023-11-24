@@ -59,6 +59,7 @@
 
     <string name="loan_section_title">লোনের পরিমাণ জানতে শষ্য ও জমির পরিমান নির্বাচন করুন</string>
     <string name="your_application_has_been_successfully">আপনার  আবেদনটি সফল হয়েছে   খুব শীঘ্র্ই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবে ।</string>
+    <string name="search">অনুসন্ধান করুন..</string>
 
 
 </resources>
