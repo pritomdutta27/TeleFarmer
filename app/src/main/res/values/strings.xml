@@ -61,5 +61,9 @@
     <string name="your_application_has_been_successfully">আপনার  আবেদনটি সফল হয়েছে   খুব শীঘ্র্ই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবে ।</string>
     <string name="search">অনুসন্ধান করুন..</string>
 
+    <string name="button_takePicture">ছবি তোলা</string>
+    <string name="temp_images_dir">temp_images</string>
+    <string name="temp_image">temp_image.jpg</string>
+    <string name="authorities">com.theroyalsoft.telefarmer.fileprovider</string>
 
 </resources>
