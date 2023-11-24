@@ -43,6 +43,7 @@ class NewsDetailsFragment : Fragment() {
 
             imgNews.setImage(newsDetails?.imageUrl ?: "")
             tvNewTitle.text = newsDetails?.title
+            tvNewDetails.text = newsDetails?.details
             tvNewDate.text = newsDetails?.dateAndTime
         }
 

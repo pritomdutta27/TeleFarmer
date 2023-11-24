@@ -181,9 +181,10 @@ class LoadDetailsBottomSheet : BottomSheetDialogFragment() {
 
         //Creates the ActivityResultLauncher
         val pickMediaT = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-            //imageView.setImageURI(null) //rough handling of image changes. Real code need to handle different API levels.
-            cropImage.launch(CropImageContractOptions(path, CropImageOptions(true, true)))
-            // binding.textView.text = path.path
+            if (it){
+                //imageView.setImageURI(null) //rough handling of image changes. Real code need to handle different API levels.
+                cropImage.launch(CropImageContractOptions(path, CropImageOptions(true, true)))
+            }
         }
 
         binding.apply {
