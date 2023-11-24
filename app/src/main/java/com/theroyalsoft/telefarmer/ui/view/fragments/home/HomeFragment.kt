@@ -51,6 +51,7 @@ import com.theroyalsoft.telefarmer.ui.adapters.slider.SliderAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.tipsntricks.TipsNTricksHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.uploadimg.UploadImageHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.weather.WeatherAdapter
+import com.theroyalsoft.telefarmer.ui.view.activity.loan.loanselect.LoanSelectActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -281,8 +282,8 @@ class HomeFragment() : Fragment() {
         mUploadImageHomeAdapter.submitData(list)
     }
 
-    private fun rvWeatherSet(){
-        weatherAdapter = WeatherAdapter {  }
+    private fun rvWeatherSet() {
+        weatherAdapter = WeatherAdapter { }
         val mLayoutManager = PeekingLinearLayoutManager(context)
         mLayoutManager.setRation(0.20f)
 //        val mLayoutManager = LinearLayoutManager(context)
@@ -327,6 +328,15 @@ class HomeFragment() : Fragment() {
                 val action =
                     HomeFragmentDirections.actionHomeFragmentToPreviousConsultationFragment()
                 findNavController().navigate(action)
+            }
+
+            llLoan.root.setOnClickListener {
+                startActivity(
+                    LoanSelectActivity.newIntent(
+                        requireContext(),
+                        phone = ""
+                    )
+                )
             }
 
             llSlider.btnViewAll.setOnClickListener {

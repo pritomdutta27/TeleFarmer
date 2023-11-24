@@ -2,6 +2,7 @@ package com.theroyalsoft.telefarmer
 
 import android.app.Application
 import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
 import bio.medico.patient.common.DeviceIDUtil
 import com.skh.hkhr.util.BuildConfig
 import com.theroyalsoft.mydoc.apputil.AppUtilConfig
@@ -19,6 +20,8 @@ class TeleFarmerApp : Application() {
     override fun onCreate() {
         super.onCreate()
         appContext = this
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
         AppUtilConfig.init(this, "MPL", "CASH_DATA_MEDICO_PATIENT")
 
         if (BuildConfig.DEBUG) {

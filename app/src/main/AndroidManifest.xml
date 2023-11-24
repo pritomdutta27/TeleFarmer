@@ -73,9 +73,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.TeleFarmer"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.view.activity.loan.loanselect.LoanSelectActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.view.activity.call.CallTestActivity"
             android:exported="false" />
@@ -100,11 +103,9 @@
         <activity
             android:name=".ui.view.activity.main.MainActivity"
             android:exported="false" />
-
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"
-            />
+            android:theme="@style/Base.Theme.AppCompat" />
     </application>
 
 </manifest>

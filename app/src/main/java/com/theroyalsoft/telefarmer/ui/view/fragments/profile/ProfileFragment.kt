@@ -16,8 +16,10 @@ import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
 import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.R
 import com.theroyalsoft.telefarmer.databinding.FragmentProfileBinding
+import com.theroyalsoft.telefarmer.extensions.getFromDateTime
 import com.theroyalsoft.telefarmer.extensions.setImage
 import com.theroyalsoft.telefarmer.extensions.setImageProfile
+import com.theroyalsoft.telefarmer.ui.custom.DatePickerFragment
 import com.theroyalsoft.telefarmer.ui.view.activity.login.LoginActivity
 import com.theroyalsoft.telefarmer.utils.isInvisible
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +36,8 @@ data class Location(val district: String,val thana: String)
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
+
+    private lateinit var datePickerDialog: DatePickerFragment
 
     private val viewModel: ProfileViewModel by viewModels()
 
@@ -78,6 +82,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initUI() {
+        datePickerDialog = DatePickerFragment()
+
         binding.apply {
             toolBarLay.btnBack.isInvisible()
             toolBarLay.tvToolbarTitle.text = getString(R.string.profile)
@@ -90,6 +96,18 @@ class ProfileFragment : Fragment() {
                 requireContext().openLogout {
                     viewModel.logout(requireContext().getPhoneDeviceId())
                 }
+            }
+
+            llExpiry.setOnClickListener {
+                clearFocus()
+                if (!datePickerDialog.isAdded) {
+                    datePickerDialog.showNow(childFragmentManager, "DatePicker")
+                }
+            }
+
+            datePickerDialog.setOnClick {
+                clearFocus()
+                binding.etExpiry.text = it.getFromDateTime("yyyy/MM/dd", "dd MMMM yyyy")
             }
         }
     }
@@ -130,6 +148,13 @@ class ProfileFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun clearFocus() {
+        binding.apply {
+            etName.clearFocus()
+            etPhone.clearFocus()
         }
     }
 

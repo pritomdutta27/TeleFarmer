@@ -8,6 +8,7 @@
     <string name="submit">Submit</string>
     <string name="no_internet">No Internet</string>
     <string name="news">News</string>
+    <string name="loan">ঋণ</string>
     <string name="all">All</string>
     <string name="tips_n_tricks">Tips &amp; Tricks</string>
     <string name="news_details">News Details</string>
@@ -25,11 +26,14 @@
     <string name="profile">Profile</string>
     <string name="save">Save</string>
     <string name="name">Name</string>
+    <string name="crop">শষ্য</string>
+    <string name="amount_of_land">জমির পরিমাণ</string>
     <string name="type_your_name">Type your name</string>
     <string name="phone">Phone</string>
     <string name="type_your_phone_number">Type your phone number</string>
     <string name="location">Location</string>
     <string name="select_your_location">Select your location</string>
+    <string name="select_crop_type">ফসলের ধরন</string>
     <string name="active_pack">Active pack</string>
     <string name="buy_now">Buy Now</string>
     <string name="expiry_date">Expiry Date</string>
@@ -46,4 +50,9 @@
     <string name="no_previous_consultations_found">You have not had any previous consultations</string>
     <string name="loading">Loading..</string>
     <string name="weather">Weather</string>
+
+
+    <string name="loan_section_title">লোনের পরিমাণ জানতে শষ্য ও জমির পরিমান নির্বাচন করুন</string>
+
+
 </resources>

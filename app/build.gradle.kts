@@ -41,6 +41,9 @@ android {
         )
         targetSdk = 32
         minSdk = 27
+
+        renderscriptTargetApi = 21
+        renderscriptSupportModeEnabled = true
     }
 
     buildTypes {

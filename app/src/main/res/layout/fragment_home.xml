@@ -95,6 +95,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/view_cl"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingBottom="@dimen/_40sdp"
@@ -256,6 +257,10 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <include
+                    android:id="@+id/ll_loan"
+                    layout="@layout/item_loan"/>
+
+                <include
                     android:id="@+id/ll_previous_consultation"
                     layout="@layout/layout_previous_consultation"/>
 
@@ -277,5 +282,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
