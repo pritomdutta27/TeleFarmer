@@ -1,29 +1,27 @@
-package com.theroyalsoft.telefarmer.ui.view.activity.loan.loanselect
+package com.theroyalsoft.telefarmer.ui.view.activity.loan.loansuccess
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.theroyalsoft.telefarmer.R
-import com.theroyalsoft.telefarmer.databinding.ActivityLoanSelectBinding
-import com.theroyalsoft.telefarmer.ui.view.activity.loan.loansuccess.LoanSuccessActivity
+import com.theroyalsoft.telefarmer.databinding.ActivityLoanSuccessBinding
 import com.theroyalsoft.telefarmer.utils.applyTransparentStatusBarAndNavigationBar
 import com.theroyalsoft.telefarmer.utils.isInvisible
 
-class LoanSelectActivity : AppCompatActivity() {
+class LoanSuccessActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLoanSelectBinding
+    private lateinit var binding: ActivityLoanSuccessBinding
 
     companion object {
         @JvmStatic
-        fun newIntent(context: Context, phone: String): Intent =
-            Intent(context, LoanSelectActivity::class.java).putExtra("phone", phone)
+        fun newIntent(context: Context): Intent =
+            Intent(context, LoanSuccessActivity::class.java)
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         applyTransparentStatusBarAndNavigationBar()
-        binding = ActivityLoanSelectBinding.inflate(layoutInflater)
+        binding = ActivityLoanSuccessBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
     }
@@ -33,10 +31,6 @@ class LoanSelectActivity : AppCompatActivity() {
             toolBarLay.btnBack.setOnClickListener { finish() }
             toolBarLay.imgLeft.isInvisible()
             toolBarLay.tvToolbarTitle.text = getString(R.string.loan)
-
-            clBtnLoanSubmit.setOnClickListener {
-                startActivity(LoanSuccessActivity.newIntent(this@LoanSelectActivity))
-            }
         }
     }
 }
