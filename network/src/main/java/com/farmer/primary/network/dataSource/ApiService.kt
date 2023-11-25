@@ -2,11 +2,13 @@ package com.farmer.primary.network.dataSource
 
 import bio.medico.patient.model.apiResponse.CommonResponse
 import bio.medico.patient.model.apiResponse.RequestLabReport
+import bio.medico.patient.model.apiResponse.RequestNewToken
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
 import bio.medico.patient.model.apiResponse.ResponseLogin
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
+import bio.medico.patient.model.apiResponse.ResponseNewToken
 import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
 import com.farmer.primary.network.model.home.HomeResponse
@@ -101,6 +103,12 @@ interface ApiService {
         @Header("UserInfo") headerUserInfo: String,
         @Body patientInfo: Map<String,String>
     ): NetworkResult<CommonResponse>
+
+    @POST("patient/token")
+    suspend fun refreshToken(
+        @Header("UserInfo") headerUserInfo: String,
+        @Body patientInfo: RequestNewToken
+    ): ResponseNewToken
 
 
 }

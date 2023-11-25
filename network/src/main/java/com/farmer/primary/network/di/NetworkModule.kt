@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.farmer.primary.network.dataSource.ApiService
 import com.farmer.primary.network.dataSource.ApiServiceForImage
+import com.farmer.primary.network.dataSource.TokenInterceptor
 import com.farmer.primary.network.dataSource.WeatherApi
 import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.retrofitAdapter.NetworkResultCallAdapterFactory
@@ -18,6 +19,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dynamic.app.survey.data.dataSource.local.preferences.abstraction.DataStoreRepository
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -43,6 +45,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideTokenInterceptor(
+        pref: DataStoreRepository
+    ): TokenInterceptor {
+        return TokenInterceptor(DataSourceConstants.BASE_URL, pref)
+    }
+
+    @Provides
+    @Singleton
     fun provideContext(application: Application): Context {
         return application
     }
@@ -52,12 +62,17 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkhttpClient(@ApplicationContext context: Context): OkHttpClient {
+    fun provideOkhttpClient(
+        @ApplicationContext context: Context,
+        mTokenInterceptor: TokenInterceptor
+    ): OkHttpClient {
         val builder = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(OkHttpProfilerInterceptor())
         }
-        builder.readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
+        builder
+            .addInterceptor(mTokenInterceptor)
+            .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(getLogInterceptors(BuildConfig.DEBUG))
             .cache(getCache(context))
