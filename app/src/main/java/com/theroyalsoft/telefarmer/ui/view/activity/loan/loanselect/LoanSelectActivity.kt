@@ -13,7 +13,9 @@ import com.theroyalsoft.telefarmer.ui.view.activity.loan.bottomsheets.detailsbot
 import com.theroyalsoft.telefarmer.utils.JsonUtils.getCropDetails
 import com.theroyalsoft.telefarmer.utils.applyTransparentStatusBarAndNavigationBar
 import com.theroyalsoft.telefarmer.utils.isInvisible
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoanSelectActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoanSelectBinding

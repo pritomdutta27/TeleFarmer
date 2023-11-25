@@ -131,4 +131,16 @@ class FarmerApi @Inject constructor(
     ): NetworkResult<WeatherResponse> {
         return weatherApi.getWeatherReports()
     }
+
+    suspend fun applyLoan(
+        token: String,
+        userInfo: String,
+        patientInfo: Map<String, String>
+    ): NetworkResult<CommonResponse> {
+        return apiService.applyForLoan(
+            token = token.getBearerToken(),
+            headerUserInfo = userInfo,
+            patientInfo = patientInfo
+        )
+    }
 }

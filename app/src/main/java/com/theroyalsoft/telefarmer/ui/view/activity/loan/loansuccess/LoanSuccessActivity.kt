@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.theroyalsoft.telefarmer.R
 import com.theroyalsoft.telefarmer.databinding.ActivityLoanSuccessBinding
+import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
 import com.theroyalsoft.telefarmer.utils.applyTransparentStatusBarAndNavigationBar
 import com.theroyalsoft.telefarmer.utils.isInvisible
 
@@ -18,6 +19,7 @@ class LoanSuccessActivity : AppCompatActivity() {
         fun newIntent(context: Context): Intent =
             Intent(context, LoanSuccessActivity::class.java)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         applyTransparentStatusBarAndNavigationBar()
@@ -28,10 +30,10 @@ class LoanSuccessActivity : AppCompatActivity() {
 
     private fun initView() {
         binding.apply {
-            toolBarLay.btnBack.setOnClickListener { finish() }
+            toolBarLay.btnBack.setSafeOnClickListener { finish() }
             toolBarLay.imgLeft.isInvisible()
             toolBarLay.tvToolbarTitle.text = getString(R.string.loan)
-
+            btnBackToHome.setSafeOnClickListener { finish() }
         }
     }
 }

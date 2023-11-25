@@ -187,8 +187,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun uploadFile(imgPart: MultipartBody.Part) {
-        val params: MultipartBody.Part = MultipartBody.Part.createFormData("folderName", "labReport")
+    fun uploadFile(imgPart: MultipartBody.Part, folderName: String) {
+        val params: MultipartBody.Part = MultipartBody.Part.createFormData("folderName", folderName)
         val headerUserInfo: String = UserDevices.getUserDevicesJson("labReportUploadApi")
 
         viewModelScope.launch {

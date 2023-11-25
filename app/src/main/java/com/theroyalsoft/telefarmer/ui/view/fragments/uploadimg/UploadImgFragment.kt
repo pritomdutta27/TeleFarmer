@@ -90,7 +90,7 @@ class UploadImgFragment : Fragment() {
                 requestFile
             )
             loadingDialog?.show()
-            viewModel.uploadFile(imageBody)
+            viewModel.uploadFile(imageBody, "labReport")
         } else {
             // An error occurred.
             val exception = result.error

@@ -10,6 +10,8 @@ import com.farmer.primary.network.repositorys.home.HomeRepository
 import com.farmer.primary.network.repositorys.home.HomeRepositoryImp
 import com.farmer.primary.network.repositorys.lapreport.LabReportRepository
 import com.farmer.primary.network.repositorys.lapreport.LabReportRepositoryImp
+import com.farmer.primary.network.repositorys.loan.LoanRepository
+import com.farmer.primary.network.repositorys.loan.LoanRepositoryImp
 import com.farmer.primary.network.repositorys.login.LoginRepository
 import com.farmer.primary.network.repositorys.login.LoginRepositoryImp
 import com.farmer.primary.network.repositorys.metadata.MetaDataRepository
@@ -79,4 +81,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideWeatherRepository(api: WeatherRepositoryImp): WeatherRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideLoanRepository(api: LoanRepositoryImp): LoanRepository
 }

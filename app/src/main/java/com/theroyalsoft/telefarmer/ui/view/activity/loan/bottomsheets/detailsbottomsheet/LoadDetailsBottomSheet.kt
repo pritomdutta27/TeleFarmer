@@ -1,5 +1,6 @@
 package com.theroyalsoft.telefarmer.ui.view.activity.loan.bottomsheets.detailsbottomsheet
 
+import android.app.Dialog
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -9,9 +10,10 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.canhub.cropper.CropImageContract
@@ -23,11 +25,17 @@ import com.theroyalsoft.telefarmer.databinding.FragmentLoadDetailsBottomSheetBin
 import com.theroyalsoft.telefarmer.extensions.getCameraAndPhotoPermission
 import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
 import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
+import com.theroyalsoft.telefarmer.extensions.showLoadingDialog
+import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.helper.EqualSpacingItemDecoration
 import com.theroyalsoft.telefarmer.model.loan.LoanDetailsResponseItem
 import com.theroyalsoft.telefarmer.ui.view.activity.loan.bottomsheets.detailsbottomsheet.adapter.LoanDetailsAdapter
 import com.theroyalsoft.telefarmer.ui.view.activity.loan.loansuccess.LoanSuccessActivity
 import com.theroyalsoft.telefarmer.utils.ImagePickUpUtil.getFile
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -37,15 +45,18 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 
-
+@AndroidEntryPoint
 class LoadDetailsBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentLoadDetailsBottomSheetBinding
-
+    private val viewModel: LoadDetailsBottomViewModel by viewModels()
     private lateinit var mLoanDetailsAdapter: LoanDetailsAdapter
 
     private var mLoanDetailsResponseItem: LoanDetailsResponseItem? = null
     private var amountOfLand: Float? = 0.0f
     private var totalAmount: Float = 0.0f
+
+    //for check front on back
+    private var isFront = false
 
     private lateinit var bitmapImage: Bitmap
     private val cropImage = registerForActivityResult(CropImageContract()) { result ->
@@ -78,20 +89,24 @@ class LoadDetailsBottomSheet : BottomSheetDialogFragment() {
                 imgFileName,
                 requestFile
             )
-//            loadingDialog?.show()
-//            viewModel.uploadFile(imageBody)
+            loadingDialog?.show()
+            viewModel.uploadFile(
+                imageBody,
+                "nidCard",
+                isFront,
+                loadingDialog,
+                binding.txtFront,
+                binding.tvBack
+            )
         } else {
             // An error occurred.
             val exception = result.error
         }
     }
 
+    private var loadingDialog: Dialog? = null
     override fun getTheme(): Int {
         return R.style.BottomSheetDialogTheme
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -103,8 +118,13 @@ class LoadDetailsBottomSheet : BottomSheetDialogFragment() {
         dialog?.setCancelable(false)
         binding = FragmentLoadDetailsBottomSheetBinding.inflate(layoutInflater, container, false)
 
+        loadingDialog = requireContext().showLoadingDialog()
+
         initView()
         event()
+        getResponse()
+        ifApiGetError()
+
         registerTakePictureLauncher(initTempUri())
         return binding.root
     }
@@ -126,13 +146,21 @@ class LoadDetailsBottomSheet : BottomSheetDialogFragment() {
 
     private fun event() {
         binding.apply {
-            btnSubmit.setOnClickListener {
-                startActivity(LoanSuccessActivity.newIntent(requireContext()))
-            }
+
             btnCancel.setOnClickListener { dismiss() }
+
+            btnSubmit.setSafeOnClickListener {
+                if (viewModel.applyLoan(
+                        cropName = mLoanDetailsResponseItem?.crop_name ?: "",
+                        landAmount = amountOfLand.toString(),
+                        totalLoan = totalAmount.toString()
+                    )
+                ) {
+                    requireContext().showToast(getString(R.string.nid_back_front))
+                }
+                loadingDialog?.show()
+            }
         }
-
-
     }
 
     fun setData(data: LoanDetailsResponseItem?, amountOfLand: Float) {
@@ -181,7 +209,7 @@ class LoadDetailsBottomSheet : BottomSheetDialogFragment() {
 
         //Creates the ActivityResultLauncher
         val pickMediaT = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-            if (it){
+            if (it) {
                 //imageView.setImageURI(null) //rough handling of image changes. Real code need to handle different API levels.
                 cropImage.launch(CropImageContractOptions(path, CropImageOptions(true, true)))
             }
@@ -191,16 +219,42 @@ class LoadDetailsBottomSheet : BottomSheetDialogFragment() {
             clBtnNidFront.setSafeOnClickListener {
                 getCameraAndPhotoPermission {
                     pickMediaT.launch(path)
+                    isFront = true
                 }
             }
 
             clBtnNidBack.setSafeOnClickListener {
                 getCameraAndPhotoPermission {
                     pickMediaT.launch(path)
+                    isFront = false
                 }
             }
         }
-//        //Launches the camera when button is pressed.
+    }
 
+    // Api Call
+    private fun getResponse() {
+        lifecycleScope.launch {
+            viewModel._successFlow.collect { flag ->
+                loadingDialog?.dismiss()
+                if (flag){
+                    startActivity(LoanSuccessActivity.newIntent(requireContext()))
+                    dismiss()
+                    requireActivity().finish()
+                }
+            }
+        }
+    }
+    private fun ifApiGetError() {
+        lifecycleScope.launch {
+            viewModel._errorFlow.collect { errorStr ->
+                loadingDialog?.dismiss()
+                withContext(Dispatchers.Main) {
+                    if (errorStr.isNotEmpty()) {
+                        requireContext().showToast(errorStr)
+                    }
+                }
+            }
+        }
     }
 }

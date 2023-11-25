@@ -114,7 +114,7 @@ class HomeFragment() : Fragment() {
                 requestFile
             )
             loadingDialog?.show()
-            viewModel.uploadFile(imageBody)
+            viewModel.uploadFile(imageBody, "labReport")
         } else {
             // An error occurred.
             val exception = result.error
@@ -124,7 +124,6 @@ class HomeFragment() : Fragment() {
     var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>? = null
 
     private var imgUrl = "";
-
     private var loadingDialog: Dialog? = null
 
     override fun onCreateView(
@@ -492,6 +491,3 @@ class HomeFragment() : Fragment() {
 
 
 }
-
-
-//

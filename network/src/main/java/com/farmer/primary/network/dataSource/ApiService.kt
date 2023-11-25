@@ -94,4 +94,13 @@ interface ApiService {
         @Header("UserInfo") headerUserInfo: String,
         @Body patientUpdate: Map<String,String>
     ): NetworkResult<CommonResponse>
+
+    @POST("loan")
+    suspend fun applyForLoan(
+        @Header("Authorization") token: String,
+        @Header("UserInfo") headerUserInfo: String,
+        @Body patientInfo: Map<String,String>
+    ): NetworkResult<CommonResponse>
+
+
 }

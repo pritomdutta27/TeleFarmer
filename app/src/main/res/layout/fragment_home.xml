@@ -84,6 +84,7 @@
                 android:layout_width="@dimen/_45sdp"
                 android:layout_height="@dimen/_22sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayoutCompat2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/linearLayoutCompat2"
@@ -169,7 +170,7 @@
                                 android:layout_weight="1"
                                 android:layout_marginBottom="@dimen/_5sdp"
                                 android:fontFamily="@font/montserrat_semi_bold"
-                                android:text="Audio Call"
+                                android:text="অডিও কল"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_12sdp"
                                 app:layout_constraintBottom_toTopOf="@+id/tvtvAudioCallDetails"
@@ -183,7 +184,7 @@
                                 android:layout_marginTop="@dimen/_4sdp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/montserrat_regular"
-                                android:text="Connect with agro experts"
+                                android:text="কৃষি বিশেষজ্ঞের\nপরামর্শ নিন"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_9sdp"
                                 android:layout_marginBottom="@dimen/_15sdp"
@@ -226,7 +227,7 @@
                                 android:layout_weight="1"
                                 android:layout_marginBottom="@dimen/_5sdp"
                                 android:fontFamily="@font/montserrat_semi_bold"
-                                android:text="Video Call"
+                                android:text="ভিডিও কল"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_12sdp"
                                 app:layout_constraintBottom_toTopOf="@+id/tvBuyPackageDetails"
@@ -240,7 +241,7 @@
                                 android:layout_marginTop="@dimen/_4sdp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/montserrat_regular"
-                                android:text="Connect with agro experts"
+                                android:text="কৃষি বিশেষজ্ঞের সাথে ভিডিও কলে সহায়তা নিন"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_9sdp"
                                 android:layout_marginBottom="@dimen/_15sdp"
@@ -255,6 +256,10 @@
 
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <include
+                    android:id="@+id/ll_chat"
+                    layout="@layout/layout_chat"/>
 
                 <include
                     android:id="@+id/ll_loan"

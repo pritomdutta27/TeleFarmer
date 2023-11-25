@@ -1,69 +1,71 @@
 <resources>
     <string name="app_name">Tele Farmer</string>
-    <string name="mobile_number">Mobile Number</string>
+    <string name="mobile_number">লগইন</string>
     <string name="login">Login</string>
-    <string name="login_sub">Enter your mobile number here,\nwe will send you OTP to verify</string>
-    <string name="otp">OTP</string>
-    <string name="please_type_the_four_digit_code"><![CDATA[ 4 digit code has been\nsent to <b>%1$s</b> number]]></string>
-    <string name="submit">Submit</string>
+    <string name="login_sub">আপনার মোবাইল নম্বরটি এখানে প্রবেশ করুন,\nআমরা আপনার পরিচয় নিশ্চিত করার জন্য একটি OTP পাঠাব</string>
+    <string name="otp">ওটিপি</string>
+    <string name="please_type_the_four_digit_code"><![CDATA[ 4 সংখ্যার কোড পাঠানো\nহয়েছে <b>%1$s</b> number]]></string>
+    <string name="submit">জমা দিন</string>
     <string name="back_to_home">হোম পেজ এ ফিরে যান</string>
     <string name="application_now">আবেদন করুন</string>
     <string name="cancel">বাতিল</string>
-    <string name="no_internet">No Internet</string>
-    <string name="news">News</string>
+    <string name="no_internet">কোন ইন্টারনেট নেই</string>
+    <string name="news">খবর</string>
     <string name="loan">ঋণ</string>
-    <string name="all">All</string>
-    <string name="tips_n_tricks">Tips &amp; Tricks</string>
-    <string name="news_details">News Details</string>
-    <string name="buy_pack">Buy Pack</string>
-    <string name="upload">Upload</string>
-    <string name="images">Images</string>
-    <string name="previous_consultation">Previous Consultation</string>
-    <string name="upload_image_for_diagnosis">Upload Image for Diagnosis</string>
-    <string name="tricks_tips">Tricks &amp; Tips</string>
-    <string name="today_agro_news">Today Agro News</string>
+    <string name="all">সব</string>
+    <string name="tips_n_tricks">টিপস এবং কৌশল</string>
+    <string name="news_details">খবর বিস্তারিত</string>
+    <string name="buy_pack">প্যাক কিনুন</string>
+    <string name="upload">আপলোড করুন</string>
+    <string name="images">ছবি</string>
+    <string name="previous_consultation">পূর্ববর্তী পরামর্শ</string>
+    <string name="upload_image_for_diagnosis">রোগ নির্ণয়ের জন্য ছবি আপলোড করুন</string>
+    <string name="tricks_tips">কৌশল এবং টিপস</string>
+    <string name="today_agro_news">আজ এগ্রো নিউজ</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="valid_mobile_number">Enter valid mobile number</string>
-    <string name="enter_otp">Enter OTP</string>
-    <string name="profile">Profile</string>
-    <string name="save">Save</string>
-    <string name="name">Name</string>
+    <string name="enter_otp">ওটিপি লিখুন</string>
+    <string name="profile">প্রোফাইল</string>
+    <string name="save">সংরক্ষণ</string>
+    <string name="name">নাম</string>
     <string name="crop">শষ্য</string>
     <string name="amount_of_land">জমির পরিমাণ</string>
     <string name="nid_font">জাতীয় পরিচয়পত্রের সামনের দিকে আপলোড করুন</string>
     <string name="nid_back">জাতীয় পরিচয়পত্রের পেছনের অংশ আপলোড করুন</string>
-    <string name="type_your_name">Type your name</string>
-    <string name="phone">Phone</string>
-    <string name="type_your_phone_number">Type your phone number</string>
-    <string name="location">Location</string>
-    <string name="select_your_location">Select your location</string>
+    <string name="nid_back_front">জাতীয় পরিচয়পত্রের সামনের এবং পেছনের অংশ আপলোড করুন</string>
+    <string name="type_your_name">আপনার  নাম লিখুন </string>
+    <string name="phone">ফোন</string>
+    <string name="type_your_phone_number">আপনার ফোন নম্বর লিখুন</string>
+    <string name="location">অবস্থান</string>
+    <string name="select_your_location">আপনার অবস্থান নির্বাচন করুন</string>
     <string name="select_crop_type">ফসলের ধরন</string>
-    <string name="active_pack">Active pack</string>
-    <string name="buy_now">Buy Now</string>
-    <string name="expiry_date">Expiry Date</string>
-    <string name="expiry">Expiry</string>
+    <string name="active_pack">সক্রিয় প্যাক</string>
+    <string name="buy_now">ক্রয় করুন </string>
+    <string name="expiry_date">মেয়াদ শেষ হওয়ার তারিখ</string>
+    <string name="expiry">মেয়াদ শেষ</string>
 
-    <string name="are_you_sure_want_to_log_out">Are you sure you want to log out?</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <string name="are_you_sure_want_to_log_out">আপনি লগ আউট করতে চান?</string>
+    <string name="yes">হ্যাঁ</string>
+    <string name="no">না</string>
 
 
     <string name="pack_params"><![CDATA[<font color="#40CF96"><small>৳</small><big>%s</big></font><small>/%s</small>]]></string>
-    <string name="view_all">See all</string>
-    <string name="careline">Careline</string>
-    <string name="no_previous_consultations_found">You have not had any previous consultations</string>
-    <string name="loading">Loading..</string>
-    <string name="weather">Weather</string>
+    <string name="view_all">সবগুলো দেখুন</string>
+    <string name="careline">কেয়ারলাইন</string>
+    <string name="no_previous_consultations_found">আপনি কোনো পূর্ববর্তী পরামর্শ ছিল না</string>
+    <string name="loading">লোড হচ্ছে..</string>
+    <string name="weather">আবহাওয়া</string>
 
 
     <string name="loan_section_title">লোনের পরিমাণ জানতে শষ্য ও জমির পরিমান নির্বাচন করুন</string>
-    <string name="your_application_has_been_successfully">আপনার  আবেদনটি সফল হয়েছে   খুব শীঘ্র্ই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবে ।</string>
+    <string name="your_application_has_been_successfully">আপনার  আবেদনটি সফল হয়েছে খুব শীঘ্র্ই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবে ।</string>
     <string name="search">অনুসন্ধান করুন..</string>
 
     <string name="button_takePicture">ছবি তোলা</string>
     <string name="temp_images_dir">temp_images</string>
     <string name="temp_image">temp_image.jpg</string>
     <string name="authorities">com.theroyalsoft.telefarmer.fileprovider</string>
+    <string name="live_chat">লাইভ চ্যাট</string>
 
 </resources>

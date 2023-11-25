@@ -90,8 +90,6 @@ public class LocalData {
             Timber.e("userInfo Not Found ");
             return "";
         }
-
-
         return userInfo.getUuid();
     }
 
@@ -212,7 +210,6 @@ public class LocalData {
         LocalData.setPhoneNumber(responsePatientInfo.getPhoneNumber());
         LocalData.setUserName(responsePatientInfo.getName());
         LocalData.setUserProfile(responsePatientInfo.getImage());
-
         String json = JsonUtil.getJsonStringFromObject(responsePatientInfo);
         CacheDataUtil.write(SpKey.sp_setUserProfileAll, json);
     }
