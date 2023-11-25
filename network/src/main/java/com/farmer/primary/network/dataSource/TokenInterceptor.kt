@@ -1,6 +1,5 @@
 package com.farmer.primary.network.dataSource
 
-import android.content.Context
 import bio.medico.patient.model.apiResponse.RequestNewToken
 import bio.medico.patient.model.apiResponse.ResponseNewToken
 import com.farmer.primary.network.dataSource.local.LocalData
@@ -13,7 +12,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 /**
