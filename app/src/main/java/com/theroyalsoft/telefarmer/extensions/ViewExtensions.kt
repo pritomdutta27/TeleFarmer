@@ -111,7 +111,16 @@ fun ImageView.setImage(url: String) {
         .load(url)
         .placeholder(R.drawable.app_icon_green)
         .into(this);
+}
 
+fun ImageView.setCenterCropImage(url: String) {
+    Timber.e("Image: $url")
+    Glide
+        .with(this)
+        .load(url)
+        .placeholder(R.drawable.app_icon_green)
+        .centerCrop()
+        .into(this);
 }
 
 fun ImageView.setImageProfile(url: String) {

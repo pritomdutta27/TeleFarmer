@@ -157,6 +157,7 @@ class LoadDetailsBottomSheet : BottomSheetDialogFragment() {
                     )
                 ) {
                     requireContext().showToast(getString(R.string.nid_back_front))
+                    return@setSafeOnClickListener
                 }
                 loadingDialog?.show()
             }

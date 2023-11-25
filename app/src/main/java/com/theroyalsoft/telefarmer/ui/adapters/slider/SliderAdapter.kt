@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.farmer.primary.network.model.home.NewsModel
 import com.theroyalsoft.telefarmer.base.BaseViewHolder
 import com.theroyalsoft.telefarmer.databinding.ItemSliderBinding
-import com.theroyalsoft.telefarmer.extensions.setImage
+import com.theroyalsoft.telefarmer.extensions.setCenterCropImage
 
 /**
  * Created by Pritom Dutta on 21/10/23.
@@ -36,7 +36,7 @@ class SliderAdapter(val onNewsSelect: (data: NewsModel) -> Unit) : RecyclerView.
         BaseViewHolder(mBinding.root) {
         override fun onBind(position: Int) {
             itemView.setOnClickListener { onNewsSelect(list[position]) }
-            mBinding.imgItem.setImage(list[position].imageUrl)
+            mBinding.imgItem.setCenterCropImage(list[position].imageUrl)
             mBinding.tvNewTitle.text = list[position].title
             mBinding.tvNewDate.text = list[position].dateAndTime
         }

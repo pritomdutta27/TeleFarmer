@@ -25,7 +25,7 @@ class TokenInterceptor(
         val originalRequest = chain.request()
         val response = chain.proceed(originalRequest)
         // Check if the response indicates that the access token is expired
-        if (response.code == 403) {
+        if (response.code == 403 || response.code == 429) {
             // Call the refresh token API to obtain a new access token
             try {
                 runBlocking { callRefreshTokenAPI() }
