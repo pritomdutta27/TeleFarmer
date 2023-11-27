@@ -40,6 +40,7 @@ import com.theroyalsoft.telefarmer.extensions.getCameraAndMicPermission
 import com.theroyalsoft.telefarmer.extensions.getCameraAndPhotoPermission
 import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
 import com.theroyalsoft.telefarmer.extensions.setImage
+import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
 import com.theroyalsoft.telefarmer.extensions.showLoadingDialog
 import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.helper.EqualSpacingItemDecoration
@@ -51,6 +52,7 @@ import com.theroyalsoft.telefarmer.ui.adapters.slider.SliderAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.tipsntricks.TipsNTricksHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.uploadimg.UploadImageHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.weather.WeatherAdapter
+import com.theroyalsoft.telefarmer.ui.view.activity.chat.ChatActivity
 import com.theroyalsoft.telefarmer.ui.view.activity.loan.loanselect.LoanSelectActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -332,6 +334,15 @@ class HomeFragment() : Fragment() {
             llLoan.root.setOnClickListener {
                 startActivity(
                     LoanSelectActivity.newIntent(
+                        requireContext(),
+                        phone = ""
+                    )
+                )
+            }
+
+            llChat.root.setSafeOnClickListener {
+                startActivity(
+                    ChatActivity.newIntent(
                         requireContext(),
                         phone = ""
                     )

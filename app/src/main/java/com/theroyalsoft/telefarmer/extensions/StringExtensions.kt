@@ -15,9 +15,15 @@ import androidx.core.text.HtmlCompat
 import androidx.core.text.parseAsHtml
 import androidx.core.text.toHtml
 import androidx.core.text.toSpanned
+import com.skh.hkhr.util.NullRemoveUtil
+import com.theroyalsoft.mydoc.apputil.TimeUtil.DATE_TIME_FORMAT_ddMMMyyyy
+import com.theroyalsoft.mydoc.apputil.TimeUtil.DATE_TIME_FORmMATE_1
+import com.theroyalsoft.mydoc.apputil.TimeUtil.TIME_FORMAT
 import timber.log.Timber
+import java.text.Format
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 import java.util.regex.Pattern
 
@@ -115,4 +121,16 @@ fun String.resizeBitMapImage1( targetWidth: Int,
         }
     }
     return bitMapImage
+}
+
+object DateTimeUtil {
+    @JvmStatic
+    val timeCurrent: String
+        get() {
+            val formatter: Format = SimpleDateFormat(TIME_FORMAT)
+            val date = Date()
+            val time = formatter.format(date)
+            Timber.d("Date is: $time")
+            return NullRemoveUtil.getNotNull(time)
+        }
 }

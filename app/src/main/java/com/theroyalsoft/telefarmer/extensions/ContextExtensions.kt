@@ -19,7 +19,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
+import bio.medico.patient.common.AppKey
 import com.permissionx.guolindev.PermissionX
+import com.skh.hkhr.util.log.ToastUtil
 import com.theroyalsoft.telefarmer.R
 
 /**
@@ -161,4 +163,21 @@ fun Context.showLoadingDialog(): Dialog {
     dialog.setContentView(R.layout.progress_dialog)
 //    dialog.show()
     return dialog
+}
+
+fun Context.checkInternet(
+    isShowMessage: Boolean = false
+): Boolean {
+    val isConnect = isNetworkConnected()
+    //  val isConnect = true
+
+    if (!isConnect && isShowMessage) {
+        showNoInternetMessage()
+    }
+
+    return isConnect
+}
+
+fun showNoInternetMessage() {
+    ToastUtil.showToastMessage(AppKey.ERROR_INTERNET_CONNECTION)
 }

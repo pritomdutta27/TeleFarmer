@@ -3,6 +3,7 @@ package com.farmer.primary.network.dataSource.local;
 import java.util.Date;
 
 
+import bio.medico.patient.common.AttachmentTypes;
 import bio.medico.patient.model.apiResponse.chat.MessageBody;
 import timber.log.Timber;
 
@@ -41,13 +42,13 @@ public class MessageModel {
 
 
 
-//    public static MessageBody getModel(String attachmentTypeImage, String attachment) {
-//        return getDataModel(attachmentTypeImage, attachment, AttachmentTypes.statusTrue, "");
-//    }
-//
-//    public static MessageBody getModel(String messageBody) {
-//        return getDataModel("", "", AttachmentTypes.statusFalse, messageBody);
-//    }
+    public static MessageBody getModel(String attachmentTypeImage, String attachment) {
+        return getDataModel(attachmentTypeImage, attachment, AttachmentTypes.statusTrue, "");
+    }
+
+    public static MessageBody getModel(String messageBody) {
+        return getDataModel("", "", AttachmentTypes.statusFalse, messageBody);
+    }
 
 
     private static MessageBody getDataModel(String attachmentType1, String attachment1, int isAttachment1, String body1) {

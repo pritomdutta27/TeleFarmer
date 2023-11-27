@@ -107,6 +107,7 @@ object AppKey {
     const val Patient_in_call = "Can't place a new call while you're already in a call."
 
 
+    const val NO_INTERNET = "Internet not available!"
     const val ERROR_INTERNET_CONNECTION =
         "Internet not available! Please connect to the Internet and try again!"
     const val ACTIVE = "ACTIVE"

@@ -141,6 +141,7 @@ dependencies {
 
     //Hilt
     implementation(Libraries.hilt_android_lib)
+    implementation("androidx.browser:browser:1.7.0")
     kapt(Libraries.hilt_android_compiler_lib)
     kapt(Libraries.hiltAnnotationProcessor)
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -158,6 +159,13 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofit")   // gson
     implementation("com.squareup.retrofit2:converter-scalars:$retrofit")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
+
+    //chatting
+    implementation("com.vanniktech:emoji-google:0.5.1")
+    implementation("com.github.captain-miao:optroundcardview:1.0.0")
+    implementation("com.theartofdev.edmodo:android-image-cropper:2.8.0")
+    implementation("com.makeramen:roundedimageview:2.3.0")
+    implementation("id.zelory:compressor:2.1.1")
 
 
     //testing
