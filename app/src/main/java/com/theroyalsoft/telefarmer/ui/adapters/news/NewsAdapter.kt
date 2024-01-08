@@ -1,9 +1,11 @@
 package com.theroyalsoft.telefarmer.ui.adapters.news
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.model.home.NewsModel
 import com.theroyalsoft.telefarmer.base.BaseViewHolder
 import com.theroyalsoft.telefarmer.databinding.ItemNewsHeadBinding
@@ -58,9 +60,11 @@ class NewsAdapter(val onNewsSelect: (data: NewsModel) -> Unit) :
         override fun onBind(position: Int) {
             itemView.setOnClickListener { onNewsSelect(list[position]) }
             mBinding.apply {
-                imgNews.setImage(list[position].imageUrl)
-                tvNewTitle.text = list[position].title
-                tvNewDate.text = list[position].dateAndTime
+                val urlImg = LocalData.getMetaInfoMetaData().imgBaseUrl + "/uploaded/" + list[position]?.imageUrl
+                Log.e("urlImg", "onBind: "+urlImg )
+                imgNews.setImage(urlImg)
+                tvNewTitle.text = list[position]?.titleBn ?: ""
+                tvNewDate.text = list[position]?.dateAndTime
             }
         }
     }
@@ -70,9 +74,11 @@ class NewsAdapter(val onNewsSelect: (data: NewsModel) -> Unit) :
         override fun onBind(position: Int) {
             itemView.setOnClickListener { onNewsSelect(list[position]) }
             mBinding.apply {
-                imgNews.setImage(list[position].imageUrl)
-                tvNewTitle.text = list[position].title
-                tvNewDate.text = list[position].dateAndTime
+                val urlImg = LocalData.getMetaInfoMetaData().imgBaseUrl + "/uploaded/" + list[position]?.imageUrl
+                Log.e("urlImg", "onBind: "+urlImg )
+                imgNews.setImage(urlImg)
+                tvNewTitle.text = list[position]?.titleBn ?: ""
+                tvNewDate.text = list[position]?.dateAndTime
             }
         }
     }

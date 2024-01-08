@@ -3,6 +3,7 @@ package com.theroyalsoft.telefarmer.ui.adapters.slider
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.model.home.NewsModel
 import com.theroyalsoft.telefarmer.base.BaseViewHolder
 import com.theroyalsoft.telefarmer.databinding.ItemSliderBinding
@@ -36,8 +37,9 @@ class SliderAdapter(val onNewsSelect: (data: NewsModel) -> Unit) : RecyclerView.
         BaseViewHolder(mBinding.root) {
         override fun onBind(position: Int) {
             itemView.setOnClickListener { onNewsSelect(list[position]) }
-            mBinding.imgItem.setCenterCropImage(list[position].imageUrl)
-            mBinding.tvNewTitle.text = list[position].title
+            val urlImg = LocalData.getMetaInfoMetaData().imgBaseUrl + "/uploaded/" + list[position]?.imageUrl
+            mBinding.imgItem.setCenterCropImage(urlImg)
+            mBinding.tvNewTitle.text = list[position].titleBn ?: ""
             mBinding.tvNewDate.text = list[position].dateAndTime
         }
     }

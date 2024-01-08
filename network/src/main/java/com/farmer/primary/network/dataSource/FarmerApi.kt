@@ -1,7 +1,6 @@
 package com.farmer.primary.network.dataSource
 
 import bio.medico.patient.model.apiResponse.CommonResponse
-import bio.medico.patient.model.apiResponse.RequestLabReport
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
@@ -9,20 +8,17 @@ import bio.medico.patient.model.apiResponse.ResponseLogin
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
 import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
-import com.farmer.primary.network.model.doctor.Doctor
 import com.farmer.primary.network.model.home.HomeResponse
+import com.farmer.primary.network.model.home.Static
 import com.farmer.primary.network.model.login.LoginOutParams
 import com.farmer.primary.network.model.login.LoginParams
 import com.farmer.primary.network.model.login.LoginResponse
 import com.farmer.primary.network.model.otp.OtpParams
 import com.farmer.primary.network.model.otp.OtpResponse
-import com.farmer.primary.network.model.profile.ProfileModel
 import com.farmer.primary.network.model.weather.WeatherResponse
 import com.farmer.primary.network.utils.NetworkResult
 import com.farmer.primary.network.utils.getBearerToken
 import okhttp3.MultipartBody
-import retrofit2.http.Path
-import retrofit2.http.Query
 import javax.inject.Inject
 
 /**
@@ -36,6 +32,18 @@ class FarmerApi @Inject constructor(
 
     suspend fun fetchHome(): NetworkResult<HomeResponse> {
         return apiService.fetchHome()
+    }
+
+    suspend fun fetchNews(): NetworkResult<Static> {
+        return apiService.fetchNews()
+    }
+
+    suspend fun fetchCategories(): NetworkResult<Static> {
+        return apiService.fetchCategories()
+    }
+
+    suspend fun fetchTripsTricks(): NetworkResult<Static> {
+        return apiService.fetchTripsTricks()
     }
 
     suspend fun getMeta(): NetworkResult<ResponseMetaInfo> {

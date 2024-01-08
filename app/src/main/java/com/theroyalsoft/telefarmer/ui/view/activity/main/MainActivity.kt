@@ -8,10 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.R
 import com.theroyalsoft.telefarmer.databinding.ActivityMainBinding
+import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
+import com.theroyalsoft.telefarmer.ui.view.activity.loan.loanselect.LoanSelectActivity
 import com.theroyalsoft.telefarmer.utils.applyTransparentStatusBarAndNavigationBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -52,6 +55,35 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView = binding.bottomnavigationbar
         bottomNavigationView.setupWithNavController(navHostFragment.navController)
         bottomNavigationView.selectedItemId = R.id.homeFragment
+
+        val bottomMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
+        val loanFrg = bottomMenuView.getChildAt(0)
+
+        loanFrg.setSafeOnClickListener { openLoan() }
+
+//        bottomNavigationView.setOnItemSelectedListener { item ->
+//            when (item.itemId) {
+//                R.id.packFragment -> {
+//                    openLoan()
+//                    true
+//                }
+//
+//                R.id.homeFragment -> {
+//                    bottomNavigationView.selectedItemId = R.id.homeFragment
+//                    true
+//                }
+//                R.id.profileFragment -> {
+//                    bottomNavigationView.selectedItemId = R.id.profileFragment
+//                    true
+//                }
+//                else -> { true }
+//            }
+//        }
+
+    }
+
+    private fun openLoan(){
+        startActivity(LoanSelectActivity.newIntent(this@MainActivity, ""))
     }
 
     // Api Response

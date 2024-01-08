@@ -78,9 +78,12 @@ class NewsListFragment : Fragment() {
 
     private fun getHomeResponse() {
         lifecycleScope.launch {
-            viewModel._homeStateFlow.collect {
-                val list = it.static.news
-                aNewsAdapter.submitData(list)
+            viewModel._homeStateFlow.collect { data ->
+                withContext(Dispatchers.Main) {
+                    data.News?.let {
+                        aNewsAdapter.submitData(it)
+                    }
+                }
             }
         }
     }

@@ -231,18 +231,12 @@ class CallManager {
                 splitSdp[position] = splitSdp[position] + bitRate
                 Timber.e("SDP_1:" + splitSdp[position])
             } else if (splitSdp[position].contains("a=mid:1") || splitSdp[position].contains("a=mid:video)")) {
-                splitSdp[position] = """
-                    ${splitSdp[position]}
-                    b=AS:500
-                    """.trimIndent()
+                splitSdp[position] = "${splitSdp[position]}b=AS:500"
                 Timber.e("SDP_2:" + splitSdp[position])
             } else {
                 Timber.e("SDP_3:" + splitSdp[position])
             }
-            splitSdp[position] = """
-                ${splitSdp[position]}
-                
-                """.trimIndent()
+            splitSdp[position] = "${splitSdp[position]}"
             sdpWithBitRate = sdpWithBitRate + splitSdp[position]
         }
         if (sdp == sdpWithBitRate) {

@@ -3,6 +3,7 @@ package com.theroyalsoft.telefarmer.ui.adapters.tipsntricks
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.model.home.NewsModel
 import com.farmer.primary.network.model.home.TricksTip
 import com.theroyalsoft.telefarmer.base.BaseViewHolder
@@ -41,8 +42,9 @@ class TipsNTricksAdapter(val onTipsItemSelect: (data: TricksTip) -> Unit) :
         override fun onBind(position: Int) {
             itemView.setOnClickListener { onTipsItemSelect(list[position]) }
             mBinding.apply {
-                imgNews.setImage(list[position].imageUrl)
-                tvNewTitle.text = list[position].title
+                val urlImg = LocalData.getMetaInfoMetaData().imgBaseUrl + "/uploaded/" + list[position]?.imageUrl
+                imgNews.setImage(urlImg)
+                tvNewTitle.text = list[position].titleBn
             }
         }
     }

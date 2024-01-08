@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.model.home.NewsModel
 import com.farmer.primary.network.model.home.TricksTip
 import com.theroyalsoft.telefarmer.R
@@ -48,9 +49,10 @@ class TipsNTricksDetailsFragment : Fragment() {
         }
 
         binding.apply {
-            tvNewDetails.text = tricksTip?.details
-            tvNewDetailsTitle.text = tricksTip?.title
-            imgNews.setImage(tricksTip?.imageUrl ?: "")
+            tvNewDetails.text = tricksTip?.detailsBn
+            tvNewDetailsTitle.text = tricksTip?.titleBn
+            val urlImg = LocalData.getMetaInfoMetaData().imgBaseUrl + "/uploaded/" + tricksTip?.imageUrl
+            imgNews.setImage(urlImg)
         }
 
     }

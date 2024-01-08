@@ -144,7 +144,7 @@ class CallTestActivity : AppCompatActivity(), WebRTCClient.Listener,
     private fun socketConnection() {
 
 
-        val socketBaseUrl = viewModel.getMetaData()?.socketBaseUrl
+        val socketBaseUrl = "https://socket.arthik.io"
         profileModel = viewModel.getProfile()
         if (socketBaseUrl!!.isEmpty() && profileModel == null)
             return

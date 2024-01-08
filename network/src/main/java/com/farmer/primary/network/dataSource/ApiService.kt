@@ -1,7 +1,6 @@
 package com.farmer.primary.network.dataSource
 
 import bio.medico.patient.model.apiResponse.CommonResponse
-import bio.medico.patient.model.apiResponse.RequestLabReport
 import bio.medico.patient.model.apiResponse.RequestNewToken
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
@@ -12,25 +11,19 @@ import bio.medico.patient.model.apiResponse.ResponseNewToken
 import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
 import com.farmer.primary.network.model.home.HomeResponse
+import com.farmer.primary.network.model.home.Static
 import com.farmer.primary.network.model.login.LoginOutParams
 import com.farmer.primary.network.model.login.LoginParams
 import com.farmer.primary.network.model.login.LoginResponse
 import com.farmer.primary.network.model.otp.OtpParams
 import com.farmer.primary.network.model.otp.OtpResponse
-import com.farmer.primary.network.model.profile.ProfileModel
 import com.farmer.primary.network.utils.NetworkResult
-import okhttp3.MultipartBody
-import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Multipart
 import retrofit2.http.POST
-import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
-import retrofit2.http.Streaming
-import retrofit2.http.Url
 
 /**
  * Created by Pritom Dutta on 13/1/23.
@@ -40,6 +33,14 @@ interface ApiService {
 
     @GET("staticData")
     suspend fun fetchHome(): NetworkResult<HomeResponse>
+
+    @GET("news")
+    suspend fun fetchNews(): NetworkResult<Static>
+
+    @GET("categories")
+    suspend fun fetchCategories(): NetworkResult<Static>
+    @GET("trips-tricks")
+    suspend fun fetchTripsTricks(): NetworkResult<Static>
 
     @GET("metaInfo")
     suspend fun fetchMetaData(): NetworkResult<ResponseMetaInfo>

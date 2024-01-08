@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -52,6 +51,8 @@ import com.theroyalsoft.telefarmer.ui.adapters.slider.SliderAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.tipsntricks.TipsNTricksHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.uploadimg.UploadImageHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.weather.WeatherAdapter
+import com.theroyalsoft.telefarmer.ui.view.activity.call.CallActivity
+import com.theroyalsoft.telefarmer.ui.view.activity.call.CallTestActivity
 import com.theroyalsoft.telefarmer.ui.view.activity.chat.ChatActivity
 import com.theroyalsoft.telefarmer.ui.view.activity.loan.loanselect.LoanSelectActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -173,7 +174,7 @@ class HomeFragment() : Fragment() {
 
         mTipsNTricksHomeAdapter = TipsNTricksHomeAdapter {
             val action =
-                HomeFragmentDirections.actionHomeFragmentToTipsNTricksListFragment(it._id, it.name)
+                HomeFragmentDirections.actionHomeFragmentToTipsNTricksListFragment(it.uuid ?: "-1", it.nameBn ?: "")
             findNavController().navigate(action)
         }
         val spanCount = 4
@@ -301,7 +302,7 @@ class HomeFragment() : Fragment() {
         binding.apply {
             imgAudioCall.setOnClickListener {
                 getCameraAndMicPermission {
-//                    val intent = Intent(activity, CallTestActivity::class.java)
+//                    val intent = Intent(activity, CallActivity::class.java)
 //                    intent.putExtra("isVideoCall", false)
 //                    startActivity(intent)
                     val intent = Intent(requireActivity(), CallActivityKotlin::class.java)
@@ -316,7 +317,7 @@ class HomeFragment() : Fragment() {
 //                startActivity(intent)
                 //check if permission of mic and camera is taken
                 getCameraAndMicPermission {
-//                    val intent = Intent(requireActivity(), CallTestActivity::class.java)
+//                    val intent = Intent(requireActivity(), CallActivity::class.java)
 //                    intent.putExtra("isVideoCall", true)
 //                    startActivity(intent)
                     val intent = Intent(requireActivity(), CallActivityKotlin::class.java)
@@ -413,12 +414,15 @@ class HomeFragment() : Fragment() {
 
     private fun getHomeResponse() {
         lifecycleScope.launch {
-            viewModel._homeStateFlow.collect {
-                val list = it.static
+            viewModel._homeStateFlow.collect { data ->
                 withContext(Dispatchers.Main) {
-                    sliderAdapter.submitData(list.news.take(4))
+                    data?.News?.let{
+                        sliderAdapter.submitData(it.take(4))
+                    }
                     rvSlider()
-                    mTipsNTricksHomeAdapter.submitData(list.tips_categories)
+                    data?.TipsCategories?.let {
+                        mTipsNTricksHomeAdapter.submitData(it)
+                    }
                 }
             }
         }

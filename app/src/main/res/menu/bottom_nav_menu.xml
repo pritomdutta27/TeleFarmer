@@ -6,7 +6,7 @@
         android:id="@+id/packFragment"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/ic_pack"
+        android:icon="@drawable/loan_svgrepo_com"
         android:title="" />
 
     <item

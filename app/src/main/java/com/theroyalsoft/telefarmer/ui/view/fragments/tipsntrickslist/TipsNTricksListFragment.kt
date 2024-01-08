@@ -33,7 +33,7 @@ class TipsNTricksListFragment : Fragment() {
     private val viewModel: NewsViewModel by viewModels()
 
     private val args: TipsNTricksListFragmentArgs by navArgs()
-    private var id: Int = -1
+    private var id: String = "-1"
     private var name: String = ""
 
     private lateinit var mTipsNTricksAdapter: TipsNTricksAdapter
@@ -50,7 +50,7 @@ class TipsNTricksListFragment : Fragment() {
         binding = FragmentTipsNTricksListBinding.inflate(layoutInflater, container, false)
         initView()
         event()
-        viewModel.getHome()
+        viewModel.getTripsTricks()
         getHomeResponse()
         ifApiGetError()
 
@@ -61,7 +61,7 @@ class TipsNTricksListFragment : Fragment() {
         binding.toolBarLay.apply {
             btnBack.setOnClickListener { findNavController().popBackStack() }
             imgLeft.isInvisible()
-            tvToolbarTitle.text = if (id == -1) {
+            tvToolbarTitle.text = if (id == "-1") {
                 getString(R.string.all)
             } else name
             tvToolbarSubtitle.isVisible()
@@ -95,13 +95,15 @@ class TipsNTricksListFragment : Fragment() {
 
     private fun getHomeResponse() {
         lifecycleScope.launch {
-            viewModel._homeStateFlow.collect {
-                val list = it.static.tricks_tips
-                if (id == -1) {
-                    mTipsNTricksAdapter.submitData(list)
-                } else {
-                    mTipsNTricksAdapter.submitData(list.filter { data -> id == data.category_id })
+            viewModel._homeStateFlow.collect { data ->
+                data?.TrickTip?.let {
+                    if (id == "-1") {
+                        mTipsNTricksAdapter.submitData(it)
+                    } else {
+                        mTipsNTricksAdapter.submitData(it.filter { fliterData -> id == fliterData.categoryUuid })
+                    }
                 }
+
             }
         }
     }

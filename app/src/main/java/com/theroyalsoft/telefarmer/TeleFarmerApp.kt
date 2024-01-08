@@ -2,14 +2,13 @@ package com.theroyalsoft.telefarmer
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatDelegate
 import bio.medico.patient.common.DeviceIDUtil
-import com.skh.hkhr.util.BuildConfig
 import com.theroyalsoft.mydoc.apputil.AppUtilConfig
 import com.theroyalsoft.telefarmer.utils.DeviceIDUtil1
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
-import timber.log.Timber.Forest.plant
 
 /**
  * Created by Pritom Dutta on 20/5/23.
@@ -37,8 +36,9 @@ class TeleFarmerApp : Application() {
         )
     }
 
-    companion object{
-        @JvmStatic var appContext: Context? = null
+    companion object {
+        @JvmStatic
+        var appContext: Context? = null
     }
 
 

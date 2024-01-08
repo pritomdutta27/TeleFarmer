@@ -5,8 +5,16 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TricksTip(
-    val details: String,
+    val uuid: String?,
+    val categoryUuid: String?,
+    val detailsBn: String?,
+    val detailsEng: String?,
     val imageUrl: String,
-    val title: String,
-    val category_id: Int
+    val titleEng: String?,
+    val titleBn: String?,
+    val category_id: Int?,
+    val createdAt: String?,
+    val updatedAt: String?,
+    val isHighlighted: Boolean,
+    val isPublished: Boolean,
 ): Parcelable

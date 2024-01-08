@@ -1,46 +1,34 @@
 package com.theroyalsoft.telefarmer.ui.view.fragments.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import bio.medico.patient.common.AppKey
 import bio.medico.patient.model.apiResponse.CommonResponse
-import bio.medico.patient.model.apiResponse.RequestLabReport
-import bio.medico.patient.model.apiResponse.RequestStatusUpdate
-import bio.medico.patient.model.apiResponse.ResponseCallHistory
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
-import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
 import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.dataSource.local.UserDevices
-import com.farmer.primary.network.model.home.HomeResponse
-import com.farmer.primary.network.model.metadata.MetaDataResponse
+import com.farmer.primary.network.model.home.Static
 import com.farmer.primary.network.model.metadata.MetaModel
 import com.farmer.primary.network.model.weather.WeatherResponse
 import com.farmer.primary.network.repositorys.callhistory.CallHistoryRepository
 import com.farmer.primary.network.repositorys.home.HomeRepository
 import com.farmer.primary.network.repositorys.lapreport.LabReportRepository
-import com.farmer.primary.network.repositorys.metadata.MetaDataRepository
 import com.farmer.primary.network.repositorys.weather.WeatherRepository
 import com.farmer.primary.network.utils.AppConstants
 import com.farmer.primary.network.utils.onError
 import com.farmer.primary.network.utils.onException
 import com.farmer.primary.network.utils.onSuccess
-import com.google.gson.GsonBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dynamic.app.survey.data.dataSource.local.preferences.abstraction.DataStoreRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.MultipartBody
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -66,9 +54,9 @@ class HomeViewModel @Inject constructor(
 //    }
 
     private val homeStateFlow by lazy {
-        MutableSharedFlow<HomeResponse>()
+        MutableSharedFlow<Static>()
     }
-    val _homeStateFlow: SharedFlow<HomeResponse> = homeStateFlow
+    val _homeStateFlow: SharedFlow<Static> = homeStateFlow
 
     private val weatherRes by lazy {
         MutableSharedFlow<WeatherResponse>()
@@ -108,9 +96,13 @@ class HomeViewModel @Inject constructor(
 
             val weather = async {weatherRepository.getWeather()}
 
-            val home = async { homeRepository.fetchHome() }
+            val news = async { homeRepository.fetchNews() }
 
-            val list = awaitAll(history, report, home, weather)
+            val tipsCategories = async { homeRepository.fetchCategories() }
+//
+//            val trickTip = async { homeRepository.fetchNews() }
+
+            val list = awaitAll(history, report, news, tipsCategories, weather)
 
             list[0].onSuccess { res ->
                 historyStateFlow.emit(res as ResponseCallHistoryModel)
@@ -133,7 +125,7 @@ class HomeViewModel @Inject constructor(
             }
 
             list[2].onSuccess { res ->
-                homeStateFlow.emit(res as HomeResponse)
+                homeStateFlow.emit(res as Static)
             }.onError { _, message ->
                 errorFlow.emit("Message: $message")
             }.onException { error ->
@@ -142,6 +134,16 @@ class HomeViewModel @Inject constructor(
             }
 
             list[3].onSuccess { res ->
+                homeStateFlow.emit(res as Static)
+            }.onError { _, message ->
+                errorFlow.emit("Message: $message")
+            }.onException { error ->
+                // Log.e("setMetaData", "setMetaData: "+error)
+                errorFlow.emit("$error")
+            }
+
+
+            list[4].onSuccess { res ->
                 weatherRes.emit(res as WeatherResponse)
             }.onError { _, message ->
                 errorFlow.emit("Message: $message")

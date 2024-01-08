@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.model.home.NewsModel
 import com.theroyalsoft.telefarmer.R
 import com.theroyalsoft.telefarmer.databinding.FragmentNewsDetailsBinding
@@ -41,9 +42,10 @@ class NewsDetailsFragment : Fragment() {
             toolBarLay.imgLeft.isInvisible()
             toolBarLay.tvToolbarTitle.text = getString(R.string.news_details)
 
-            imgNews.setImage(newsDetails?.imageUrl ?: "")
-            tvNewTitle.text = newsDetails?.title
-            tvNewDetails.text = newsDetails?.details
+            val urlImg = LocalData.getMetaInfoMetaData().imgBaseUrl + "/uploaded/" + newsDetails?.imageUrl
+            imgNews.setImage(urlImg)
+            tvNewTitle.text = newsDetails?.titleBn
+            tvNewDetails.text = newsDetails?.detailsBn
             tvNewDate.text = newsDetails?.dateAndTime
         }
 

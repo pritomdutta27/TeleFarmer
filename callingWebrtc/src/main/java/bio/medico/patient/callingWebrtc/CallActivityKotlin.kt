@@ -38,6 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.webrtc.DataChannel
 import org.webrtc.IceCandidate
@@ -526,7 +527,7 @@ class CallActivityKotlin : AppCompatActivity() {
         //========================================================
 
 
-        //setLoudSpeakerOnOff();
+//        setLoudSpeakerOnOff();
         binding.fbLoudSpeaker.setOnClickListener {
             callAudioManager.setLoudSpeakerOnOff()
         }
@@ -920,7 +921,7 @@ class CallActivityKotlin : AppCompatActivity() {
 
         doctorManager.closeHandlerConnectingTime()
 
-        runOnUiThread {
+        runBlocking(Dispatchers.Main) {
             binding.llDrag.isVisible = true
             binding.llCallEnd.isVisible = true
         }

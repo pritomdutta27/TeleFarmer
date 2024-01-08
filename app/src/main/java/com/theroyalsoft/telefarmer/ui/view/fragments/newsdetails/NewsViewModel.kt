@@ -3,6 +3,7 @@ package com.theroyalsoft.telefarmer.ui.view.fragments.newsdetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farmer.primary.network.model.home.HomeResponse
+import com.farmer.primary.network.model.home.Static
 import com.farmer.primary.network.repositorys.callhistory.CallHistoryRepository
 import com.farmer.primary.network.repositorys.home.HomeRepository
 import com.farmer.primary.network.repositorys.lapreport.LabReportRepository
@@ -26,16 +27,30 @@ class NewsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val homeStateFlow by lazy {
-        MutableSharedFlow<HomeResponse>()
+        MutableSharedFlow<Static>()
     }
-    val _homeStateFlow: SharedFlow<HomeResponse> = homeStateFlow
+    val _homeStateFlow: SharedFlow<Static> = homeStateFlow
 
     private val errorFlow: MutableSharedFlow<String> = MutableSharedFlow()
     val _errorFlow: SharedFlow<String> = errorFlow
 
     fun getHome() {
         viewModelScope.launch {
-            homeRepository.fetchHome()
+            homeRepository.fetchNews()
+                .onSuccess { res ->
+                    homeStateFlow.emit(res)
+                }.onError { _, message ->
+                    errorFlow.emit("Message: $message")
+                }.onException { error ->
+                    // Log.e("setMetaData", "setMetaData: "+error)
+                    errorFlow.emit("$error")
+                }
+        }
+    }
+
+    fun getTripsTricks() {
+        viewModelScope.launch {
+            homeRepository.fetchTripsTricks()
                 .onSuccess { res ->
                     homeStateFlow.emit(res)
                 }.onError { _, message ->
