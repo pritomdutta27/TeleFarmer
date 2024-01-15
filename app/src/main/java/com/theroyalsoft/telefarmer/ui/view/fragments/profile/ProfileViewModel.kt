@@ -9,6 +9,9 @@ import com.farmer.primary.network.utils.AppConstants
 import com.farmer.primary.network.utils.onError
 import com.farmer.primary.network.utils.onException
 import com.farmer.primary.network.utils.onSuccess
+import com.theroyalsoft.telefarmer.model.loan.LoanDetailsResponseItem
+import com.theroyalsoft.telefarmer.ui.view.bottomsheet.DivisionDataModel
+import com.theroyalsoft.telefarmer.utils.JsonUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dynamic.app.survey.data.dataSource.local.preferences.abstraction.DataStoreRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -52,5 +55,9 @@ class ProfileViewModel @Inject constructor(
                 errorFlow.emit("$error")
             }
         }
+    }
+
+    fun getDistricts(): List<DivisionDataModel> {
+        return JsonUtils.getDistricts("bd_districts.json").sortedBy { it.bn_name }
     }
 }

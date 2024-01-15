@@ -5,6 +5,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.theroyalsoft.telefarmer.model.loan.LoanDetailsResponseItem
+import com.theroyalsoft.telefarmer.ui.view.bottomsheet.DivisionDataModel
 import java.io.IOException
 import java.lang.reflect.Type
 
@@ -47,6 +48,18 @@ object JsonUtils {
             LoanDetailsResponseItem::class.java
         )
         val adapter: JsonAdapter<List<LoanDetailsResponseItem>> = moshi.adapter(listData)
+        val jsonString = readFileToString(JsonUtils::class.java, "/$fileName")
+        return adapter.fromJson(jsonString)!!
+    }
+
+    fun getDistricts(fileName: String): List<DivisionDataModel> {
+        val moshi = Moshi.Builder()
+            .build()
+        val listData: Type = Types.newParameterizedType(
+            List::class.java,
+            DivisionDataModel::class.java
+        )
+        val adapter: JsonAdapter<List<DivisionDataModel>> = moshi.adapter(listData)
         val jsonString = readFileToString(JsonUtils::class.java, "/$fileName")
         return adapter.fromJson(jsonString)!!
     }

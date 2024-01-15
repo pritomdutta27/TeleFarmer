@@ -112,7 +112,7 @@
 
         <activity
             android:name=".ui.view.activity.chat.ChatActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
 
         <provider

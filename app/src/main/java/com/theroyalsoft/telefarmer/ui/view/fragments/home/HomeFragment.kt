@@ -37,6 +37,7 @@ import com.theroyalsoft.telefarmer.databinding.FragmentHomeBinding
 import com.theroyalsoft.telefarmer.extensions.autoScroll
 import com.theroyalsoft.telefarmer.extensions.getCameraAndMicPermission
 import com.theroyalsoft.telefarmer.extensions.getCameraAndPhotoPermission
+import com.theroyalsoft.telefarmer.extensions.getFile
 import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
 import com.theroyalsoft.telefarmer.extensions.setImage
 import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
@@ -96,28 +97,29 @@ class HomeFragment() : Fragment() {
                 MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uriContent)
             //uploadImage(bitmapImage)
 
-            var imgFile: File = getFile(requireContext(), bitmapImage!!)
+            bitmapImage.let { image ->
+                var imgFile: File = requireContext().getFile(image)
+                try {
+                    val compressToBitmap = imgFile.path.resizeBitMapImage1(200, 200)
+                    imgFile = requireContext().getFile(compressToBitmap)
+                } catch (e: IOException) {
+                    Timber.e("Error:$e")
+                    return@registerForActivityResult
+                }
 
-            try {
-                val compressToBitmap = imgFile.path.resizeBitMapImage1(200, 200)
-                imgFile = getFile(requireContext(), compressToBitmap)
-            } catch (e: IOException) {
-                Timber.e("Error:$e")
-                return@registerForActivityResult
+                val imgFileName: String = imgFile.name
+
+                val mediaType: MediaType? = "image/jpg".toMediaTypeOrNull()
+
+                val requestFile: RequestBody = imgFile.asRequestBody(mediaType)
+                val imageBody: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "file",
+                    imgFileName,
+                    requestFile
+                )
+                loadingDialog?.show()
+                viewModel.uploadFile(imageBody, "labReport")
             }
-
-            val imgFileName: String = imgFile.name
-
-            val mediaType: MediaType? = "image/jpg".toMediaTypeOrNull()
-
-            val requestFile: RequestBody = imgFile.asRequestBody(mediaType)
-            val imageBody: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "file",
-                imgFileName,
-                requestFile
-            )
-            loadingDialog?.show()
-            viewModel.uploadFile(imageBody, "labReport")
         } else {
             // An error occurred.
             val exception = result.error
@@ -134,7 +136,8 @@ class HomeFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        binding = FragmentHomeBinding.inflate(layoutInflater)
+
         initView()
         event()
 
@@ -480,29 +483,7 @@ class HomeFragment() : Fragment() {
             }
     }
 
-    private fun getFile(context: Context, bm: Bitmap?): File {
-        val imgFile = File(context.cacheDir, "image-" + System.currentTimeMillis() + ".jpg")
-        try {
-            imgFile.createNewFile()
-        } catch (e: IOException) {
-            Timber.d("Error:$e")
-        }
-        val bos = ByteArrayOutputStream()
-        bm?.compress(Bitmap.CompressFormat.JPEG, 50 /*ignored for PNG*/, bos)
-        val bitmapData = bos.toByteArray()
-        var fos: FileOutputStream? = null
-        try {
-            fos = FileOutputStream(imgFile)
-            fos.write(bitmapData)
-            fos.flush()
-            fos.close()
-        } catch (e: FileNotFoundException) {
-            Timber.d("Error:$e")
-        } catch (e: IOException) {
-            Timber.d("Error:$e")
-        }
-        return imgFile
-    }
+
 
 
 }

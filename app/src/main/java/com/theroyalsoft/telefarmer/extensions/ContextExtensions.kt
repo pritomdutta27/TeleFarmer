@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Handler
@@ -23,6 +24,12 @@ import bio.medico.patient.common.AppKey
 import com.permissionx.guolindev.PermissionX
 import com.skh.hkhr.util.log.ToastUtil
 import com.theroyalsoft.telefarmer.R
+import timber.log.Timber
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 /**
  * Created by Pritom Dutta on 28/8/23.
@@ -180,4 +187,28 @@ fun Context.checkInternet(
 
 fun showNoInternetMessage() {
     ToastUtil.showToastMessage(AppKey.ERROR_INTERNET_CONNECTION)
+}
+
+fun Context.getFile(bm: Bitmap?): File {
+    val imgFile = File(cacheDir, "image-" + System.currentTimeMillis() + ".jpg")
+    try {
+        imgFile.createNewFile()
+    } catch (e: IOException) {
+        Timber.d("Error:$e")
+    }
+    val bos = ByteArrayOutputStream()
+    bm?.compress(Bitmap.CompressFormat.JPEG, 50 /*ignored for PNG*/, bos)
+    val bitmapData = bos.toByteArray()
+    var fos: FileOutputStream? = null
+    try {
+        fos = FileOutputStream(imgFile)
+        fos.write(bitmapData)
+        fos.flush()
+        fos.close()
+    } catch (e: FileNotFoundException) {
+        Timber.d("Error:$e")
+    } catch (e: IOException) {
+        Timber.d("Error:$e")
+    }
+    return imgFile
 }

@@ -8,8 +8,10 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.speech.RecognizerIntent
+import android.text.InputType
 import android.text.TextUtils
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import bio.medico.patient.common.AppKey
@@ -73,6 +75,14 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.newMessage.apply {
+            setInputType(InputType.TYPE_CLASS_TEXT)
+            requestFocus()
+            val mgr = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            mgr.showSoftInput(this, InputMethodManager.SHOW_FORCED)
+        }
+
+
         activity = this
 //        if (LocalData.getUserUuid().isEmpty()) {
 //            Timber.e("User Id Not Found")
@@ -99,7 +109,6 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
     private fun setLanguage() {
 
         binding.apply {
-
             llHeader.btnBack.setSafeOnClickListener { finish() }
             llHeader.imgLeft.isInvisible()
             llHeader.tvToolbarTitle.text = getString(bio.medico.patient.assets.R.string.chat_bn)
@@ -113,8 +122,6 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
     }
 
     private fun initUI() {
-
-
         //setup recycler view
         messageAdapter = MessageAdapter(
             this,
