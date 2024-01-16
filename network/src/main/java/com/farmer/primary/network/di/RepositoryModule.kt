@@ -2,6 +2,8 @@ package com.farmer.primary.network.di
 
 import com.farmer.primary.network.repositorys.callhistory.CallHistoryRepository
 import com.farmer.primary.network.repositorys.callhistory.CallHistoryRepositoryImp
+import com.farmer.primary.network.repositorys.chat.ChatRepository
+import com.farmer.primary.network.repositorys.chat.ChatRepositoryImp
 import com.farmer.primary.network.repositorys.doctor.AvailableDoctorRepository
 import com.farmer.primary.network.repositorys.doctor.AvailableDoctorRepositoryImp
 import com.farmer.primary.network.repositorys.doctor.UpdateDoctorStatus
@@ -85,4 +87,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideLoanRepository(api: LoanRepositoryImp): LoanRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideChatRepository(api: ChatRepositoryImp): ChatRepository
 }

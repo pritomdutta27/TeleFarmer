@@ -8,4 +8,5 @@ object DataSourceConstants {
     const val BASE_URL = "https://api.farmer.arthik.io/"
     const val IMAGE_URL = "http://103.250.69.18/EDUCATION/"
     const val WEATHER_URL = "http://api.weatherapi.com/v1/"
+    const val LOG_URL = "http://62.72.13.27:3335/api/"
 }

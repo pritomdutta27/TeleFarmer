@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.farmer.primary.network.dataSource.ApiService
 import com.farmer.primary.network.dataSource.ApiServiceForImage
+import com.farmer.primary.network.dataSource.LogUrlApi
 import com.farmer.primary.network.dataSource.TokenInterceptor
 import com.farmer.primary.network.dataSource.WeatherApi
 import com.farmer.primary.network.dataSource.local.LocalData
@@ -109,6 +110,20 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @Named("chat")
+    fun provideChatRetrofit(
+        okHttpClient: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(DataSourceConstants.LOG_URL)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .addCallAdapterFactory(NetworkResultCallAdapterFactory.create())
+            .client(okHttpClient)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     @Named("weather")
     fun provideWeatherRetrofit(
         okHttpClient: OkHttpClient
@@ -127,6 +142,12 @@ object NetworkModule {
     @Singleton
     fun provideApiService(@Named("first") retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiServiceForChat(@Named("chat") retrofit: Retrofit): LogUrlApi {
+        return retrofit.create(LogUrlApi::class.java)
     }
 
     @Provides

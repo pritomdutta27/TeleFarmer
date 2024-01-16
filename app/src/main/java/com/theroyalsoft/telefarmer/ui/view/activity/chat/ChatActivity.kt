@@ -1,6 +1,7 @@
 package com.theroyalsoft.telefarmer.ui.view.activity.chat
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -10,10 +11,17 @@ import android.provider.MediaStore
 import android.speech.RecognizerIntent
 import android.text.InputType
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import bio.medico.patient.common.AppKey
 import bio.medico.patient.common.AppKeyLog
 import bio.medico.patient.common.AttachmentTypes
@@ -22,18 +30,22 @@ import bio.medico.patient.model.apiResponse.chat.MessageBody
 import bio.medico.patient.socketUtils.SocketKeyChat
 import bio.medico.patient.socketUtils.SocketManagerChat
 import bio.medico.patient.socketUtils.SocketManagerChat.ISocketChatMessage
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.dataSource.local.MessageModel
 import com.skh.hkhr.util.IntentUtil
 import com.skh.hkhr.util.JsonUtil
 import com.skh.hkhr.util.NetUtil
 import com.skh.hkhr.util.log.ToastUtil
-import com.skh.hkhr.util.view.LoadingUtil
 import com.skh.hkhr.util.view.OnSingleClickListener
-import com.theartofdev.edmodo.cropper.CropImage
 import com.theroyalsoft.telefarmer.databinding.ActivityChatBinding
 import com.theroyalsoft.telefarmer.extensions.checkInternet
+import com.theroyalsoft.telefarmer.extensions.getFile
+import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
 import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
+import com.theroyalsoft.telefarmer.extensions.showLoadingDialog
 import com.theroyalsoft.telefarmer.ui.view.activity.chat.interfaces.OnMessageItemClick
 import com.theroyalsoft.telefarmer.utils.ImagePickUpUtil
 import com.theroyalsoft.telefarmer.utils.applyTransparentStatusBarAndNavigationBar
@@ -41,12 +53,24 @@ import com.theroyalsoft.telefarmer.utils.isInvisible
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.EmojiPopup
 import com.vanniktech.emoji.google.GoogleEmojiProvider
-import id.zelory.compressor.Compressor
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
+import java.io.File
 import java.io.IOException
 
-
+@AndroidEntryPoint
 class ChatActivity : AppCompatActivity(), OnMessageItemClick {
+
+    private val viewModel: ChatViewModel by viewModels()
 
     private lateinit var emojIcon: EmojiPopup
     private lateinit var activity: Activity
@@ -55,11 +79,55 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
 
     private var currentPhotoPath: String = ""
     private var bitmapImage: Bitmap? = null
+    private var imgUrl = "";
 
     private lateinit var binding: ActivityChatBinding
     private val uiName = AppKeyLog.UI_CHAT
     private val uiType: String
         private get() = IntentUtil.getIntentValue(AppKey.INTENT_UI, intent)
+
+    private lateinit var loading: Dialog
+
+    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            // Use the returned uri.
+            val uriContent = result.uriContent
+            //val uriFilePath = result.getUriFilePath(requireContext()) // optional usage
+
+            bitmapImage =
+                MediaStore.Images.Media.getBitmap(contentResolver, uriContent)
+            //uploadImage(bitmapImage)
+
+            bitmapImage.let { image ->
+                var imgFile: File = getFile(image)
+                try {
+                    val compressToBitmap = imgFile.path.resizeBitMapImage1(200, 200)
+                    imgFile = getFile(compressToBitmap)
+                } catch (e: IOException) {
+                    Timber.e("Error:$e")
+                    return@registerForActivityResult
+                }
+
+                val imgFileName: String = imgFile.name
+
+                val mediaType: MediaType? = "image/jpg".toMediaTypeOrNull()
+
+                val requestFile: RequestBody = imgFile.asRequestBody(mediaType)
+                val imageBody: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "file",
+                    imgFileName,
+                    requestFile
+                )
+                loading.show()
+                viewModel.uploadFile(imageBody, AppKey.CHAT_FOLDER)
+            }
+        } else {
+            // An error occurred.
+            val exception = result.error
+        }
+    }
+
+    var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>? = null
 
     companion object {
         @JvmStatic
@@ -75,6 +143,12 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        loading = showLoadingDialog()
+        loading.show()
+
+        imgUrl = LocalData.getMetaInfoMetaData()?.imgBaseUrl ?: ""
+        photoPickerInitialize()
+
         binding.newMessage.apply {
             setInputType(InputType.TYPE_CLASS_TEXT)
             requestFocus()
@@ -84,11 +158,6 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
 
 
         activity = this
-//        if (LocalData.getUserUuid().isEmpty()) {
-//            Timber.e("User Id Not Found")
-//            IntentUtil.goActivityCleatAllTop(this, LoginActivity::class.java)
-//        }
-
 
         // AppLog.sendUiOpen(uiName)
         // logEventWithNumber(AppKey.EVENT_CHAT_SCREEN_VIEW)
@@ -103,7 +172,8 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
 //
         initUI()
         setLanguage()
-//        callMessagesApi()
+        callMessagesApi()
+        imgApi()
     }
 
     private fun setLanguage() {
@@ -126,12 +196,22 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
         messageAdapter = MessageAdapter(
             this,
             LocalData.getUserUuid(),
-            binding.newMessage
+            binding.newMessage,
+            imgUrl
         )
+        messageAdapter.setHasStableIds(true)
+
+
+        val mLinearLayoutManager = LinearLayoutManager(activity)
+//        mLinearLayoutManager.reverseLayout = false
 
         binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = mLinearLayoutManager
             adapter = messageAdapter
+//            val viewPool = RecyclerView.RecycledViewPool()
+//            setRecycledViewPool(viewPool)
+//            setItemViewCacheSize(20)
+//            setHasFixedSize(true)
             scrollToPosition(messageAdapter.itemCount - 1)
         }
 
@@ -160,7 +240,7 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
 
         binding.addAttachment.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
-                clickImgCamera()
+                pickMedia?.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
         })
 
@@ -175,15 +255,6 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
 
     private fun closeUi() {
         finish()
-//        if (AppConfig.appPreviousOpen) {
-//            finish()
-//        } else {
-//            if (LocalData.getUserUuid().isEmpty()) {
-//                IntentUtil.goActivityCleatAllTop(this, LoginActivity::class.java)
-//            } else {
-//                IntentUtil.goActivityCleatAllTop(this, MainActivity::class.java)
-//            }
-//        }
     }
 
     private fun sendMessage(
@@ -258,19 +329,12 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
                 ImagePickUpUtil.REQUEST_CODE_GALLERY -> if (data != null) {
                     Timber.e("data:$data")
                     val contentURI = data.data
-                    CropImage.activity(contentURI).start(this)
-                }
-
-                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                    val result = CropImage.getActivityResult(data)
-                    if (resultCode == RESULT_OK) {
-                        val resultUri = result.uri
-                        bitmapImage =
-                            MediaStore.Images.Media.getBitmap(activity.contentResolver, resultUri)
-                        uploadImage(bitmapImage)
-                    } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                        ToastUtil.showToastMessage("Upload Failed!")
-                    }
+                    cropImage.launch(
+                        CropImageContractOptions(
+                            contentURI,
+                            CropImageOptions(true, true)
+                        )
+                    )
                 }
 
                 ImagePickUpUtil.REQUEST_CODE_CAMERA -> setPic()
@@ -294,71 +358,76 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
     private fun setPic() {
         Timber.e("file path:: $currentPhotoPath")
         val myBitmap = BitmapFactory.decodeFile(currentPhotoPath)
-        uploadImage(myBitmap)
+        //uploadImage(myBitmap)
     }
 
     //=================API CALL==========================
-    private fun uploadImage(bitmapImage: Bitmap?) {
-
-        LoadingUtil.show(AppKey.UPLOADING, activity)
-
-        var imgFile =
-            ImagePickUpUtil.getFile(activity, bitmapImage)
-
-        try {
-            val compressToBitmap = Compressor(activity).compressToBitmap(imgFile)
-            imgFile = ImagePickUpUtil.getFile(
-                activity,
-                compressToBitmap
-            )
-        } catch (e: IOException) {
-            Timber.e("Error:$e")
-            // ApiManager.sendApiLogErrorCodeScope(e)
-        }
-
-        val imgFileName = imgFile.name
-//        ApiManager.uploadImage(imgFile, imgFileName, AppKey.CHAT_FOLDER, object : IApiResponse {
-//            override fun <T> onSuccess(model: T) {
-//                val commonResponse = model as CommonResponse
-//                val imageUrl =
-//                    Objects.requireNonNull(LocalData.getMetaInfoMetaData()).imgBaseUrl + commonResponse.file
-//                Timber.e("imageUrl::$imageUrl")
-//                ThreadUtil.startTask({
-//                    sendMessage("", AttachmentTypes.IMAGE, imageUrl)
-//                    ToastUtil.showToastMessage("Sent")
-//                }, 1000, false)
-//            }
+//    private fun uploadImage(bitmapImage: Bitmap?) {
 //
-//            override fun onFailed(message: String) {}
-//        })
+////        LoadingUtil.show(AppKey.UPLOADING, activity)
+//
+//        var imgFile =
+//            ImagePickUpUtil.getFile(activity, bitmapImage)
+//
+//        try {
+//            val compressToBitmap = Compressor(activity).compressToBitmap(imgFile)
+//            imgFile = ImagePickUpUtil.getFile(
+//                activity,
+//                compressToBitmap
+//            )
+//        } catch (e: IOException) {
+//            Timber.e("Error:$e")
+//            // ApiManager.sendApiLogErrorCodeScope(e)
+//        }
+//
+//        val imgFileName = imgFile.name
+//
+//        val mediaType: MediaType? = "image/jpg".toMediaTypeOrNull()
+//
+//        val requestFile: RequestBody = imgFile.asRequestBody(mediaType)
+//        val imageBody: MultipartBody.Part = MultipartBody.Part.createFormData(
+//            "file",
+//            imgFileName,
+//            requestFile
+//        )
+//        loading.show()
+//        viewModel.uploadFile(imageBody, AppKey.CHAT_FOLDER)
+//    }
+
+    private fun photoPickerInitialize() {
+
+        pickMedia =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null) {
+                    // Start cropping activity for pre-acquired image saved on the device and customize settings.
+                    cropImage.launch(CropImageContractOptions(uri, CropImageOptions(true, true)))
+                } else {
+                    Log.e("PhotoPicker", "No media selected")
+                }
+            }
     }
 
     private fun callMessagesApi() {
-       // CustomProgress.showProgress(activity)
-        val conversionId = MessageModel.getConversationID()
-//        ApiManager.getMessages(conversionId, object : IApiResponse {
-//            override fun <T> onSuccess(model: T) {
-//                try {
-//                    val responseCallHistory = model as ResponsemessageBody
-//                    if (responseCallHistory == null) {
-//                        Timber.e("Error:" + "responseChat null")
-//                    }
-//                    messageAdapter.setData(responseCallHistory.message, binding.recyclerView)
-//
-//
-//                    //Timber.e("messageAdapter:: :" + dataList.get(0).getSenderId());
-//                } catch (exception: Exception) {
-//                    Timber.e("Error:$exception")
-//                    ApiManager.sendApiLogErrorApi(exception, AppUrl.URL_MESSAGES)
-//                }
-//                CustomProgress.hideProgress()
-//            }
-//
-//            override fun onFailed(message: String) {
-//                CustomProgress.hideProgress()
-//                ToastUtil.showToastMessage(message)
-//            }
-//        })
+        // CustomProgress.showProgress(activity)
+        lifecycleScope.launch {
+            withContext(Dispatchers.Main) {
+                viewModel._chatStateFlow.collectLatest {
+                    loading.hide()
+                    messageAdapter.setData(it.message, binding.recyclerView)
+                }
+            }
+        }
+    }
+
+    private fun imgApi() {
+        lifecycleScope.launch {
+            viewModel._imgUrlStateFlow.collectLatest { imageUrl ->
+                loading.hide()
+                withContext(Dispatchers.Main) {
+                    sendMessage("", AttachmentTypes.IMAGE, imageUrl)
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -379,79 +448,5 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
     override fun onMessageLongClick(message: MessageBody, position: Int) {
         //  TODO("Not yet implemented")
     }
-
-
-    /*
-
-        private val startForResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    val intent = result.data
-                    val message = intent?.getStringExtra(AppUrl.KEY_MESSAGE)
-                    val doctorId = IntentUtil.getIntentValue(AppKey.INTENT_doctorId, intent)
-                    val getPatientId = IntentUtil.getIntentValue(AppKey.INTENT_PatientId, intent)
-                    val getScheduleId = IntentUtil.getIntentValue(AppKey.INTENT_scheduleId, intent)
-
-                    val isDoctorRoom = intent?.getBooleanExtra(AppUrl.KEY_DOCTOR_ROOM, false)
-
-                    Timber.e("isDoctorRoom:$isDoctorRoom")
-
-
-
-                    Timber.e("startForResult")
-
-
-                }
-
-
-                Timber.e("onActivityResult")
-                val data = result.data
-
-
-                when (val resultCode = result.resultCode) {
-
-                    RESULT_CANCELED -> {
-                        Timber.e("RESULT_CANCELED")
-                        return@registerForActivityResult
-                    }
-
-                    ImagePickUpUtil.REQUEST_CODE_GALLERY -> if (data != null) {
-                        Timber.e("data:$data")
-                        val contentURI = data.data
-                        CropImage.activity(contentURI).start(this)
-                    }
-
-                    CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                        if (data == null) {
-                            Timber.e("data==null")
-                            return@registerForActivityResult
-                        }
-
-                        val result = CropImage.getActivityResult(data)
-                        if (resultCode == RESULT_OK) {
-                            val resultUri = result.uri
-                            bitmapImage =
-                                MediaStore.Images.Media.getBitmap(activity.contentResolver, resultUri)
-                            uploadImage(bitmapImage)
-                        } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                            ToastUtil.showToastMessage("Upload Failed!")
-                        }
-                    }
-
-                    ImagePickUpUtil.REQUEST_CODE_CAMERA -> setPic()
-                    ImagePickUpUtil.REQUEST_CODE_VOICE -> {
-                        val matches = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                        if (matches != null && matches.size > 0) {
-                            val searchWrd = matches[0]
-                            if (!TextUtils.isEmpty(searchWrd)) {
-                                binding.newMessage.setText(searchWrd)
-                                //getSearchResult(searchWrd);
-                            }
-                        }
-                    }
-                }
-
-            }
-    */
 
 }

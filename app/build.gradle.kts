@@ -167,6 +167,13 @@ dependencies {
     implementation("com.makeramen:roundedimageview:2.3.0")
     implementation("id.zelory:compressor:2.1.1")
 
+    implementation("com.github.piasy:BigImageViewer:1.8.1")
+    implementation("com.github.piasy:FrescoImageLoader:1.8.1")
+    implementation("com.github.piasy:GlideImageLoader:1.8.1")
+    implementation("com.github.piasy:ProgressPieIndicator:1.8.1")
+    implementation("com.github.piasy:FrescoImageViewFactory:1.8.1")
+    implementation ("com.github.piasy:GlideImageViewFactory:1.8.1")
+
 
     //testing
     testImplementation(TestingDependencies.junit)

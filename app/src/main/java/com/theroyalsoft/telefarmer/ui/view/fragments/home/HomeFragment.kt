@@ -177,7 +177,10 @@ class HomeFragment() : Fragment() {
 
         mTipsNTricksHomeAdapter = TipsNTricksHomeAdapter {
             val action =
-                HomeFragmentDirections.actionHomeFragmentToTipsNTricksListFragment(it.uuid ?: "-1", it.nameBn ?: "")
+                HomeFragmentDirections.actionHomeFragmentToTipsNTricksListFragment(
+                    it.uuid ?: "-1",
+                    it.nameBn ?: ""
+                )
             findNavController().navigate(action)
         }
         val spanCount = 4
@@ -305,9 +308,6 @@ class HomeFragment() : Fragment() {
         binding.apply {
             imgAudioCall.setOnClickListener {
                 getCameraAndMicPermission {
-//                    val intent = Intent(activity, CallActivity::class.java)
-//                    intent.putExtra("isVideoCall", false)
-//                    startActivity(intent)
                     val intent = Intent(requireActivity(), CallActivityKotlin::class.java)
                     intent.putExtra(AppKey.INTENT_VIDEO_CALL, false);
                     startActivity(intent);
@@ -315,14 +315,8 @@ class HomeFragment() : Fragment() {
             }
 
             imgVideoCall.setOnClickListener {
-//                Timber.e("isVideoCall:")
-//                val intent = Intent(requireActivity(), CallTestActivity::class.java)
-//                startActivity(intent)
                 //check if permission of mic and camera is taken
                 getCameraAndMicPermission {
-//                    val intent = Intent(requireActivity(), CallActivity::class.java)
-//                    intent.putExtra("isVideoCall", true)
-//                    startActivity(intent)
                     val intent = Intent(requireActivity(), CallActivityKotlin::class.java)
                     intent.putExtra(AppKey.INTENT_VIDEO_CALL, true);
                     startActivity(intent);
@@ -330,8 +324,7 @@ class HomeFragment() : Fragment() {
             }
 
             llPreviousConsultation.btnViewAll.setOnClickListener {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToPreviousConsultationFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToPreviousConsultationFragment()
                 findNavController().navigate(action)
             }
 
@@ -345,30 +338,29 @@ class HomeFragment() : Fragment() {
             }
 
             llChat.root.setSafeOnClickListener {
-                startActivity(
-                    ChatActivity.newIntent(
-                        requireContext(),
-                        phone = ""
+                getCameraAndPhotoPermission {
+                    startActivity(
+                        ChatActivity.newIntent(
+                            requireContext(),
+                            phone = ""
+                        )
                     )
-                )
+                }
             }
 
             llSlider.btnViewAll.setOnClickListener {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToNewsListFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToNewsListFragment()
                 findNavController().navigate(action)
             }
 
             llTipsNTricks.btnViewAll.setOnClickListener {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToTipsNTricksListFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToTipsNTricksListFragment()
                 findNavController().navigate(action)
             }
 
 
             llUploadImage.btnViewAll.setOnClickListener {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToUploadImgFragment()
+                val action = HomeFragmentDirections.actionHomeFragmentToUploadImgFragment()
                 findNavController().navigate(action)
             }
 
@@ -419,7 +411,7 @@ class HomeFragment() : Fragment() {
         lifecycleScope.launch {
             viewModel._homeStateFlow.collect { data ->
                 withContext(Dispatchers.Main) {
-                    data?.News?.let{
+                    data?.News?.let {
                         sliderAdapter.submitData(it.take(4))
                     }
                     rvSlider()
@@ -482,8 +474,6 @@ class HomeFragment() : Fragment() {
                 }
             }
     }
-
-
 
 
 }

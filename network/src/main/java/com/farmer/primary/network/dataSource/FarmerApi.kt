@@ -8,6 +8,7 @@ import bio.medico.patient.model.apiResponse.ResponseLogin
 import bio.medico.patient.model.apiResponse.ResponseMetaInfo
 import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import bio.medico.patient.model.apiResponse.ResponseSingleDoctor
+import bio.medico.patient.model.apiResponse.chat.ResponsemessageBody
 import com.farmer.primary.network.model.home.HomeResponse
 import com.farmer.primary.network.model.home.Static
 import com.farmer.primary.network.model.login.LoginOutParams
@@ -28,6 +29,7 @@ class FarmerApi @Inject constructor(
     private val apiService: ApiService,
     private val apiServiceForImage: ApiServiceForImage,
     private val weatherApi: WeatherApi,
+    private val mLogUrlApi: LogUrlApi,
 ) {
 
     suspend fun fetchHome(): NetworkResult<HomeResponse> {
@@ -150,5 +152,12 @@ class FarmerApi @Inject constructor(
             headerUserInfo = userInfo,
             patientInfo = patientInfo
         )
+    }
+
+    ///////////////////////////////////////////////////////
+    /// Chat
+    //////////////////////////////////////////////////////
+    suspend fun getMess(conversionId: String): NetworkResult<ResponsemessageBody>{
+        return mLogUrlApi.fetchMessages(id = conversionId)
     }
 }

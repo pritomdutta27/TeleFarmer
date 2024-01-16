@@ -40,13 +40,14 @@ public class MessageAdapter extends RecyclerView.Adapter<BaseMessageViewHolder> 
 
     public List<MessageBody> messageBodies;
     private View newMessage;
+    private String imgUrl;
 
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
-
-    public MessageAdapter(Context context, String myId, View newMessage) {
+    public MessageAdapter(Context context, String myId, View newMessage, String imgUrl) {
         this.context = context;
+        this.imgUrl = imgUrl;
 
         this.myId = myId;
         this.newMessage = newMessage;
@@ -109,11 +110,7 @@ public class MessageAdapter extends RecyclerView.Adapter<BaseMessageViewHolder> 
         if (this.messageBodies == null) {
             this.messageBodies = new ArrayList<>();
         }
-
-
         this.messageBodies.add(messages);
-
-
         handler.post(() -> {
             Timber.i("notifyDataSetChanged");
             notifyDataSetChanged();
@@ -133,13 +130,13 @@ public class MessageAdapter extends RecyclerView.Adapter<BaseMessageViewHolder> 
 
         switch (viewType) {
             case OTHER:
-                return new MessageTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_text_other, parent, false), newMessage, itemClickListener);
+                return new MessageTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_text_other, parent, false), newMessage, itemClickListener, imgUrl);
 
             //  return new MessageAttachmentImageViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_attachment_image, parent, false), itemClickListener);
             //case AttachmentTypes.NONE_TYPING: return new MessageTypingViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_typing, parent, false));
             case MY:
             default:
-                return new MessageTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_text, parent, false), newMessage, itemClickListener);
+                return new MessageTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_text, parent, false), newMessage, itemClickListener,imgUrl);
         }
     }
 
