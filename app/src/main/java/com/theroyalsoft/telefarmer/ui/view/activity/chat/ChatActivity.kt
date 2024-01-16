@@ -46,6 +46,7 @@ import com.theroyalsoft.telefarmer.extensions.getFile
 import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
 import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
 import com.theroyalsoft.telefarmer.extensions.showLoadingDialog
+import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.ui.view.activity.chat.interfaces.OnMessageItemClick
 import com.theroyalsoft.telefarmer.utils.ImagePickUpUtil
 import com.theroyalsoft.telefarmer.utils.applyTransparentStatusBarAndNavigationBar
@@ -174,6 +175,7 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
         setLanguage()
         callMessagesApi()
         imgApi()
+        ifApiGetError()
     }
 
     private fun setLanguage() {
@@ -425,6 +427,19 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
                 loading.hide()
                 withContext(Dispatchers.Main) {
                     sendMessage("", AttachmentTypes.IMAGE, imageUrl)
+                }
+            }
+        }
+    }
+
+    private fun ifApiGetError() {
+        lifecycleScope.launch {
+            viewModel._errorFlow.collect { errorStr ->
+                withContext(Dispatchers.Main) {
+                    loading.hide()
+                    if (errorStr.isNotEmpty()) {
+                        showToast(errorStr)
+                    }
                 }
             }
         }

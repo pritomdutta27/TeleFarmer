@@ -26,7 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatViewModel @Inject constructor(
     private val repository: ChatRepository,
-    private val mLabReportRepository: LabReportRepository,
+    private val mLabReportRepository: LabReportRepository
 ) : ViewModel() {
 
     init {

@@ -2,6 +2,7 @@ package com.farmer.primary.network.dataSource
 
 import bio.medico.patient.model.apiResponse.CommonResponse
 import bio.medico.patient.model.apiResponse.RequestNewToken
+import bio.medico.patient.model.apiResponse.RequestPatientUpdate
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
@@ -22,6 +23,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -110,6 +112,14 @@ interface ApiService {
         @Header("UserInfo") headerUserInfo: String,
         @Body patientInfo: RequestNewToken
     ): ResponseNewToken
+
+    @PUT("patient/{uuid}")
+    suspend fun updateProfile(
+        @Header("Authorization") token: String,
+        @Header("UserInfo") headerUserInfo: String,
+        @Path("uuid") uuid: String,
+        @Body patientUpdate: RequestPatientUpdate
+    ): NetworkResult<CommonResponse>
 
 
 }

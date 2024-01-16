@@ -1,6 +1,7 @@
 package com.farmer.primary.network.dataSource
 
 import bio.medico.patient.model.apiResponse.CommonResponse
+import bio.medico.patient.model.apiResponse.RequestPatientUpdate
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
@@ -20,6 +21,7 @@ import com.farmer.primary.network.model.weather.WeatherResponse
 import com.farmer.primary.network.utils.NetworkResult
 import com.farmer.primary.network.utils.getBearerToken
 import okhttp3.MultipartBody
+import retrofit2.http.Body
 import javax.inject.Inject
 
 /**
@@ -151,6 +153,20 @@ class FarmerApi @Inject constructor(
             token = token.getBearerToken(),
             headerUserInfo = userInfo,
             patientInfo = patientInfo
+        )
+    }
+
+    suspend fun updateProfile(
+        token: String,
+        userInfo: String,
+        uuid: String,
+        patientUpdate: RequestPatientUpdate
+    ): NetworkResult<CommonResponse> {
+        return apiService.updateProfile(
+            token = token.getBearerToken(),
+            headerUserInfo = userInfo,
+            uuid = uuid,
+            patientUpdate = patientUpdate
         )
     }
 

@@ -1,5 +1,6 @@
 package com.theroyalsoft.telefarmer.ui.view.fragments.profile
 
+import android.app.Dialog
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,11 +15,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import bio.medico.patient.common.AppKey
+import bio.medico.patient.common.AttachmentTypes
+import bio.medico.patient.model.apiResponse.RequestPatientUpdate
+import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.farmer.primary.network.dataSource.local.LocalData
 import com.google.gson.Gson
+import com.skh.hkhr.util.log.ToastUtil
 import com.theroyalsoft.telefarmer.extensions.getPhoneDeviceId
 import com.theroyalsoft.telefarmer.extensions.openLogout
 import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
@@ -31,6 +37,7 @@ import com.theroyalsoft.telefarmer.extensions.getFromDateTime
 import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
 import com.theroyalsoft.telefarmer.extensions.setImage
 import com.theroyalsoft.telefarmer.extensions.setImageProfile
+import com.theroyalsoft.telefarmer.extensions.showLoadingDialog
 import com.theroyalsoft.telefarmer.ui.custom.DatePickerFragment
 import com.theroyalsoft.telefarmer.ui.view.activity.loan.bottomsheets.bottomlist.ListBottomSheetFragment
 import com.theroyalsoft.telefarmer.ui.view.activity.login.LoginActivity
@@ -40,6 +47,7 @@ import com.theroyalsoft.telefarmer.utils.isInvisible
 import dagger.hilt.android.AndroidEntryPoint
 import dynamic.app.survey.data.dataSource.local.preferences.abstraction.DataStoreRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType
@@ -65,6 +73,10 @@ class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels()
 
     private lateinit var mDistrictBottomSheetFragment: DistrictBottomSheetFragment
+
+    private lateinit var loading: Dialog
+
+    private var imgUrl = ""
 
     @Inject
     lateinit var pref: DataStoreRepository
@@ -103,8 +115,21 @@ class ProfileFragment : Fragment() {
                     imgFileName,
                     requestFile
                 )
-//                loadingDialog?.show()
-//                viewModel.uploadFile(imageBody, "labReport")
+
+                val convertedDate = binding.etExpiry.text.toString()
+                val location = Location(binding.etLocation.text.toString(), binding.etLocation.text.toString())
+                val gson = Gson()
+                val json = gson.toJson(location)
+                val requestPatientUpdate = RequestPatientUpdate(
+                    name = binding.etName.text.toString(),
+                    dob = convertedDate,
+                    weight = "66",
+                    height = "5:5",
+                    location = json
+                )
+
+                loading.show()
+                viewModel.uploadFile(imageBody, AppKey.USER_PATIENT, requestPatientUpdate)
             }
         } else {
             // An error occurred.
@@ -112,7 +137,6 @@ class ProfileFragment : Fragment() {
         }
     }
     var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>? = null
-    private var imgUrl = "";
 
     //////////////////////////////////////////
     override fun onCreateView(
@@ -125,24 +149,28 @@ class ProfileFragment : Fragment() {
         photoPickerInitialize()
         event()
 
+        loading = requireContext().showLoadingDialog()
+
         listDistricts = viewModel.getDistricts()
 
         //Api Call
         getResponse()
+        imgApi()
         ifApiGetError()
 
-        setProfileData()
-
+        val data = LocalData.getResponsePatientInfo()
+        imgUrl = data.image
+        setProfileData(data)
 
         return binding.root
     }
 
-    private fun setProfileData() {
-        val data = LocalData.getResponsePatientInfo()
+    private fun setProfileData(data: ResponsePatientInfo) {
+
         binding.apply {
             etName.setText(data.name)
             etPhone.setText(data.phoneNumber)
-            imgProfile.setImageProfile(LocalData.getImgBaseUrl() + data.image)
+            imgProfile.setImageProfile(LocalData.getImgBaseUrl() +"/uploaded/"+ imgUrl)
             etExpiry.text = data.dob
             try {
                 val gson = Gson()
@@ -213,7 +241,42 @@ class ProfileFragment : Fragment() {
                 }
                 mDistrictBottomSheetFragment.submitData(listDistricts, "জেলার নাম") { data ->
                     etLocation.text = data.bn_name
+                    etLocation.tag = data.upazila
                 }
+            }
+
+            btnSubmit.setSafeOnClickListener {
+                if (binding.etName.text.toString().isEmpty()) {
+                    ToastUtil.showToastMessage("Name can't be empty!")
+                    binding.etName.requestFocus()
+                    return@setSafeOnClickListener
+                }
+                else if (binding.etLocation.text.toString().isEmpty()) {
+                    ToastUtil.showToastMessage("Location can't be empty!")
+                    binding.etLocation.requestFocus()
+                    return@setSafeOnClickListener
+                }
+
+                else if (binding.etExpiry.text.toString().isEmpty()) {
+                    binding.etExpiry.error = "Please enter valid Date of birth!"
+                    binding.etExpiry.requestFocus()
+                    return@setSafeOnClickListener
+                }
+
+                val location = Location(binding.etLocation.text.toString(), binding.etLocation.text.toString())
+                val gson = Gson()
+                val json = gson.toJson(location)
+
+                val requestPatientUpdate = RequestPatientUpdate(
+                    name = binding.etName.text.toString(),
+                    dob = binding.etExpiry.text.toString(),
+                    weight = "66",
+                    height = "5:5",
+                    location = json,
+                    image = imgUrl
+                )
+                loading.show()
+                viewModel.updateProfile(requestPatientUpdate)
             }
 
         }
@@ -250,6 +313,7 @@ class ProfileFragment : Fragment() {
         lifecycleScope.launch {
             viewModel._errorFlow.collect { errorStr ->
                 withContext(Dispatchers.Main) {
+                    loading.hide()
                     if (errorStr.isNotEmpty()) {
                         requireContext().showToast(errorStr)
                     }
@@ -262,6 +326,20 @@ class ProfileFragment : Fragment() {
         binding.apply {
             etName.clearFocus()
             etPhone.clearFocus()
+        }
+    }
+
+    private fun imgApi() {
+        lifecycleScope.launch {
+            viewModel._imgUrlStateFlow.collectLatest { imageUrl ->
+                loading.hide()
+                withContext(Dispatchers.Main) {
+                    if (imageUrl.isNotEmpty()){
+                        imgUrl = imageUrl
+                        binding.imgProfile.setImageProfile(LocalData.getImgBaseUrl() +"/uploaded/"+ imgUrl)
+                    }
+                }
+            }
         }
     }
 

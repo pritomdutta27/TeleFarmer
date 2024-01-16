@@ -134,3 +134,18 @@ object DateTimeUtil {
             return NullRemoveUtil.getNotNull(time)
         }
 }
+
+fun String.getTimeForDobUiToApi(): String {
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+    val formatter: Format = SimpleDateFormat("MMMM dd, yyyy")
+    var date: Date? = Date()
+    try {
+        date = dateFormat.parse(this)
+        val time1 = formatter.format(date)
+        Timber.d("Date is: $time1")
+        return NullRemoveUtil.getNotNull(time1)
+    } catch (e: ParseException) {
+        Timber.e("Error:$e")
+    }
+    return ""
+}
