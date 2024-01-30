@@ -208,14 +208,14 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
 
         val mLinearLayoutManager = LinearLayoutManager(activity)
 //        mLinearLayoutManager.reverseLayout = true
-//        mLinearLayoutManager.stackFromEnd = true     // items gravity sticks to bottom
-//        mLinearLayoutManager.reverseLayout = false
+        mLinearLayoutManager.stackFromEnd = true     // items gravity sticks to bottom
+        mLinearLayoutManager.reverseLayout = false
 
         binding.recyclerView.apply {
             layoutManager = mLinearLayoutManager
             adapter = messageAdapter
-            val viewPool = RecyclerView.RecycledViewPool()
-            setRecycledViewPool(viewPool)
+//            val viewPool = RecyclerView.RecycledViewPool()
+//            setRecycledViewPool(viewPool)
             setItemViewCacheSize(20)
             setHasFixedSize(true)
             scrollToPosition(messageAdapter.itemCount - 1)

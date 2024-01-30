@@ -19,6 +19,7 @@ import com.theroyalsoft.telefarmer.R;
 import com.theroyalsoft.telefarmer.ui.view.activity.chat.interfaces.OnMessageItemClick;
 import com.theroyalsoft.telefarmer.ui.view.activity.chat.viewHolders.BaseMessageViewHolder;
 import com.theroyalsoft.telefarmer.ui.view.activity.chat.viewHolders.MessageTextViewHolder;
+import com.theroyalsoft.telefarmer.ui.view.activity.chat.viewHolders.MessageTextViewHolderOther;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +101,7 @@ public class MessageAdapter extends RecyclerView.Adapter<BaseMessageViewHolder> 
             if (getItemCount() > 1) {
                 recyclerView.scrollToPosition(getItemCount() - 1);
             }
-        }, 100);
+        }, 400);
     }
 
     void setData(MessageBody messages, RecyclerView recyclerView) {
@@ -132,11 +133,10 @@ public class MessageAdapter extends RecyclerView.Adapter<BaseMessageViewHolder> 
 
         switch (viewType) {
             case OTHER:
-                return new MessageTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_text_other, parent, false), newMessage, itemClickListener);
+                return new MessageTextViewHolderOther(LayoutInflater.from(context).inflate(R.layout.item_message_text_other, parent, false), newMessage, itemClickListener);
 
             //  return new MessageAttachmentImageViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_attachment_image, parent, false), itemClickListener);
             //case AttachmentTypes.NONE_TYPING: return new MessageTypingViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_typing, parent, false));
-            case MY:
             default:
                 return new MessageTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_text, parent, false), newMessage, itemClickListener);
         }
@@ -145,6 +145,12 @@ public class MessageAdapter extends RecyclerView.Adapter<BaseMessageViewHolder> 
     @Override
     public void onBindViewHolder(BaseMessageViewHolder holder, int position) {
         holder.setData(messageBodies.get(position), position);
+//        holder.setIsRecyclable(false);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
