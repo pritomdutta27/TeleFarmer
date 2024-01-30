@@ -45,9 +45,9 @@ public class MessageAdapter extends RecyclerView.Adapter<BaseMessageViewHolder> 
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
-    public MessageAdapter(Context context, String myId, View newMessage, String imgUrl) {
+
+    public MessageAdapter(Context context, String myId, View newMessage) {
         this.context = context;
-        this.imgUrl = imgUrl;
 
         this.myId = myId;
         this.newMessage = newMessage;
@@ -88,8 +88,7 @@ public class MessageAdapter extends RecyclerView.Adapter<BaseMessageViewHolder> 
             notifyDataSetChanged();
 
             if (getItemCount() > 1) {
-                recyclerView.scrollToPosition(getItemCount() - 1);
-
+//                recyclerView.scrollToPosition(getItemCount() - 1);
                 scrolAgain(recyclerView);//for Image Size
             }
         });
@@ -98,25 +97,28 @@ public class MessageAdapter extends RecyclerView.Adapter<BaseMessageViewHolder> 
 
     private void scrolAgain(RecyclerView recyclerView) {
         handler.postDelayed(() -> {
-
             if (getItemCount() > 1) {
                 recyclerView.scrollToPosition(getItemCount() - 1);
             }
-        }, 1000);
+        }, 100);
     }
 
-    public void setData(MessageBody messages, RecyclerView recyclerView) {
+    void setData(MessageBody messages, RecyclerView recyclerView) {
 
         if (this.messageBodies == null) {
             this.messageBodies = new ArrayList<>();
         }
+
+
         this.messageBodies.add(messages);
+
+
         handler.post(() -> {
             Timber.i("notifyDataSetChanged");
             notifyDataSetChanged();
 
             if (getItemCount() > 1) {
-                recyclerView.scrollToPosition(getItemCount() - 1);
+                //recyclerView.scrollToPosition(getItemCount() - 1);
                 scrolAgain(recyclerView);//for Image Size
             }
         });
@@ -130,13 +132,13 @@ public class MessageAdapter extends RecyclerView.Adapter<BaseMessageViewHolder> 
 
         switch (viewType) {
             case OTHER:
-                return new MessageTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_text_other, parent, false), newMessage, itemClickListener, imgUrl);
+                return new MessageTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_text_other, parent, false), newMessage, itemClickListener);
 
             //  return new MessageAttachmentImageViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_attachment_image, parent, false), itemClickListener);
             //case AttachmentTypes.NONE_TYPING: return new MessageTypingViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_typing, parent, false));
             case MY:
             default:
-                return new MessageTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_text, parent, false), newMessage, itemClickListener,imgUrl);
+                return new MessageTextViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message_text, parent, false), newMessage, itemClickListener);
         }
     }
 

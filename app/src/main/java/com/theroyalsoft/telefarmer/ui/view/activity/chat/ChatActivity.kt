@@ -89,6 +89,8 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
 
     private lateinit var loading: Dialog
 
+    val messageBodies = ArrayList<MessageBody>()
+
     private val cropImage = registerForActivityResult(CropImageContract()) { result ->
         if (result.isSuccessful) {
             // Use the returned uri.
@@ -147,7 +149,7 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
         loading = showLoadingDialog()
         loading.show()
 
-        imgUrl = LocalData.getMetaInfoMetaData()?.imgBaseUrl ?: ""
+
         photoPickerInitialize()
 
         binding.newMessage.apply {
@@ -190,7 +192,8 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
 
     private val iSocketChatMessage = ISocketChatMessage { messageBody ->
         Timber.i("Message:" + JsonUtil.getJsonStringFromObject(messageBody))
-        messageAdapter.setData(messageBody, binding.recyclerView)
+//        messageBodies.add(messageBody)
+        messageAdapter.setData(messageBody,binding.recyclerView)
     }
 
     private fun initUI() {
@@ -198,22 +201,23 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
         messageAdapter = MessageAdapter(
             this,
             LocalData.getUserUuid(),
-            binding.newMessage,
-            imgUrl
+            binding.newMessage
         )
         messageAdapter.setHasStableIds(true)
 
 
         val mLinearLayoutManager = LinearLayoutManager(activity)
+//        mLinearLayoutManager.reverseLayout = true
+//        mLinearLayoutManager.stackFromEnd = true     // items gravity sticks to bottom
 //        mLinearLayoutManager.reverseLayout = false
 
         binding.recyclerView.apply {
             layoutManager = mLinearLayoutManager
             adapter = messageAdapter
-//            val viewPool = RecyclerView.RecycledViewPool()
-//            setRecycledViewPool(viewPool)
-//            setItemViewCacheSize(20)
-//            setHasFixedSize(true)
+            val viewPool = RecyclerView.RecycledViewPool()
+            setRecycledViewPool(viewPool)
+            setItemViewCacheSize(20)
+            setHasFixedSize(true)
             scrollToPosition(messageAdapter.itemCount - 1)
         }
 
@@ -279,7 +283,9 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
                     MessageModel.getModel(AttachmentTypes.attachmentTypeImage, attachment)
                 val messageJson1 = JsonUtil.getJsonStringFromObject(messageBody11)
                 socketManagerChat.sendData(SocketKeyChat.LISTENER_message_send, messageJson1)
+//                messageBodies.add(messageBody11)
                 messageAdapter.setData(messageBody11, binding.recyclerView)
+//                binding.recyclerView.scrollToPosition(messageAdapter.itemCount - 1)
                 //logEventWithNumber(AppKey.EVENT_SEND_CHAT_CLICK, "IMAGE_SEND")
             }
 
@@ -291,7 +297,8 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
                 val messageBody1 = MessageModel.getModel(messageBody)
                 val messageJson = JsonUtil.getJsonStringFromObject(messageBody1)
                 socketManagerChat.sendData(SocketKeyChat.LISTENER_message_send, messageJson)
-                messageAdapter.setData(messageBody1, binding.recyclerView)
+//                messageBodies.add(messageBody1)
+                messageAdapter.setData(messageBody1,binding.recyclerView)
             }
         }
         binding.newMessage.setText("")
@@ -412,12 +419,11 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
     private fun callMessagesApi() {
         // CustomProgress.showProgress(activity)
         lifecycleScope.launch {
-            withContext(Dispatchers.Main) {
                 viewModel._chatStateFlow.collectLatest {
                     loading.hide()
+//                    messageBodies.addAll(it.message)
                     messageAdapter.setData(it.message, binding.recyclerView)
                 }
-            }
         }
     }
 

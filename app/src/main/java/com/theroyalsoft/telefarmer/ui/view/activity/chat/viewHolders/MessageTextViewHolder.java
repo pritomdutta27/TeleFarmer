@@ -1,5 +1,6 @@
 package com.theroyalsoft.telefarmer.ui.view.activity.chat.viewHolders;
 
+
 import static com.theroyalsoft.telefarmer.ui.view.activity.chat.MessageAdapter.MY;
 
 import android.app.AlertDialog;
@@ -38,7 +39,7 @@ public class MessageTextViewHolder extends BaseMessageViewHolder {
 
     private static int _4dpInPx = -1;
 
-    public MessageTextViewHolder(View itemView, View newMessageView, OnMessageItemClick itemClickListener, String imgUrl) {
+    public MessageTextViewHolder(View itemView, View newMessageView, OnMessageItemClick itemClickListener) {
         super(itemView, newMessageView, itemClickListener);
         text = itemView.findViewById(R.id.text);
         ll = itemView.findViewById(R.id.container);
@@ -46,7 +47,7 @@ public class MessageTextViewHolder extends BaseMessageViewHolder {
         tvTextDate = itemView.findViewById(R.id.tvTextDate);
         imgV = itemView.findViewById(R.id.imgV);
         imgProfile = itemView.findViewById(R.id.imgProfile);
-        this.imgUrl = imgUrl;
+        this.imgUrl = LocalData.getImgBaseUrl();
 
         imgV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +121,8 @@ public class MessageTextViewHolder extends BaseMessageViewHolder {
 
             String userProfile = "";
             if (!LocalData.getUserProfile().isEmpty()) {
-                userProfile = LocalData.getImgBaseUrl() + LocalData.getUserProfile();
+                userProfile = LocalData.getImgBaseUrl()+"/upload/" + LocalData.getUserProfile();
+                imgUrl = LocalData.getImgBaseUrl();
             }
 
             Timber.e("userProfile:" + userProfile);
