@@ -16,13 +16,13 @@ class PreviousConsultationAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
     private var listCall: List<ResponseCallHistory> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        if(itemCount != 1){
+        if (viewType == 1) {
             val item = ItemPreviousConsultationBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent, false
             )
             return PreviousConsultationHolder(item)
-        }else{
+        } else {
             val item = ItemNoPreviousConsultationBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent, false
@@ -32,9 +32,19 @@ class PreviousConsultationAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
     }
 
-    override fun getItemCount(): Int = listCall.size
+    override fun getItemCount(): Int = if (listCall.isEmpty()) {
+        1
+    } else
+        listCall.size
 
-    fun submitData(list: List<ResponseCallHistory>){
+    override fun getItemViewType(position: Int): Int {
+        return if (listCall.isEmpty()) {
+            0
+        } else
+            1
+    }
+
+    fun submitData(list: List<ResponseCallHistory>) {
         this.listCall = list
         notifyDataSetChanged()
     }
@@ -49,8 +59,14 @@ class PreviousConsultationAdapter : RecyclerView.Adapter<BaseViewHolder>() {
             mBinding.apply {
                 tvDoctorName.text = listCall[position].doctorName
                 tvDoctorSpecialist.text = listCall[position].callStatus
-                tvDate.text = listCall[position].updatedAt.getFromDateTime("yyyy-MM-dd'T'HH:mm:ssXXX", "MMM dd, yyyy")
-                tvTime.text = listCall[position].updatedAt.getFromDateTime("yyyy-MM-dd'T'HH:mm:ssXXX", "hh:mm a")
+                tvDate.text = listCall[position].updatedAt.getFromDateTime(
+                    "yyyy-MM-dd'T'HH:mm:ssXXX",
+                    "MMM dd, yyyy"
+                )
+                tvTime.text = listCall[position].updatedAt.getFromDateTime(
+                    "yyyy-MM-dd'T'HH:mm:ssXXX",
+                    "hh:mm a"
+                )
             }
         }
     }

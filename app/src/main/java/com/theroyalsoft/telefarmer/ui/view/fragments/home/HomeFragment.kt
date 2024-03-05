@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -130,6 +131,7 @@ class HomeFragment() : Fragment() {
 
     private var imgUrl = "";
     private var loadingDialog: Dialog? = null
+    private lateinit var mLayoutManager: PeekingLinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -236,15 +238,16 @@ class HomeFragment() : Fragment() {
     }
 
     private fun rvSetUpPreviousConsultation() {
-        val mLayoutManager = PeekingLinearLayoutManager(context)
+        mLayoutManager = PeekingLinearLayoutManager(context)
 //        val mLayoutManager = LinearLayoutManager(context)
+        mLayoutManager.setRation(0.98F)
         mLayoutManager.orientation = RecyclerView.HORIZONTAL
 
         binding.llPreviousConsultation.rvPreviousConsultationHome.apply {
             layoutManager = mLayoutManager
             setHasFixedSize(true)
             setItemViewCacheSize(20)
-            addItemDecoration(EqualSpacingItemDecoration(40))
+            addItemDecoration(EqualSpacingItemDecoration(10))
             adapter = previousConsultationAdapter
         }
     }
@@ -324,7 +327,8 @@ class HomeFragment() : Fragment() {
             }
 
             llPreviousConsultation.btnViewAll.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToPreviousConsultationFragment()
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToPreviousConsultationFragment()
                 findNavController().navigate(action)
             }
 
@@ -379,6 +383,8 @@ class HomeFragment() : Fragment() {
             viewModel._historyStateFlow.collect {
                 val list = it.callHistory.take(5)
                 withContext(Dispatchers.Main) {
+                    mLayoutManager.setRation(0.7F)
+                    binding.llPreviousConsultation.rvPreviousConsultationHome.layoutManager = mLayoutManager
                     previousConsultationAdapter.submitData(list)
                 }
             }

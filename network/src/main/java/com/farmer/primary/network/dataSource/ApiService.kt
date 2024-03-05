@@ -3,6 +3,7 @@ package com.farmer.primary.network.dataSource
 import bio.medico.patient.model.apiResponse.CommonResponse
 import bio.medico.patient.model.apiResponse.RequestNewToken
 import bio.medico.patient.model.apiResponse.RequestPatientUpdate
+import bio.medico.patient.model.apiResponse.RequestSignUp
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
@@ -121,5 +122,11 @@ interface ApiService {
         @Body patientUpdate: RequestPatientUpdate
     ): NetworkResult<CommonResponse>
 
+    @POST("patient/passwordless-singup")
+    suspend fun requestReg(
+        @Header("Authorization") token: String,
+        @Header("UserInfo") headerUserInfo: String,
+        @Body patientUpdate: RequestSignUp
+    ): NetworkResult<CommonResponse>
 
 }

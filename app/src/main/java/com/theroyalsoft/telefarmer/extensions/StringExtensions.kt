@@ -136,7 +136,7 @@ object DateTimeUtil {
 }
 
 fun String.getTimeForDobUiToApi(): String {
-    val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+    val dateFormat = SimpleDateFormat("yyyyy/MM/dd")
     val formatter: Format = SimpleDateFormat("MMMM dd, yyyy")
     var date: Date? = Date()
     try {

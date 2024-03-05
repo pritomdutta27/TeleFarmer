@@ -80,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     hideLoading()
                     if (data.isSuccess) {
-                        openOtp()
+                        openOtp(data.isProfile)
                     } else {
                         showToast(data.message)
                     }
@@ -102,8 +102,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun openOtp() {
-        startActivity(OTPActivity.newIntent(this, binding.etPhoneNumber.text.toString()))
+    private fun openOtp(isProfile: Boolean) {
+        startActivity(OTPActivity.newIntent(this, binding.etPhoneNumber.text.toString(), isProfile))
     }
 
     private fun showLoading() {

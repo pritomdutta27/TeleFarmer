@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Tele Farmer</string>
-    <string name="mobile_number">লগইন</string>
-    <string name="login">Login</string>
+    <string name="mobile_number">মোবাইল নম্বর</string>
+    <string name="login">লগইন</string>
+    <string name="profile_create">প্রোফাইল তৈরি করুন</string>
     <string name="login_sub">আপনার মোবাইল নম্বরটি এখানে প্রবেশ করুন,\nআমরা আপনার পরিচয় নিশ্চিত করার জন্য একটি OTP পাঠাব</string>
     <string name="otp">ওটিপি</string>
     <string name="please_type_the_four_digit_code"><![CDATA[ 4 সংখ্যার কোড পাঠানো\nহয়েছে <b>%1$s</b> number]]></string>
@@ -28,6 +29,7 @@
     <string name="enter_otp">ওটিপি লিখুন</string>
     <string name="profile">প্রোফাইল</string>
     <string name="save">সংরক্ষণ</string>
+    <string name="create">ক্রিট করুন</string>
     <string name="name">নাম</string>
     <string name="crop">শষ্য</string>
     <string name="amount_of_land">জমির পরিমাণ</string>

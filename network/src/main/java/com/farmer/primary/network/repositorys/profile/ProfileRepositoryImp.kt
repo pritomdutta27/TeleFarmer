@@ -2,6 +2,7 @@ package com.farmer.primary.network.repositorys.profile
 
 import bio.medico.patient.model.apiResponse.CommonResponse
 import bio.medico.patient.model.apiResponse.RequestPatientUpdate
+import bio.medico.patient.model.apiResponse.RequestSignUp
 import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import com.farmer.primary.network.dataSource.FarmerApi
 import com.farmer.primary.network.dataSource.local.LocalData
@@ -32,6 +33,17 @@ class ProfileRepositoryImp @Inject constructor(
             token = pref.getString(AppConstants.PREF_KEY_ACCESS_TOKEN) ?: "",
             userInfo = userInfo,
             uuid = LocalData.getUserUuid(),
+            patientUpdate = patientUpdate
+        )
+    }
+
+    override suspend fun requestReg(
+        userInfo: String,
+        patientUpdate: RequestSignUp
+    ): NetworkResult<CommonResponse> {
+        return api.requestReg(
+            token = pref.getString(AppConstants.PREF_KEY_ACCESS_TOKEN) ?: "",
+            userInfo = userInfo,
             patientUpdate = patientUpdate
         )
     }

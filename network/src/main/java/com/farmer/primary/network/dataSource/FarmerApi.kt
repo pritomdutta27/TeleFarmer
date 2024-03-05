@@ -2,6 +2,7 @@ package com.farmer.primary.network.dataSource
 
 import bio.medico.patient.model.apiResponse.CommonResponse
 import bio.medico.patient.model.apiResponse.RequestPatientUpdate
+import bio.medico.patient.model.apiResponse.RequestSignUp
 import bio.medico.patient.model.apiResponse.RequestStatusUpdate
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
@@ -166,6 +167,18 @@ class FarmerApi @Inject constructor(
             token = token.getBearerToken(),
             headerUserInfo = userInfo,
             uuid = uuid,
+            patientUpdate = patientUpdate
+        )
+    }
+
+    suspend fun requestReg(
+        token: String,
+        userInfo: String,
+        patientUpdate: RequestSignUp
+    ): NetworkResult<CommonResponse> {
+        return apiService.requestReg(
+            token = token.getBearerToken(),
+            headerUserInfo = userInfo,
             patientUpdate = patientUpdate
         )
     }

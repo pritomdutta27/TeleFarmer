@@ -5,7 +5,7 @@ package com.farmer.primary.network.utils
  */
 object DataSourceConstants {
 //    const val API_KEY = "dfc67e319cc457c3d0d20948a046b160"
-    const val BASE_URL = "https://api.farmer.arthik.io/"
+    const val BASE_URL = "https://api.telefarmer.net/"
     const val IMAGE_URL = "http://103.250.69.18/EDUCATION/"
     const val WEATHER_URL = "http://api.weatherapi.com/v1/"
     const val LOG_URL = "http://62.72.13.27:3335/api/"

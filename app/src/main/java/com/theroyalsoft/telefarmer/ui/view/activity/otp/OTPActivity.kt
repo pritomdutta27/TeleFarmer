@@ -18,6 +18,7 @@ import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.R
 import com.theroyalsoft.telefarmer.databinding.ActivityOtpactivityBinding
 import com.theroyalsoft.telefarmer.ui.view.activity.main.MainActivity
+import com.theroyalsoft.telefarmer.ui.view.activity.reg.RegActivity
 import com.theroyalsoft.telefarmer.utils.hideNavigationBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -29,9 +30,10 @@ class OTPActivity : AppCompatActivity() {
 
     companion object {
         @JvmStatic
-        fun newIntent(context: Context, phone: String): Intent =
+        fun newIntent(context: Context, phone: String, isProfile: Boolean): Intent =
             Intent(context, OTPActivity::class.java)
                 .putExtra("phone", phone)
+                .putExtra("isProfile", isProfile)
     }
 
     private lateinit var binding: ActivityOtpactivityBinding
@@ -39,6 +41,8 @@ class OTPActivity : AppCompatActivity() {
     private val viewModel: OTPViewModel by viewModels()
 
     private var phoneNum = ""
+    private var accessToken = ""
+    private var isProfile = true
     private var timer: CountDownTimer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +52,7 @@ class OTPActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         phoneNum = intent.getStringExtra("phone") ?: ""
+        isProfile = intent.getBooleanExtra("isProfile", true)
 
         binding.tvLoginSubtitle.text =
             setFormXmlText(R.string.please_type_the_four_digit_code, phoneNum)
@@ -71,7 +76,7 @@ class OTPActivity : AppCompatActivity() {
                 channel = "android",
                 deviceId = this.getPhoneDeviceId(),
                 phoneNumber = phoneNum,
-                isTrusted = false,
+                isTrusted = true,
                 deviceName = this.getDeviceName(),
                 otp = binding.tvOtp.otp.toString()
             )
@@ -116,7 +121,14 @@ class OTPActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     hideLoading()
                     if (data.isSuccess) {
-                        openMain()
+                        if (isProfile) {
+                            openMain()
+                        } else {
+                            if (data.accessToken.isNotEmpty()) {
+                                accessToken = data.accessToken
+                                openReg()
+                            }
+                        }
                     } else {
                         showToast(data.message.toString())
                     }
@@ -141,6 +153,10 @@ class OTPActivity : AppCompatActivity() {
 
     private fun openMain() {
         startActivity(MainActivity.newIntent(this))
+    }
+
+    private fun openReg() {
+        startActivity(RegActivity.newIntent(this, phone = phoneNum, accessToken = accessToken))
     }
 
     private fun showLoading() {
