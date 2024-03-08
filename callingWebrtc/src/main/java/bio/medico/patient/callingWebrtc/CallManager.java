@@ -342,6 +342,7 @@ public class CallManager {
         Timber.e("Receive Remote Call ...");
         createPeerConnection1();
         mPeerConnection.setRemoteDescription(new SimpleSdpObserver(), new SessionDescription(SessionDescription.Type.OFFER, signalingOfferSocket.getOffer()));
+        Timber.e("Receive Remote Call ..."+mPeerConnection.getRemoteDescription().type);
         answerCallSocket(doctorUuid);
     }
 

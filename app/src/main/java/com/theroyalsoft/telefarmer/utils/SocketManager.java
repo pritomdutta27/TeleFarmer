@@ -45,7 +45,7 @@ public class SocketManager {
 
     public void init() {
 
-        String SocketUrl = "https://socket.arthik.io";
+        String SocketUrl = "https://socket.telefarmer.net/";
         Timber.e("Socket URL:" + SocketUrl);
 
         if (SocketUrl.isEmpty()) {

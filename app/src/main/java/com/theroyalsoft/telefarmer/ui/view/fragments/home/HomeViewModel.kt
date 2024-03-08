@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import bio.medico.patient.common.AppKey
 import bio.medico.patient.model.apiResponse.CommonResponse
+import bio.medico.patient.model.apiResponse.ResponseCallHistory
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
 import com.farmer.primary.network.dataSource.local.LocalData
@@ -106,9 +107,11 @@ class HomeViewModel @Inject constructor(
 
             list[0].onSuccess { res ->
                 historyStateFlow.emit(res as ResponseCallHistoryModel)
-            }.onError { _, message ->
+            }.onError { code, message ->
                 //Log.e("setMetaData", "setMetaData: "+message)
-                errorFlow.emit("Message: $message")
+                if (code != 400){
+                    errorFlow.emit("Message: $message")
+                }
             }.onException { error ->
                 // Log.e("setMetaData", "setMetaData: "+error)
                 errorFlow.emit("$error")
@@ -116,9 +119,11 @@ class HomeViewModel @Inject constructor(
 
             list[1].onSuccess { res ->
                 labStateFlow.emit(res as ResponseLabReport)
-            }.onError { _, message ->
+            }.onError { code, message ->
                 //Log.e("setMetaData", "setMetaData: "+message)
-                errorFlow.emit("Message: $message")
+                if (code != 400){
+                    errorFlow.emit("Message: $message")
+                }
             }.onException { error ->
                 // Log.e("setMetaData", "setMetaData: "+error)
                 errorFlow.emit("$error")
@@ -160,9 +165,11 @@ class HomeViewModel @Inject constructor(
             repository.getCallHistory(headerUserInfo, LocalData.getUserUuid())
                 .onSuccess { res ->
                     historyStateFlow.emit(res)
-                }.onError { _, message ->
+                }.onError { code, message ->
                     //Log.e("setMetaData", "setMetaData: "+message)
-                    errorFlow.emit("Message: $message")
+                    if (code != 400){
+                        errorFlow.emit("Message: $message")
+                    }
                 }.onException { error ->
                     // Log.e("setMetaData", "setMetaData: "+error)
                     errorFlow.emit("$error")
@@ -179,9 +186,11 @@ class HomeViewModel @Inject constructor(
             )
                 .onSuccess { res ->
                     labStateFlow.emit(res as ResponseLabReport)
-                }.onError { _, message ->
+                }.onError { code, message ->
                     //Log.e("setMetaData", "setMetaData: "+message)
-                    errorFlow.emit("Message: $message")
+                    if (code != 400){
+                        errorFlow.emit("Message: $message")
+                    }
                 }.onException { error ->
                     // Log.e("setMetaData", "setMetaData: "+error)
                     errorFlow.emit("$error")
