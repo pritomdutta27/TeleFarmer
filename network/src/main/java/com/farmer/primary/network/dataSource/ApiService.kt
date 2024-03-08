@@ -81,8 +81,8 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Header("UserInfo") headerUserInfo: String,
         @Path("uuid") uuid: String,
-        @Query("pageNumber") pageNumber: String,
-        @Query("perpageCount") perpageCount: String
+//        @Query("pageNumber") pageNumber: String,
+//        @Query("perpageCount") perpageCount: String
     ): NetworkResult<ResponseCallHistoryModel>
 
     @GET("labReport/patient/{uuid}")

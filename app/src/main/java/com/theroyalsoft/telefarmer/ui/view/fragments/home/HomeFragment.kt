@@ -66,6 +66,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.internal.notify
+import okhttp3.internal.notifyAll
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -384,7 +386,11 @@ class HomeFragment() : Fragment() {
                 val list = it.callHistory.take(5)
                 withContext(Dispatchers.Main) {
                     mLayoutManager.setRation(0.7F)
-                    binding.llPreviousConsultation.rvPreviousConsultationHome.layoutManager = mLayoutManager
+                    if (binding.llPreviousConsultation.rvPreviousConsultationHome.itemDecorationCount == 1) {
+                        binding.llPreviousConsultation.rvPreviousConsultationHome.addItemDecoration(
+                            EqualSpacingItemDecoration(40)
+                        )
+                    }
                     previousConsultationAdapter.submitData(list)
                 }
             }

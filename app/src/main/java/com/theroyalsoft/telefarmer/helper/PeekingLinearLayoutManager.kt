@@ -38,6 +38,8 @@ class PeekingLinearLayoutManager : LinearLayoutManager {
 
     private var ratio = 0.7f // change to 0.7f for 70%
 
+
+
     fun setRation(ratio: Float){
         this.ratio = ratio
     }
