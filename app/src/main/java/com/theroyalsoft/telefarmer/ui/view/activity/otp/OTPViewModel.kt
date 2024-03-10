@@ -46,7 +46,7 @@ class OTPViewModel @Inject constructor(
     private val errorFlow: MutableSharedFlow<String> = MutableSharedFlow()
     val _errorFlow: SharedFlow<String> = errorFlow
 
-    private fun setLogin(accessToken: String, phone: String) = runBlocking {
+    fun setLogin(accessToken: String, phone: String) = runBlocking {
         pref.userLoginMode()
         LocalData.setToken(accessToken)
         pref.putString(AppConstants.PREF_KEY_ACCESS_TOKEN, accessToken)
@@ -57,7 +57,6 @@ class OTPViewModel @Inject constructor(
         viewModelScope.launch {
             val response = repository.verifyOtp(params)
             response.onSuccess { res ->
-                //setLogin(res, params.phoneNumber)
                 otpStateFlow.emit(res)
             }.onError { code, message ->
                 errorFlow.emit("Message: $message")
@@ -68,10 +67,10 @@ class OTPViewModel @Inject constructor(
     }
 
     fun requestReg(profileData: RequestSignUp, accessToken: String, phone: String){
-        val apiEndPoint: String = "patient/passwordless-singup"
+        val apiEndPoint = "patient/passwordless-singup"
         val headerUserInfo: String = UserDevices.getUserDevicesJson(apiEndPoint)
         viewModelScope.launch {
-            mProfileRepository.requestReg(headerUserInfo, profileData)
+            mProfileRepository.requestReg(headerUserInfo, profileData, accessToken = accessToken)
                 .onSuccess { res ->
                     setLogin(accessToken, phone)
                     updateStateFlow.emit(true)

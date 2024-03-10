@@ -122,6 +122,7 @@ class OTPActivity : AppCompatActivity() {
                     hideLoading()
                     if (data.isSuccess) {
                         if (isProfile) {
+                            viewModel.setLogin(accessToken = data.accessToken, phone = phoneNum)
                             openMain()
                         } else {
                             if (data.accessToken.isNotEmpty()) {

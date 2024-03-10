@@ -39,12 +39,15 @@ class ProfileRepositoryImp @Inject constructor(
 
     override suspend fun requestReg(
         userInfo: String,
-        patientUpdate: RequestSignUp
+        patientUpdate: RequestSignUp,
+        accessToken: String
     ): NetworkResult<CommonResponse> {
         return api.requestReg(
-            token = pref.getString(AppConstants.PREF_KEY_ACCESS_TOKEN) ?: "",
+            token = accessToken,
             userInfo = userInfo,
             patientUpdate = patientUpdate
         )
     }
+
+
 }

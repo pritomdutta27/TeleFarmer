@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.utils.AppConstants
 import com.google.gson.GsonBuilder
 import dynamic.app.survey.data.dataSource.local.preferences.abstraction.DataStoreRepository
@@ -87,8 +88,13 @@ class DataStoreRepositoryImpl @Inject constructor(
 
     override suspend fun userLoginOut() {
         val preferencesKey = intPreferencesKey(AppConstants.PREF_KEY_USER_LOGGED_IN_MODE)
+        val preferencesAccessKey = stringPreferencesKey(AppConstants.PREF_KEY_ACCESS_TOKEN)
+        val preferencesPhoneNum = stringPreferencesKey(AppConstants.PREF_KEY_USER_PHONE_NUM)
+        LocalData.setToken("")
         context.dataStore.edit { preferences ->
             preferences[preferencesKey] = LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.type
+            preferences[preferencesAccessKey] = ""
+            preferences[preferencesPhoneNum] = ""
         }
     }
 }

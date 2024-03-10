@@ -56,12 +56,16 @@ class RegActivity : AppCompatActivity() {
         binding = ActivityRegBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+
         initUI()
         event()
 
         getResponse()
         ifApiGetError()
-
     }
 
     private fun initUI() {

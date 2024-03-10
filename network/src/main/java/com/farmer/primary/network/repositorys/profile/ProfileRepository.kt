@@ -14,5 +14,5 @@ interface ProfileRepository {
     suspend fun profileInfo(params: String): NetworkResult<ResponsePatientInfo>
 
     suspend fun updateProfile(userInfo: String, patientUpdate: RequestPatientUpdate): NetworkResult<CommonResponse>
-    suspend fun requestReg(userInfo: String, patientUpdate: RequestSignUp): NetworkResult<CommonResponse>
+    suspend fun requestReg(userInfo: String, patientUpdate: RequestSignUp, accessToken: String): NetworkResult<CommonResponse>
 }
