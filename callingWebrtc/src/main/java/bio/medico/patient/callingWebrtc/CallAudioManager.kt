@@ -1,6 +1,7 @@
 package bio.medico.patient.callingWebrtc
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -18,13 +19,14 @@ Created by Samiran Kumar on 26,September,2023
 class CallAudioManager(
     private val isVideoCall: Boolean,
     val activity: Activity,
-    private val fbLoudSpeaker: FloatingActionButton
+    private val fbLoudSpeaker: FloatingActionButton,
+    private val context: Context
 ) {
 
     private lateinit var welcomeToneMediaPlayer: MediaPlayer
 
     private val appAudioManager by lazy {
-        AppAudioManager(isVideoCall, activity, fbLoudSpeaker)
+        AppAudioManager(isVideoCall, activity, fbLoudSpeaker, context)
     }
 
     private val mAudioManager by lazy {
@@ -75,6 +77,6 @@ class CallAudioManager(
 
     fun setLoudSpeakerOnOff() {
 
-        appAudioManager!!.setLoudSpeakerOnOff()
+        appAudioManager.setLoudSpeakerOnOff()
     }
 }

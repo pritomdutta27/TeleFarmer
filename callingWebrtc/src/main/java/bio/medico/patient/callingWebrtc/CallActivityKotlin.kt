@@ -25,6 +25,7 @@ import bio.medico.patient.socketUtils.SocketKey
 import bio.medico.patient.socketUtils.SocketKey.receiverDeviceId
 import bio.medico.patient.socketUtils.WrtcSignalManager
 import bio.medico.patient.socketUtils.WrtcSignalManager.ICallUiListener
+import com.skh.hkhr.util.AppRes
 import com.skh.hkhr.util.IntentUtil
 import com.skh.hkhr.util.JsonUtil
 import com.skh.hkhr.util.NetUtil
@@ -71,7 +72,8 @@ class CallActivityKotlin : AppCompatActivity() {
         CallAudioManager(
             isVideoCall,
             activity,
-            binding.fbLoudSpeaker
+            binding.fbLoudSpeaker,
+            this
         )
     }
 
@@ -526,7 +528,7 @@ class CallActivityKotlin : AppCompatActivity() {
         callManager!!.createVideoTrack(isVideoCall)
         //========================================================
 
-
+        //callAudioManager.setLoudSpeakerOnOff()
 //        setLoudSpeakerOnOff();
         binding.fbLoudSpeaker.setOnClickListener {
             callAudioManager.setLoudSpeakerOnOff()
@@ -1001,10 +1003,10 @@ class CallActivityKotlin : AppCompatActivity() {
     private fun setMicOnOff() {
         if (callManager!!.isMicrophoneOn) {
             callManager!!.setMicrophoneOnOff(false)
-            //binding.fbMute.setImageDrawable(AppRes.getDrawable(bio.medico.patient.assets.R.drawable.ic_mic_off, this))
+            binding.fbMute.setImageDrawable(AppRes.getDrawable(bio.medico.patient.assets.R.drawable.ic_mic_off, this))
         } else {
             callManager!!.setMicrophoneOnOff(true)
-           // binding.fbMute.setImageDrawable(AppRes.getDrawable(bio.medico.patient.assets.R.drawable.ic_mic_on, this))
+            binding.fbMute.setImageDrawable(AppRes.getDrawable(bio.medico.patient.assets.R.drawable.ic_mic_on, this))
         }
     }
 
@@ -1019,17 +1021,17 @@ class CallActivityKotlin : AppCompatActivity() {
         }
         if (callManager!!.isCameraOn) {
             callManager!!.setCameraOnOff(false)
-           // binding.fbVideoOn!!.setImageDrawable(AppRes.getDrawable(bio.medico.patient.assets.R.drawable.ic_video_camera_off, this))
+            binding.fbVideoOn.setImageDrawable(AppRes.getDrawable(bio.medico.patient.assets.R.drawable.ic_video_camera_off, this))
         } else {
             callManager!!.setCameraOnOff(true)
-           // binding.fbVideoOn!!.setImageDrawable(AppRes.getDrawable(bio.medico.patient.assets.R.drawable.ic_video_camera_on, this))
+            binding.fbVideoOn.setImageDrawable(AppRes.getDrawable(bio.medico.patient.assets.R.drawable.ic_video_camera_on, this))
         }
     }
 
     private fun setCameraOnOff(isOnOff: Boolean) {
         if (isOnOff) {
             callManager!!.setCameraOnOff(false)
-           // binding.fbVideoOn!!.setImageDrawable(AppRes.getDrawable(bio.medico.patient.assets.R.drawable.ic_video_camera_off, this))
+            binding.fbVideoOn.setImageDrawable(AppRes.getDrawable(bio.medico.patient.assets.R.drawable.ic_video_camera_off, this))
         } else {
             setCameraOnOff()
         }

@@ -45,10 +45,12 @@ public class AppAudioManager {
     private Activity activity;
     private AudioManager audioManager;
     private FloatingActionButton fbLoudSpeaker;
+    private Context context;
 
-    public AppAudioManager(boolean isVideoCall, Activity activity, FloatingActionButton fbLoudSpeake) {
+    public AppAudioManager(boolean isVideoCall, Activity activity, FloatingActionButton fbLoudSpeake, Context context) {
         this.isVideoCall = isVideoCall;
         this.activity = activity;
+        this.context = context;
         this.fbLoudSpeaker = fbLoudSpeake;
         audioManager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
 
@@ -142,7 +144,7 @@ public class AppAudioManager {
                 audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
                 audioManager.setSpeakerphoneOn(false);
                 soundInStatusBeforePlug = soundInStatus;
-                //fbLoudSpeaker.setImageDrawable(AppResources.icLoudSpeakerOff);
+                fbLoudSpeaker.setImageDrawable(context.getDrawable(bio.medico.patient.assets.R.drawable.ic_loud_speaker_off));
 
                 break;
 
@@ -152,7 +154,7 @@ public class AppAudioManager {
                 audioManager.setBluetoothScoOn(false);
 
                 audioManager.setSpeakerphoneOn(false);
-                //fbLoudSpeaker.setImageDrawable(AppResources.icLoudSpeakerOff);
+                fbLoudSpeaker.setImageDrawable(context.getDrawable(bio.medico.patient.assets.R.drawable.ic_loud_speaker_off));
 
                 break;
 
@@ -162,7 +164,7 @@ public class AppAudioManager {
                 audioManager.startBluetoothSco();
                 audioManager.setBluetoothScoOn(true);
 
-                //fbLoudSpeaker.setImageDrawable(AppResources.icLoudSpeakerOff);
+                fbLoudSpeaker.setImageDrawable(context.getDrawable(bio.medico.patient.assets.R.drawable.ic_loud_speaker_off));
 
                 break;
 
@@ -175,7 +177,7 @@ public class AppAudioManager {
                 audioManager.setSpeakerphoneOn(true);
                 soundInStatusBeforePlug = soundInStatus;
 
-               // fbLoudSpeaker.setImageDrawable(AppResources.icLoudSpeakerOn);
+                fbLoudSpeaker.setImageDrawable(context.getDrawable(bio.medico.patient.assets.R.drawable.ic_loud_speaker_on));
 
                 break;
         }
