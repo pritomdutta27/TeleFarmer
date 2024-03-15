@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import bio.medico.patient.common.AppKey
-import bio.medico.patient.common.AttachmentTypes
 import bio.medico.patient.model.apiResponse.RequestPatientUpdate
 import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import com.canhub.cropper.CropImageContract
@@ -25,21 +23,19 @@ import com.canhub.cropper.CropImageOptions
 import com.farmer.primary.network.dataSource.local.LocalData
 import com.google.gson.Gson
 import com.skh.hkhr.util.log.ToastUtil
-import com.theroyalsoft.telefarmer.extensions.getPhoneDeviceId
-import com.theroyalsoft.telefarmer.extensions.openLogout
-import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
-import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.R
 import com.theroyalsoft.telefarmer.databinding.FragmentProfileBinding
 import com.theroyalsoft.telefarmer.extensions.getCameraAndPhotoPermission
 import com.theroyalsoft.telefarmer.extensions.getFile
 import com.theroyalsoft.telefarmer.extensions.getFromDateTime
+import com.theroyalsoft.telefarmer.extensions.getPhoneDeviceId
+import com.theroyalsoft.telefarmer.extensions.openLogout
 import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
-import com.theroyalsoft.telefarmer.extensions.setImage
 import com.theroyalsoft.telefarmer.extensions.setImageProfile
+import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
 import com.theroyalsoft.telefarmer.extensions.showLoadingDialog
+import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.ui.custom.DatePickerFragment
-import com.theroyalsoft.telefarmer.ui.view.activity.loan.bottomsheets.bottomlist.ListBottomSheetFragment
 import com.theroyalsoft.telefarmer.ui.view.activity.login.LoginActivity
 import com.theroyalsoft.telefarmer.ui.view.bottomsheet.DistrictBottomSheetFragment
 import com.theroyalsoft.telefarmer.ui.view.bottomsheet.DivisionDataModel
@@ -58,7 +54,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
 import javax.inject.Inject
 
 data class Location(val district: String, val thana: String)
@@ -67,6 +62,8 @@ data class Location(val district: String, val thana: String)
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
+
+    private var compressToBitmap: Bitmap? = null
 
     private lateinit var datePickerDialog: DatePickerFragment
 
@@ -98,7 +95,8 @@ class ProfileFragment : Fragment() {
             bitmapImage.let { image ->
                 var imgFile: File = requireContext().getFile(image)
                 try {
-                    val compressToBitmap = imgFile.path.resizeBitMapImage1(200, 200)
+                    compressToBitmap = imgFile.path.resizeBitMapImage1(200, 200)
+                    binding.imgProfile.setImageBitmap(compressToBitmap)
                     imgFile = requireContext().getFile(compressToBitmap)
                 } catch (e: IOException) {
                     Timber.e("Error:$e")
@@ -159,7 +157,12 @@ class ProfileFragment : Fragment() {
         ifApiGetError()
 
         val data = LocalData.getResponsePatientInfo()
-        imgUrl = data.image
+        if (data.image.isEmpty()){
+            imgUrl = LocalData.getImgBaseUrl() +"/uploaded/"+ data.image
+        }else{
+            imgUrl = data.image
+        }
+
         setProfileData(data)
 
         return binding.root
@@ -336,7 +339,11 @@ class ProfileFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     if (imageUrl.isNotEmpty()){
                         imgUrl = imageUrl
-                        binding.imgProfile.setImageProfile(LocalData.getImgBaseUrl() +"/uploaded/"+ imgUrl)
+                        if (compressToBitmap != null){
+                            binding.imgProfile.setImageBitmap(compressToBitmap)
+                        }else{
+                            binding.imgProfile.setImageProfile(LocalData.getImgBaseUrl() +"/uploaded/"+ imgUrl)
+                        }
                     }
                 }
             }

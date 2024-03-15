@@ -128,7 +128,7 @@ fun ImageView.setImageProfile(url: String) {
     Glide
         .with(this)
         .load(url)
-        .placeholder(R.drawable.avatar_man)
+        .error(R.drawable.avatar_man)
         .into(this);
 
 }

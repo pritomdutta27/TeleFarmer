@@ -114,7 +114,7 @@ interface ApiService {
         @Body patientInfo: RequestNewToken
     ): ResponseNewToken
 
-    @PUT("patient/{uuid}")
+    @PUT("patient/update/{uuid}")
     suspend fun updateProfile(
         @Header("Authorization") token: String,
         @Header("UserInfo") headerUserInfo: String,

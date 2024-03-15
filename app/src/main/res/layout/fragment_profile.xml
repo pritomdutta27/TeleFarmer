@@ -29,7 +29,7 @@
         android:layout_marginTop="-70dp"
         android:elevation="@dimen/_10sdp"
         android:padding="@dimen/_1sdp"
-        android:scaleType="center"
+        android:scaleType="fitXY"
         app:layout_constraintCircleRadius="@dimen/_40sdp"
         app:layout_constraintEnd_toEndOf="@+id/appCompatImageView5"
         app:layout_constraintStart_toStartOf="@+id/appCompatImageView5"
