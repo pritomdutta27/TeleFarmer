@@ -132,7 +132,7 @@ class PreviousConsultationDetailsFragment : Fragment() {
         })
 
         url = LocalData.getMetaInfoMetaData()
-            .doctorBaseUrl + "iframe-prescription/" + prescriptionId
+            .doctorBaseUrl + "iframe-advices/" + prescriptionId
 //        url = "https://doctor.telefarmer.net/iframe-advices/e3593d7c-c118-408e-945f-2b5e096ddbc7"
         binding.wvPrescriptionPreview.loadUrl(url)
         Timber.e("externalUrl: $url")
