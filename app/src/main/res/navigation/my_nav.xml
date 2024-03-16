@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_homeFragment_to_newsDetailsFragment"
             app:destination="@id/newsDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_previousConsultationDetailsFragment"
+            app:destination="@id/previousConsultationDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -98,5 +101,18 @@
             android:name="id"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_previousConsultationFragment_to_previousConsultationDetailsFragment"
+            app:destination="@id/previousConsultationDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previousConsultationDetailsFragment"
+        android:name="com.theroyalsoft.telefarmer.ui.view.fragments.previousConsultation.PreviousConsultationDetailsFragment"
+        android:label="fragment_previous_consultation_details"
+        tools:layout="@layout/fragment_previous_consultation_details" >
+        <argument
+            android:name="prescriptionId"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
 </navigation>

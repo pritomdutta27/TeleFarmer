@@ -54,7 +54,13 @@ class PreviousConsultationFragment : Fragment() {
     private fun initView() {
         binding.toolBarLay.tvToolbarTitle.text = getString(R.string.previous_consultation)
 
-        mPreviousConsultationAdapter = PreviousConsultationAdapter(imgUrl)
+        mPreviousConsultationAdapter = PreviousConsultationAdapter(imgUrl) { prescriptionId ->
+            findNavController().navigate(
+                PreviousConsultationFragmentDirections.actionPreviousConsultationFragmentToPreviousConsultationDetailsFragment(
+                    prescriptionId
+                )
+            )
+        }
 
         val mLayoutManager = LinearLayoutManager(context)
         mLayoutManager.orientation = RecyclerView.VERTICAL

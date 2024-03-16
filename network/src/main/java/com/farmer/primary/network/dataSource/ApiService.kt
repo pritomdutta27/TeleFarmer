@@ -76,7 +76,7 @@ interface ApiService {
         @Body requestStatusUpdate: RequestStatusUpdate
     ): NetworkResult<CommonResponse>
 
-    @GET("callHistory/patient/{uuid}")
+    @GET("callHistory/patient/{uuid}/completed")
     suspend fun getCallHistory(
         @Header("Authorization") token: String,
         @Header("UserInfo") headerUserInfo: String,

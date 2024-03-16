@@ -173,7 +173,13 @@ class HomeFragment() : Fragment() {
             findNavController().navigate(action)
         }
 
-        previousConsultationAdapter = PreviousConsultationAdapter(imgUrl)
+        previousConsultationAdapter = PreviousConsultationAdapter(imgUrl) { prescriptionId ->
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToPreviousConsultationDetailsFragment(
+                    prescriptionId
+                )
+            )
+        }
 
 //
         rvSetUpPreviousConsultation()
@@ -256,7 +262,7 @@ class HomeFragment() : Fragment() {
     }
 
     private fun rvImageUploadSetup(list: List<ResponseLabReport.ItemLabReport>) {
-        mUploadImageHomeAdapter = UploadImageHomeAdapter(imgUrl){ imgUrl ->
+        mUploadImageHomeAdapter = UploadImageHomeAdapter(imgUrl) { imgUrl ->
             //Item Click
             ImageLoaderActivity.goActivityFullPath(requireContext(), imgUrl)
         }

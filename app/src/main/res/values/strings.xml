@@ -20,6 +20,7 @@
     <string name="upload">আপলোড করুন</string>
     <string name="images">ছবি</string>
     <string name="previous_consultation">পূর্ববর্তী পরামর্শ</string>
+    <string name="previous_consultation_details">বিস্তারিত পরামর্শ</string>
     <string name="upload_image_for_diagnosis">রোগ নির্ণয়ের জন্য ছবি আপলোড করুন</string>
     <string name="tricks_tips">কৌশল এবং টিপস</string>
     <string name="today_agro_news">আজ এগ্রো নিউজ</string>
