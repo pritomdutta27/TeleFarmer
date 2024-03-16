@@ -56,7 +56,8 @@ public class SocketManagerChat {
     public void init() {
 
 //        String SocketUrl = LocalData.getSocketChatUrl();
-        String SocketUrl = "http://62.72.13.27:3393";
+//        String SocketUrl = "http://62.72.13.27:3393";
+        String SocketUrl = "https://chat-socket.telefarmer.net/";
         Timber.e("Socket URL:" + SocketUrl);
 
         if (SocketUrl.isEmpty()) {

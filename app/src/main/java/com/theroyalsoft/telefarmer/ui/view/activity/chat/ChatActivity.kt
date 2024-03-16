@@ -57,6 +57,7 @@ import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.EmojiPopup
 import com.vanniktech.emoji.google.GoogleEmojiProvider
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -196,7 +197,10 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
     private val iSocketChatMessage = ISocketChatMessage { messageBody ->
         Timber.i("Message:" + JsonUtil.getJsonStringFromObject(messageBody))
 //        messageBodies.add(messageBody)
-        messageAdapter.setData(messageBody,binding.recyclerView)
+        CoroutineScope(Dispatchers.Main).launch {
+            messageAdapter.setData(messageBody,binding.recyclerView)
+            binding.recyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+        }
     }
 
     private fun initUI() {
