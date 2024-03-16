@@ -154,7 +154,7 @@
                     android:background="@android:color/transparent"
                     android:fontFamily="@font/montserrat_regular"
                     android:gravity="center"
-                    android:hint="@string/amount_of_land"
+                    android:hint="@string/per_acre"
                     android:inputType="numberDecimal"
                     android:lines="1"
                     android:paddingEnd="@dimen/_5sdp"

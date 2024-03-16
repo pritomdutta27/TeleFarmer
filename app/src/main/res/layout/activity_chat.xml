@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
     android:background="#ECF3F7"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/llHeader"
-        layout="@layout/toolbar_layout" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/sendContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        android:clipToPadding="false"
-        android:padding="16dp"
-        tools:itemCount="5"
-        tools:listitem="@layout/item_message_text" />
+        <include
+            android:id="@+id/llHeader"
+            layout="@layout/toolbar_layout" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="16dp"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_message_text" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <LinearLayout
         android:id="@+id/sendContainer"
@@ -30,7 +39,10 @@
         android:background="@android:color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="8dp">
+        android:paddingLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/attachment_emoji"
@@ -49,8 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="@string/type_a_message"
             android:focusableInTouchMode="true"
+            android:hint="@string/type_a_message"
             android:maxLines="2"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
@@ -88,4 +100,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

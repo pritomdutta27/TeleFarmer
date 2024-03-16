@@ -13,6 +13,7 @@ import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
@@ -42,6 +43,7 @@ import com.skh.hkhr.util.log.ToastUtil
 import com.skh.hkhr.util.view.OnSingleClickListener
 import com.theroyalsoft.telefarmer.databinding.ActivityChatBinding
 import com.theroyalsoft.telefarmer.extensions.checkInternet
+import com.theroyalsoft.telefarmer.extensions.fitSystemWindowsAndAdjustResize
 import com.theroyalsoft.telefarmer.extensions.getFile
 import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
 import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
@@ -141,11 +143,12 @@ class ChatActivity : AppCompatActivity(), OnMessageItemClick {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         applyTransparentStatusBarAndNavigationBar()
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         EmojiManager.install(GoogleEmojiProvider())
 
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.rootView.fitSystemWindowsAndAdjustResize()
         loading = showLoadingDialog()
         loading.show()
 

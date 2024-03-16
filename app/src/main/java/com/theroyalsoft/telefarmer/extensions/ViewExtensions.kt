@@ -7,6 +7,9 @@ import android.os.Handler
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -146,4 +149,22 @@ fun RecyclerView.setItemDecorationSpacing(spacingPx: Float) {
 fun RecyclerView.setItemDecorationGrid(spanCount: Int, spacing: Int, includeEdge: Boolean) {
     val divider = GridSpacingItemDecoration(spanCount, spacing, includeEdge)
     addItemDecoration(divider)
+}
+
+fun View?.fitSystemWindowsAndAdjustResize() = this?.let { view ->
+    ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+        view.fitsSystemWindows = true
+        val bottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+
+        WindowInsetsCompat
+            .Builder()
+            .setInsets(
+                WindowInsetsCompat.Type.systemBars(),
+                Insets.of(0, 0, 0, bottom)
+            )
+            .build()
+            .apply {
+                ViewCompat.onApplyWindowInsets(v, this)
+            }
+    }
 }
