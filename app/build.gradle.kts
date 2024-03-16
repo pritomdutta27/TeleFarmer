@@ -142,6 +142,7 @@ dependencies {
     //Hilt
     implementation(Libraries.hilt_android_lib)
     implementation("androidx.browser:browser:1.7.0")
+    implementation("androidx.activity:activity:1.8.0")
     kapt(Libraries.hilt_android_compiler_lib)
     kapt(Libraries.hiltAnnotationProcessor)
     implementation("androidx.appcompat:appcompat:1.6.1")

@@ -28,7 +28,6 @@ class ImageLoaderActivity : FullScreenActivity() {
             intent.putExtra(
                 AppKey.INTENT_KEY_NAME, LocalData.getMetaInfoMetaData().imgBaseUrl + "/uploaded/" + imageUrl
             )
-
             context.startActivity(intent)
         }
 

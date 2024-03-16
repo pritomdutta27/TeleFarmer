@@ -29,6 +29,7 @@ import com.theroyalsoft.telefarmer.extensions.showLoadingDialog
 import com.theroyalsoft.telefarmer.extensions.showToast
 import com.theroyalsoft.telefarmer.helper.EqualSpacingItemDecoration
 import com.theroyalsoft.telefarmer.ui.adapters.uploadimg.UploadImageAdapter
+import com.theroyalsoft.telefarmer.ui.view.activity.viewimg.ImageLoaderActivity
 import com.theroyalsoft.telefarmer.ui.view.fragments.home.HomeViewModel
 import com.theroyalsoft.telefarmer.utils.isInvisible
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,7 +73,7 @@ class UploadImgFragment : Fragment() {
             var imgFile: File = getFile(requireContext(), bitmapImage!!)
 
             try {
-                val compressToBitmap = imgFile.path.resizeBitMapImage1(200,200)
+                val compressToBitmap = imgFile.path.resizeBitMapImage1(200, 200)
                 imgFile = getFile(requireContext(), compressToBitmap)
             } catch (e: IOException) {
                 Timber.e("Error:$e")
@@ -111,7 +112,7 @@ class UploadImgFragment : Fragment() {
         photoPickerInitialize()
 
         binding.tvUploadImg.setOnClickListener {
-            getCameraAndPhotoPermission{
+            getCameraAndPhotoPermission {
                 pickMedia?.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
         }
@@ -131,9 +132,9 @@ class UploadImgFragment : Fragment() {
             tvToolbarTitle.text = getString(R.string.images)
         }
 
-        mUploadImageAdapter = UploadImageAdapter {
+        mUploadImageAdapter = UploadImageAdapter { imgUrl ->
             //Item Click
-
+            ImageLoaderActivity.goActivityFullPath(requireContext(), imgUrl)
         }
 
         val mLayoutManager = LinearLayoutManager(context)
@@ -186,12 +187,13 @@ class UploadImgFragment : Fragment() {
             registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
                 if (uri != null) {
                     // Start cropping activity for pre-acquired image saved on the device and customize settings.
-                    cropImage.launch(CropImageContractOptions(uri, CropImageOptions(true , true,)))
+                    cropImage.launch(CropImageContractOptions(uri, CropImageOptions(true, true)))
                 } else {
                     Log.e("PhotoPicker", "No media selected")
                 }
             }
     }
+
     private fun getFile(context: Context, bm: Bitmap?): File {
         val imgFile = File(context.cacheDir, "image-" + System.currentTimeMillis() + ".jpg")
         try {

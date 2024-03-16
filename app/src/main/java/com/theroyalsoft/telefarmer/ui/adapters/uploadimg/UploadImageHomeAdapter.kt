@@ -8,15 +8,17 @@ import com.theroyalsoft.telefarmer.base.BaseViewHolder
 import com.theroyalsoft.telefarmer.databinding.ItemImageEmptyBinding
 import com.theroyalsoft.telefarmer.databinding.ItemImageUploadBinding
 import com.theroyalsoft.telefarmer.extensions.setImage
+import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
 
 /**
  * Created by Pritom Dutta on 21/10/23.
  */
-class UploadImageHomeAdapter(private val imgUrl: String) : RecyclerView.Adapter<BaseViewHolder>() {
+class UploadImageHomeAdapter(private val imgUrl: String, private val onClick: (String) -> Unit) :
+    RecyclerView.Adapter<BaseViewHolder>() {
 
     private var list: List<ResponseLabReport.ItemLabReport> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        if (viewType == 1){
+        if (viewType == 1) {
             val item = ItemImageUploadBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent, false
@@ -51,7 +53,7 @@ class UploadImageHomeAdapter(private val imgUrl: String) : RecyclerView.Adapter<
         BaseViewHolder(mBinding.root) {
         override fun onBind(position: Int) {
             mBinding.imgNews.setImage(imgUrl + "/uploaded/" + list[position].fileUrl)
-//            itemView.setOnClickListener { onClickImage() }
+            mBinding.imgNews.setSafeOnClickListener { onClick(list[position].fileUrl) }
         }
     }
 

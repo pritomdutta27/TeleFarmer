@@ -9,6 +9,7 @@ import com.theroyalsoft.telefarmer.base.BaseViewHolder
 import com.theroyalsoft.telefarmer.databinding.ItemUploadImageBinding
 import com.theroyalsoft.telefarmer.extensions.getFromDateTime
 import com.theroyalsoft.telefarmer.extensions.setImage
+import com.theroyalsoft.telefarmer.extensions.setSafeOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
@@ -16,7 +17,7 @@ import java.io.File
  * Created by Pritom Dutta on 21/5/23.
  */
 
-class UploadImageAdapter(val onClickImage: () -> Unit) :
+class UploadImageAdapter(val onClickImage: (String) -> Unit) :
     RecyclerView.Adapter<BaseViewHolder>() {
 
     private var list: List<ResponseLabReport.ItemLabReport> = emptyList()
@@ -42,7 +43,7 @@ class UploadImageAdapter(val onClickImage: () -> Unit) :
     inner class ImageUploadHolder(private val mBinding: ItemUploadImageBinding) :
         BaseViewHolder(mBinding.root) {
         override fun onBind(position: Int) {
-//            itemView.setOnClickListener { onClickImage() }
+            mBinding.viewUpload.setSafeOnClickListener { onClickImage(list[position].fileUrl) }
             mBinding.imgNews.setImage(LocalData.getMetaInfoMetaData().imgBaseUrl + "/uploaded/" + list[position].fileUrl)
             val file = File(list[position].fileUrl)
             mBinding.tvNewTitle.text = file.name

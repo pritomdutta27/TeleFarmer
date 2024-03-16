@@ -8,11 +8,12 @@ import com.theroyalsoft.telefarmer.base.BaseViewHolder
 import com.theroyalsoft.telefarmer.databinding.ItemNoPreviousConsultationBinding
 import com.theroyalsoft.telefarmer.databinding.ItemPreviousConsultationBinding
 import com.theroyalsoft.telefarmer.extensions.getFromDateTime
+import com.theroyalsoft.telefarmer.extensions.setImage
 
 /**
  * Created by Pritom Dutta on 21/5/23.
  */
-class PreviousConsultationAdapter : RecyclerView.Adapter<BaseViewHolder>() {
+class PreviousConsultationAdapter(private val imgUrl: String) : RecyclerView.Adapter<BaseViewHolder>() {
 
     private var listCall: List<ResponseCallHistory> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -67,6 +68,7 @@ class PreviousConsultationAdapter : RecyclerView.Adapter<BaseViewHolder>() {
                     "yyyy-MM-dd'T'HH:mm:ssXXX",
                     "hh:mm a"
                 )
+                mBinding.imgDoctor.setImage(imgUrl + "/uploaded/" + listCall[position].doctorImage)
             }
         }
     }

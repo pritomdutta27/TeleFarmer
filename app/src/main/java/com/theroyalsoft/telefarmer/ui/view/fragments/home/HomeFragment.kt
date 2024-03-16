@@ -57,6 +57,7 @@ import com.theroyalsoft.telefarmer.ui.view.activity.call.CallActivity
 import com.theroyalsoft.telefarmer.ui.view.activity.call.CallTestActivity
 import com.theroyalsoft.telefarmer.ui.view.activity.chat.ChatActivity
 import com.theroyalsoft.telefarmer.ui.view.activity.loan.loanselect.LoanSelectActivity
+import com.theroyalsoft.telefarmer.ui.view.activity.viewimg.ImageLoaderActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -131,7 +132,7 @@ class HomeFragment() : Fragment() {
 
     var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>? = null
 
-    private var imgUrl = "";
+    private var imgUrl = ""
     private var loadingDialog: Dialog? = null
     private lateinit var mLayoutManager: PeekingLinearLayoutManager
 
@@ -172,7 +173,7 @@ class HomeFragment() : Fragment() {
             findNavController().navigate(action)
         }
 
-        previousConsultationAdapter = PreviousConsultationAdapter()
+        previousConsultationAdapter = PreviousConsultationAdapter(imgUrl)
 
 //
         rvSetUpPreviousConsultation()
@@ -255,7 +256,10 @@ class HomeFragment() : Fragment() {
     }
 
     private fun rvImageUploadSetup(list: List<ResponseLabReport.ItemLabReport>) {
-        mUploadImageHomeAdapter = UploadImageHomeAdapter(imgUrl)
+        mUploadImageHomeAdapter = UploadImageHomeAdapter(imgUrl){ imgUrl ->
+            //Item Click
+            ImageLoaderActivity.goActivityFullPath(requireContext(), imgUrl)
+        }
         var data: List<Int>
         if (list.size > 2) {
             data = listOf(0, 1, 2)

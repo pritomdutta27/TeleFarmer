@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/_80sdp"
     android:clipToOutline="true"
+    android:id="@+id/view_upload"
     android:background="@drawable/white_round_bg">
 
     <androidx.appcompat.widget.AppCompatImageView
