@@ -269,4 +269,18 @@ class HomeViewModel @Inject constructor(
         }
         }
     }
+
+    fun deleteLabReport(id: String, rev: String?) {
+        val headerUserInfo: String = UserDevices.getUserDevicesJson("callHistory/patient")
+        viewModelScope.launch {
+            val response = mLabReportRepository.labReportDelete(headerUserInfo, uuid = id, rev = rev ?: "")
+            response.onSuccess { res ->
+                getLabReport()
+            }.onError { _, message ->
+                errorFlow.emit("Message: $message")
+            }.onException { error ->
+                errorFlow.emit("$error")
+            }
+        }
+    }
 }

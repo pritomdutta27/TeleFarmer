@@ -120,6 +120,33 @@ fun Context.openLogout(
     dialog.show()
 }
 
+fun Context.mezDialog(
+    message: String,
+    onClick: () -> Unit
+) {
+    val dialog = Dialog(this)
+    dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.setCancelable(false)
+    dialog.setContentView(R.layout.logout_dialog)
+    val dialogButton = dialog.findViewById<AppCompatButton>(R.id.btn_close)
+    val btn = dialog.findViewById<AppCompatButton>(R.id.btn_login)
+    val textDialog = dialog.findViewById<TextView>(R.id.text_dialog)
+
+    textDialog.text = message
+
+    btn.setSafeOnClickListener { v: View? ->
+        dialog.dismiss()
+        Handler(Looper.getMainLooper()).postDelayed({
+            onClick.invoke()
+        }, 200)
+    }
+    dialogButton.setSafeOnClickListener { v: View? ->
+        dialog.dismiss()
+    }
+    dialog.show()
+}
+
 
 fun Fragment.getCameraAndMicPermission(success: () -> Unit) {
     PermissionX.init(this)

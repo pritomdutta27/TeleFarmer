@@ -56,10 +56,12 @@
 
     <string name="pack_params"><![CDATA[<font color="#40CF96"><small>৳</small><big>%s</big></font><small>/%s</small>]]></string>
     <string name="view_all">সবগুলো দেখুন</string>
+    <!--    <string name="view_all">আরো দেখুন</string>-->
     <string name="careline">কেয়ারলাইন</string>
     <string name="no_previous_consultations_found">আপনি কোনো পূর্ববর্তী পরামর্শ ছিল না</string>
     <string name="loading">লোড হচ্ছে..</string>
     <string name="weather">আবহাওয়া</string>
+    <string name="pic_delete_mez">আপনি কি নিশ্চিত আপনি এই ছবিটি মুছে ফেলতে চান?</string>
 
 
     <string name="loan_section_title">লোনের পরিমাণ জানতে শষ্য ও জমির পরিমান নির্বাচন করুন</string>

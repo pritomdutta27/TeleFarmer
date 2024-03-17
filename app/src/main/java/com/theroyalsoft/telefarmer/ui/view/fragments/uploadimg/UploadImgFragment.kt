@@ -24,6 +24,9 @@ import com.canhub.cropper.CropImageOptions
 import com.theroyalsoft.telefarmer.R
 import com.theroyalsoft.telefarmer.databinding.FragmentUploadImgBinding
 import com.theroyalsoft.telefarmer.extensions.getCameraAndPhotoPermission
+import com.theroyalsoft.telefarmer.extensions.getPhoneDeviceId
+import com.theroyalsoft.telefarmer.extensions.mezDialog
+import com.theroyalsoft.telefarmer.extensions.openLogout
 import com.theroyalsoft.telefarmer.extensions.resizeBitMapImage1
 import com.theroyalsoft.telefarmer.extensions.showLoadingDialog
 import com.theroyalsoft.telefarmer.extensions.showToast
@@ -135,6 +138,13 @@ class UploadImgFragment : Fragment() {
         mUploadImageAdapter = UploadImageAdapter { imgUrl ->
             //Item Click
             ImageLoaderActivity.goActivityFullPath(requireContext(), imgUrl)
+        }
+
+        mUploadImageAdapter.onLapReportDelete { data ->
+            requireContext().mezDialog(getString(R.string.pic_delete_mez)) {
+                //Log.e("onLapReportDelete", "initView: "+data.rev )
+                viewModel.deleteLabReport(data.id, data.rev)
+            }
         }
 
         val mLayoutManager = LinearLayoutManager(context)

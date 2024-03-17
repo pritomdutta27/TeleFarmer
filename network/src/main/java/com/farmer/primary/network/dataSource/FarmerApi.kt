@@ -140,6 +140,20 @@ class FarmerApi @Inject constructor(
         )
     }
 
+    suspend fun labReportDelete(
+        token: String,
+        userInfo: String,
+        uuid: String,
+        rev: String
+    ): NetworkResult<CommonResponse> {
+        return apiService.labReportDelete(
+            token = token.getBearerToken(),
+            headerUserInfo = userInfo,
+            uuid = uuid,
+            rev = rev,
+        )
+    }
+
     suspend fun getWeatherReports(
     ): NetworkResult<WeatherResponse> {
         return weatherApi.getWeatherReports()

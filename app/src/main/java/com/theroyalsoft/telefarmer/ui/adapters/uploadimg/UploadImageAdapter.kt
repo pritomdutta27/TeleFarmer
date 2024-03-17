@@ -17,8 +17,10 @@ import java.io.File
  * Created by Pritom Dutta on 21/5/23.
  */
 
-class UploadImageAdapter(val onClickImage: (String) -> Unit) :
+class UploadImageAdapter(private val onClickImage: (String) -> Unit, ) :
     RecyclerView.Adapter<BaseViewHolder>() {
+
+    private var onImageDelete: (ResponseLabReport.ItemLabReport) -> Unit = {}
 
     private var list: List<ResponseLabReport.ItemLabReport> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -40,10 +42,15 @@ class UploadImageAdapter(val onClickImage: (String) -> Unit) :
         holder.onBind(position)
     }
 
+    fun onLapReportDelete(onImageDelete: (ResponseLabReport.ItemLabReport) -> Unit){
+        this.onImageDelete = onImageDelete
+    }
+
     inner class ImageUploadHolder(private val mBinding: ItemUploadImageBinding) :
         BaseViewHolder(mBinding.root) {
         override fun onBind(position: Int) {
             mBinding.viewUpload.setSafeOnClickListener { onClickImage(list[position].fileUrl) }
+            mBinding.imgDelete.setSafeOnClickListener { onImageDelete(list[position]) }
             mBinding.imgNews.setImage(LocalData.getMetaInfoMetaData().imgBaseUrl + "/uploaded/" + list[position].fileUrl)
             val file = File(list[position].fileUrl)
             mBinding.tvNewTitle.text = file.name

@@ -20,13 +20,14 @@ import com.farmer.primary.network.model.login.LoginResponse
 import com.farmer.primary.network.model.otp.OtpParams
 import com.farmer.primary.network.model.otp.OtpResponse
 import com.farmer.primary.network.utils.NetworkResult
+import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 /**
  * Created by Pritom Dutta on 13/1/23.
@@ -100,6 +101,15 @@ interface ApiService {
         @Header("UserInfo") headerUserInfo: String,
         @Body patientUpdate: Map<String,String>
     ): NetworkResult<CommonResponse>
+
+    @DELETE("labReport/{id}/{rev}")
+    suspend fun labReportDelete(
+        @Header("Authorization") token: String,
+        @Header("UserInfo") headerUserInfo: String,
+        @Path("id") uuid: String,
+        @Path("rev") rev: String
+    ): NetworkResult<CommonResponse>
+
 
     @POST("loan")
     suspend fun applyForLoan(

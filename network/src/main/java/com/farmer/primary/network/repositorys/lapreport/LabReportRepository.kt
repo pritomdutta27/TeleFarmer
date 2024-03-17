@@ -23,4 +23,10 @@ interface LabReportRepository {
         userInfo: String,
         patientUpdate: Map<String,String>
     ): NetworkResult<CommonResponse>
+
+    suspend fun labReportDelete(
+        userInfo: String,
+        uuid: String,
+        rev: String
+    ): NetworkResult<CommonResponse>
 }

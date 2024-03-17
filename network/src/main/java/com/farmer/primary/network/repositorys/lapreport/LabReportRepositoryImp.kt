@@ -30,17 +30,28 @@ class LabReportRepositoryImp @Inject constructor(
         uuid: String,
         imageBody: MultipartBody.Part,
         folder: MultipartBody.Part
-    )= api.invoke(
+    ) = api.invoke(
         token = pref.getString(AppConstants.PREF_KEY_ACCESS_TOKEN) ?: "",
         userInfo = userInfo, imageBody = imageBody, folder = folder
     )
 
     override suspend fun patientLabReportFileURLUpload(
         userInfo: String,
-        patientUpdate: Map<String,String>
+        patientUpdate: Map<String, String>
     ) = api.urlUpload(
         token = pref.getString(AppConstants.PREF_KEY_ACCESS_TOKEN) ?: "",
         userInfo = userInfo,
         patientUpdate = patientUpdate
+    )
+
+    override suspend fun labReportDelete(
+        userInfo: String,
+        uuid: String,
+        rev: String
+    ) = api.labReportDelete(
+        token = pref.getString(AppConstants.PREF_KEY_ACCESS_TOKEN) ?: "",
+        userInfo = userInfo,
+        uuid = uuid,
+        rev = rev
     )
 }
