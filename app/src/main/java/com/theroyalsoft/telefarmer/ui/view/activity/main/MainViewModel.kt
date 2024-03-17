@@ -15,6 +15,8 @@ import com.farmer.primary.network.utils.onSuccess
 import com.theroyalsoft.telefarmer.utils.JsonUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dynamic.app.survey.data.dataSource.local.preferences.abstraction.DataStoreRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
@@ -28,9 +30,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: MetaDataRepository,
-    private val repositoryProfile: ProfileRepository,
     private val pref: DataStoreRepository
 ) : ViewModel() {
+
+    init {
+        fetchMetaData()
+    }
 
     private fun setMetaData(metaData: ResponseMetaInfo) = runBlocking {
         metaData?.let {
@@ -41,11 +46,7 @@ class MainViewModel @Inject constructor(
 
     }
 
-    private fun setProfileInfo(data: ResponsePatientInfo?) = runBlocking {
-//        LocalData.setUserProfile(data.toString())
-        LocalData.setUserProfileAll(data)
-        pref.putModel(AppConstants.PREF_KEY_USER_INFO, data)
-    }
+
 
     private fun getToken() = runBlocking{
         pref.getString(AppConstants.PREF_KEY_ACCESS_TOKEN)
@@ -58,7 +59,7 @@ class MainViewModel @Inject constructor(
     private val errorFlow: MutableSharedFlow<String> = MutableSharedFlow()
     val _errorFlow: SharedFlow<String> = errorFlow
 
-    fun fetchMetaData() {
+    private fun fetchMetaData() {
 
         viewModelScope.launch {
 //            LocalData.setToken(getToken())
@@ -68,6 +69,7 @@ class MainViewModel @Inject constructor(
 //            LocalData.setUserProfileAll(profile)
 
 //            Timber.e("metaData ${LocalData.getToken()}")
+            delay(100)
             val response = repository.fetchMetaData()
             response.onSuccess { res ->
                 setMetaData(res)
@@ -76,21 +78,6 @@ class MainViewModel @Inject constructor(
                 errorFlow.emit("Message: $message")
             }.onException { error ->
                // Log.e("setMetaData", "setMetaData: "+error)
-                errorFlow.emit("$error")
-            }
-        }
-    }
-
-    fun fetchProfile() {
-        viewModelScope.launch {
-            val response = repositoryProfile.profileInfo(getPhone())
-            response.onSuccess { res ->
-                setProfileInfo(res)
-            }.onError { _, message ->
-                //Log.e("setMetaData", "setMetaData: "+message)
-                errorFlow.emit("Message: $message")
-            }.onException { error ->
-                // Log.e("setMetaData", "setMetaData: "+error)
                 errorFlow.emit("$error")
             }
         }

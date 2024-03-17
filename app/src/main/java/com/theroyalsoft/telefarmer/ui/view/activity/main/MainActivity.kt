@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity() {
         bottomNavSetup()
 
         // Api Call
-        viewModel.fetchProfile()
-        viewModel.fetchMetaData()
+//        viewModel.fetchProfile()
+//        viewModel.fetchMetaData()
         ifApiGetError()
     }
 
@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Api Response
+
     private fun ifApiGetError() {
         lifecycleScope.launch {
             viewModel._errorFlow.collect { errorStr ->

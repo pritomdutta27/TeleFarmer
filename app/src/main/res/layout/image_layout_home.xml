@@ -41,7 +41,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_upload_img"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_190sdp"
+        android:layout_height="@dimen/_140sdp"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/_15dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +54,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:background="@drawable/upload_img_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/rv_upload_img"

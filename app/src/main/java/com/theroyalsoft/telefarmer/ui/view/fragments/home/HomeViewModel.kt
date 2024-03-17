@@ -7,6 +7,7 @@ import bio.medico.patient.model.apiResponse.CommonResponse
 import bio.medico.patient.model.apiResponse.ResponseCallHistory
 import bio.medico.patient.model.apiResponse.ResponseCallHistoryModel
 import bio.medico.patient.model.apiResponse.ResponseLabReport
+import bio.medico.patient.model.apiResponse.ResponsePatientInfo
 import com.farmer.primary.network.dataSource.local.LocalData
 import com.farmer.primary.network.dataSource.local.UserDevices
 import com.farmer.primary.network.model.home.Static
@@ -15,6 +16,7 @@ import com.farmer.primary.network.model.weather.WeatherResponse
 import com.farmer.primary.network.repositorys.callhistory.CallHistoryRepository
 import com.farmer.primary.network.repositorys.home.HomeRepository
 import com.farmer.primary.network.repositorys.lapreport.LabReportRepository
+import com.farmer.primary.network.repositorys.profile.ProfileRepository
 import com.farmer.primary.network.repositorys.weather.WeatherRepository
 import com.farmer.primary.network.utils.AppConstants
 import com.farmer.primary.network.utils.onError
@@ -25,6 +27,7 @@ import dynamic.app.survey.data.dataSource.local.preferences.abstraction.DataStor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
@@ -41,11 +44,18 @@ class HomeViewModel @Inject constructor(
     private val mLabReportRepository: LabReportRepository,
     private val homeRepository: HomeRepository,
     private val weatherRepository: WeatherRepository,
+    private val repositoryProfile: ProfileRepository,
     private val pref: DataStoreRepository
 ) : ViewModel() {
 
     fun getMetaData() = runBlocking {
         pref.getModel(AppConstants.PREF_KEY_META_INFO, MetaModel::class.java)
+    }
+
+    private fun setProfileInfo(data: ResponsePatientInfo?) = runBlocking {
+//        LocalData.setUserProfile(data.toString())
+        LocalData.setUserProfileAll(data)
+        pref.putModel(AppConstants.PREF_KEY_USER_INFO, data)
     }
 
 //    fun getCallHistory(): Flow<PagingData<ResponseCallHistory>> {
@@ -83,7 +93,7 @@ class HomeViewModel @Inject constructor(
     val _errorFlow: SharedFlow<String> = errorFlow
 
 
-    fun getHomeData() {
+    private fun getHomeData() {
         val headerUserInfo: String = UserDevices.getUserDevicesJson("callHistory/patient")
         viewModelScope.launch(Dispatchers.IO) {
             val history =
@@ -238,6 +248,25 @@ class HomeViewModel @Inject constructor(
                 // Log.e("setMetaData", "setMetaData: "+error)
                 errorFlow.emit("$error")
             }
+        }
+    }
+
+    private fun getPhone() = runBlocking {
+        pref.getString(AppConstants.PREF_KEY_USER_PHONE_NUM) ?: ""
+    }
+    fun fetchProfile() {
+        viewModelScope.launch {
+        val response = repositoryProfile.profileInfo(getPhone())
+        response.onSuccess { res ->
+            setProfileInfo(res)
+            getHomeData()
+        }.onError { _, message ->
+            //Log.e("setMetaData", "setMetaData: "+message)
+            errorFlow.emit("Message: $message")
+        }.onException { error ->
+            // Log.e("setMetaData", "setMetaData: "+error)
+            errorFlow.emit("$error")
+        }
         }
     }
 }

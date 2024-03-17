@@ -71,5 +71,7 @@
     <string name="temp_image">temp_image.jpg</string>
     <string name="authorities">com.theroyalsoft.telefarmer.fileprovider</string>
     <string name="live_chat">লাইভ চ্যাট</string>
+    <string name="video_call">ভিডিও কল</string>
+    <string name="audio_call">অডিও কল</string>
 
 </resources>

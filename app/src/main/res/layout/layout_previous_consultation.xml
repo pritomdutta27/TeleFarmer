@@ -19,7 +19,7 @@
             android:padding="@dimen/_2sdp"
             android:text="@string/previous_consultation"
             android:textColor="@color/app_green"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_6sdp"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

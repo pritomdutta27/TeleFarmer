@@ -84,9 +84,11 @@ class LoginActivity : AppCompatActivity() {
 
                     if (data.isSuccess) {
                         if ((!data.isProfile && !data.isVerified) || (data.isProfile && !data.isVerified)) {
+                            delay(300)
                             hideLoading()
                             openOtp(data.isProfile)
                         }else if (data.isProfile && data.isVerified){
+                            delay(1000)
                             hideLoading()
                             viewModel.setLogin(accessToken = data.accessToken, phone = binding.etPhoneNumber.text.toString())
                             openMain()

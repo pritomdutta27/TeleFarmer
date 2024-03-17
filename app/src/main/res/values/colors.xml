@@ -25,5 +25,8 @@
     <color name="hint_color">#C7C7C7</color>
     <color name="faded_black">#57000000</color>
 
+    <color name="vide_call_color">#FFDCAB7E</color>
+    <color name="audio_call_color">#01AA99</color>
+
 
 </resources>

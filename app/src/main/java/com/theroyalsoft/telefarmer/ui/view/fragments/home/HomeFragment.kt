@@ -1,7 +1,6 @@
 package com.theroyalsoft.telefarmer.ui.view.fragments.home
 
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -15,7 +14,6 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -48,13 +46,12 @@ import com.theroyalsoft.telefarmer.helper.EqualSpacingItemDecoration
 import com.theroyalsoft.telefarmer.helper.GridSpacingItemDecoration
 import com.theroyalsoft.telefarmer.helper.PeekingLinearLayoutManager
 import com.theroyalsoft.telefarmer.helper.SpannedGridLayoutManager
+import com.theroyalsoft.telefarmer.helper.SpannedGridLayoutManager.SpanInfo
 import com.theroyalsoft.telefarmer.ui.adapters.previousConsultation.PreviousConsultationAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.slider.SliderAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.tipsntricks.TipsNTricksHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.uploadimg.UploadImageHomeAdapter
 import com.theroyalsoft.telefarmer.ui.adapters.weather.WeatherAdapter
-import com.theroyalsoft.telefarmer.ui.view.activity.call.CallActivity
-import com.theroyalsoft.telefarmer.ui.view.activity.call.CallTestActivity
 import com.theroyalsoft.telefarmer.ui.view.activity.chat.ChatActivity
 import com.theroyalsoft.telefarmer.ui.view.activity.loan.loanselect.LoanSelectActivity
 import com.theroyalsoft.telefarmer.ui.view.activity.viewimg.ImageLoaderActivity
@@ -67,13 +64,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.internal.notify
-import okhttp3.internal.notifyAll
 import timber.log.Timber
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
 import java.io.IOException
 import java.util.Timer
 
@@ -149,7 +141,7 @@ class HomeFragment() : Fragment() {
         loadingDialog = requireContext().showLoadingDialog()
 
         imgUrl = LocalData.getMetaInfoMetaData()?.imgBaseUrl ?: ""
-        viewModel.getHomeData()
+        viewModel.fetchProfile()
 
         photoPickerInitialize()
 
@@ -276,22 +268,33 @@ class HomeFragment() : Fragment() {
         }
 
         var gridLayoutManager: LayoutManager
-        if (list.size > 1) {
-            gridLayoutManager = SpannedGridLayoutManager({ position ->
-                val spanInfo = SpannedGridLayoutManager.SpanInfo(1, 1)
-                if (data[position] == 1) {
-                    spanInfo.columnSpan = 1
-                    spanInfo.rowSpan = 1
-                } else if (data[position] == 0) {
-//                    spanInfo.columnSpan = 1
-                    spanInfo.rowSpan = 1
-                } else if (data[position] == 2) {
-                    spanInfo.columnSpan = 2
-                    spanInfo.rowSpan = 1
-                }
-                spanInfo
-            }, 2, 1.5f)
-        } else {
+        if (list.size > 2) {
+            gridLayoutManager = SpannedGridLayoutManager(
+                { position -> // Conditions for 2x2 items
+                    if (position % 6 == 0 || position % 6 == 4) {
+                        SpanInfo(2, 2)
+                    } else {
+                        SpanInfo(1, 1)
+                    }
+                },
+                3,  // number of columns
+                1.33f // how big is default item
+            )
+        } else if (list.size == 2){
+            gridLayoutManager = SpannedGridLayoutManager(
+                { position -> // Conditions for 2x2 items
+                    SpanInfo(1, 2)
+//                    if (position % 6 == 0 || position % 6 == 4) {
+//                        SpanInfo(2, 2)
+//                    } else {
+//                        SpanInfo(1, 1)
+//                    }
+                },
+                2,  // number of columns
+                2f // how big is default item
+            )
+        }
+        else {
             gridLayoutManager = LinearLayoutManager(context)
             gridLayoutManager.orientation = RecyclerView.HORIZONTAL
         }
