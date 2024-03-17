@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_semi_bold"
         android:background="@drawable/white_round_bg"
-        android:text="Roof Gardening"
+        tools:text="Roof Gardening"
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
         android:gravity="center"

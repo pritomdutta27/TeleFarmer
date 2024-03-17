@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.farmer.primary.network.model.home.TipsCategory
 import com.farmer.primary.network.model.home.TricksTip
 import com.theroyalsoft.telefarmer.R
 import com.theroyalsoft.telefarmer.databinding.FragmentTipsNTricksListBinding
@@ -37,7 +38,7 @@ class TipsNTricksListFragment : Fragment() {
     private var name: String = ""
 
     private lateinit var mTipsNTricksAdapter: TipsNTricksAdapter
-
+//    val listTipsCategory = mutableListOf<TipsCategory>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,6 +52,8 @@ class TipsNTricksListFragment : Fragment() {
         initView()
         event()
         viewModel.getTripsTricks()
+
+//        getCategoryResponse()
         getHomeResponse()
         ifApiGetError()
 
@@ -68,7 +71,7 @@ class TipsNTricksListFragment : Fragment() {
             tvToolbarSubtitle.text = getString(R.string.tips_n_tricks)
         }
 
-        mTipsNTricksAdapter = TipsNTricksAdapter {
+        mTipsNTricksAdapter = TipsNTricksAdapter(name) {
             //Item Click
             val action =
                 TipsNTricksListFragmentDirections.actionTipsNTricksListFragmentToTipsNTricksDetailsFragment(
@@ -93,17 +96,27 @@ class TipsNTricksListFragment : Fragment() {
 
     }
 
+//    private fun getCategoryResponse() {
+//        lifecycleScope.launch {
+//            viewModel._category.collect { data ->
+//                data.TipsCategories?.let {
+//                    listTipsCategory.clear()
+//                    listTipsCategory.addAll(it)
+//                }
+//            }
+//        }
+//    }
+
     private fun getHomeResponse() {
         lifecycleScope.launch {
             viewModel._homeStateFlow.collect { data ->
-                data?.TrickTip?.let {
+                data.TrickTip?.let {
                     if (id == "-1") {
                         mTipsNTricksAdapter.submitData(it)
                     } else {
                         mTipsNTricksAdapter.submitData(it.filter { fliterData -> id == fliterData.categoryUuid })
                     }
                 }
-
             }
         }
     }

@@ -13,7 +13,7 @@ import com.theroyalsoft.telefarmer.extensions.setImage
 /**
  * Created by Pritom Dutta on 20/5/23.
  */
-class TipsNTricksAdapter(val onTipsItemSelect: (data: TricksTip) -> Unit) :
+class TipsNTricksAdapter(val catName: String, val onTipsItemSelect: (data: TricksTip) -> Unit) :
     RecyclerView.Adapter<BaseViewHolder>() {
 
     private var list: List<TricksTip> = emptyList()
@@ -45,6 +45,7 @@ class TipsNTricksAdapter(val onTipsItemSelect: (data: TricksTip) -> Unit) :
                 val urlImg = LocalData.getMetaInfoMetaData().imgBaseUrl + "/uploaded/" + list[position]?.imageUrl
                 imgNews.setImage(urlImg)
                 tvNewTitle.text = list[position].titleBn
+                tvNewDate.text = catName
             }
         }
     }

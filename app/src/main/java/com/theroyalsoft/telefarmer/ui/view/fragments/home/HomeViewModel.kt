@@ -105,7 +105,7 @@ class HomeViewModel @Inject constructor(
                 )
             }
 
-            val weather = async {weatherRepository.getWeather()}
+            val weather = async { weatherRepository.getWeather() }
 
             val news = async { homeRepository.fetchNews() }
 
@@ -119,7 +119,7 @@ class HomeViewModel @Inject constructor(
                 historyStateFlow.emit(res as ResponseCallHistoryModel)
             }.onError { code, message ->
                 //Log.e("setMetaData", "setMetaData: "+message)
-                if (code != 400){
+                if (code != 400) {
                     errorFlow.emit("Message: $message")
                 }
             }.onException { error ->
@@ -131,7 +131,7 @@ class HomeViewModel @Inject constructor(
                 labStateFlow.emit(res as ResponseLabReport)
             }.onError { code, message ->
                 //Log.e("setMetaData", "setMetaData: "+message)
-                if (code != 400){
+                if (code != 400) {
                     errorFlow.emit("Message: $message")
                 }
             }.onException { error ->
@@ -177,7 +177,7 @@ class HomeViewModel @Inject constructor(
                     historyStateFlow.emit(res)
                 }.onError { code, message ->
                     //Log.e("setMetaData", "setMetaData: "+message)
-                    if (code != 400){
+                    if (code != 400) {
                         errorFlow.emit("Message: $message")
                     }
                 }.onException { error ->
@@ -198,7 +198,7 @@ class HomeViewModel @Inject constructor(
                     labStateFlow.emit(res as ResponseLabReport)
                 }.onError { code, message ->
                     //Log.e("setMetaData", "setMetaData: "+message)
-                    if (code != 400){
+                    if (code != 400) {
                         errorFlow.emit("Message: $message")
                     }
                 }.onException { error ->
@@ -232,7 +232,7 @@ class HomeViewModel @Inject constructor(
     fun urlStore(url: String) {
         val headerUserInfo: String = UserDevices.getUserDevicesJson("labReport")
 //        val labReport =   RequestLabReport(LocalData.getUserUuid(),url, AppKey.CHANNEL)
-        val labReport = mutableMapOf<String,String>()
+        val labReport = mutableMapOf<String, String>()
         labReport["patientUuid"] = LocalData.getUserUuid()
         labReport["fileUrl"] = url
         labReport["channel"] = AppKey.CHANNEL
@@ -254,26 +254,39 @@ class HomeViewModel @Inject constructor(
     private fun getPhone() = runBlocking {
         pref.getString(AppConstants.PREF_KEY_USER_PHONE_NUM) ?: ""
     }
+
     fun fetchProfile() {
         viewModelScope.launch {
-        val response = repositoryProfile.profileInfo(getPhone())
-        response.onSuccess { res ->
-            setProfileInfo(res)
-            getHomeData()
-        }.onError { _, message ->
-            //Log.e("setMetaData", "setMetaData: "+message)
-            errorFlow.emit("Message: $message")
-        }.onException { error ->
-            // Log.e("setMetaData", "setMetaData: "+error)
-            errorFlow.emit("$error")
+            val response = repositoryProfile.profileInfo(getPhone())
+            response.onSuccess { res ->
+                setProfileInfo(res)
+                getHomeData()
+            }.onError { _, message ->
+                //Log.e("setMetaData", "setMetaData: "+message)
+                errorFlow.emit("Message: $message")
+            }.onException { error ->
+                // Log.e("setMetaData", "setMetaData: "+error)
+                errorFlow.emit("$error")
+            }
         }
+    }
+
+    fun getCategory() {
+        viewModelScope.launch {
+            homeRepository.fetchCategories().onSuccess { res ->
+            }.onError { _, message ->
+                errorFlow.emit("Message: $message")
+            }.onException { error ->
+                errorFlow.emit("$error")
+            }
         }
     }
 
     fun deleteLabReport(id: String, rev: String?) {
         val headerUserInfo: String = UserDevices.getUserDevicesJson("callHistory/patient")
         viewModelScope.launch {
-            val response = mLabReportRepository.labReportDelete(headerUserInfo, uuid = id, rev = rev ?: "")
+            val response =
+                mLabReportRepository.labReportDelete(headerUserInfo, uuid = id, rev = rev ?: "")
             response.onSuccess { res ->
                 getLabReport()
             }.onError { _, message ->

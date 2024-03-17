@@ -31,6 +31,13 @@ class NewsViewModel @Inject constructor(
     }
     val _homeStateFlow: SharedFlow<Static> = homeStateFlow
 
+//    private val category by lazy {
+//        MutableSharedFlow<Static>()
+//    }
+//    val _category: SharedFlow<Static> = category
+
+
+
     private val errorFlow: MutableSharedFlow<String> = MutableSharedFlow()
     val _errorFlow: SharedFlow<String> = errorFlow
 
@@ -61,4 +68,19 @@ class NewsViewModel @Inject constructor(
                 }
         }
     }
+
+
+
+//    fun getCategory() {
+//        viewModelScope.launch {
+//            homeRepository.fetchCategories().onSuccess { res ->
+//                category.emit(res)
+//                getTripsTricks()
+//            }.onError { _, message ->
+//                errorFlow.emit("Message: $message")
+//            }.onException { error ->
+//                errorFlow.emit("$error")
+//            }
+//        }
+//    }
 }

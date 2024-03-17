@@ -17,4 +17,5 @@ data class TricksTip(
     val updatedAt: String?,
     val isHighlighted: Boolean,
     val isPublished: Boolean,
+    var catName: String? = "",
 ): Parcelable
